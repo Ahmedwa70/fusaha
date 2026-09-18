@@ -5,6 +5,15 @@ import { withSentryConfig } from "@sentry/nextjs/config";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      {
+        source: "/login",
+        destination: "/auth/login",
+        permanent: false,
+      },
+    ];
+  },
   experimental: {
     serverActions: {
       // Template create/update actions send the bundled HTML (with inlined
