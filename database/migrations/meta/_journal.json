@@ -1,0 +1,160 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1788296016795,
+      "tag": "0001_last_shard",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788465478862,
+      "tag": "0001_wet_lockheed",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788472420553,
+      "tag": "0002_typical_falcon",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1788474292951,
+      "tag": "0003_certain_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1788475421079,
+      "tag": "0004_sloppy_living_lightning",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1788476162476,
+      "tag": "0005_violet_marrow",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1788550296975,
+      "tag": "0006_melted_yellowjacket",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1788552770957,
+      "tag": "0007_married_shape",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1788610399973,
+      "tag": "0008_wide_morgan_stark",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1788639580309,
+      "tag": "0009_flimsy_wilson_fisk",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1788707619363,
+      "tag": "0010_add_system_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1788793218858,
+      "tag": "0011_colossal_alice",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1788793312586,
+      "tag": "0012_boring_blonde_phantom",
+      "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1788793519328,
+      "tag": "0013_tearful_whizzer",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1788794060687,
+      "tag": "0014_ancient_mother_askani",
+      "breakpoints": true
+    },
+    {
+      "idx": 15,
+      "version": "7",
+      "when": 1788881193887,
+      "tag": "0015_spooky_green_goblin",
+      "breakpoints": true
+    },
+    {
+      "idx": 16,
+      "version": "7",
+      "when": 1788965980541,
+      "tag": "0016_add_app_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1789126191609,
+      "tag": "0017_add_translatable_level_to_schema_definitions",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1789379396732,
+      "tag": "0018_add_credit_package_display_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1789388110535,
+      "tag": "0019_paddle_integration",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1789394940913,
+      "tag": "0020_drop_credit_package_color_light",
+      "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1789500000000,
+      "tag": "0021_localize_credit_package_display_fields",
+      "breakpoints": true
+    }
+  ]
+}

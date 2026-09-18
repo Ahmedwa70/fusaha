@@ -1,0 +1,269 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Brand scales — exposed as utilities (bg-brand-700, text-gold-600, ...) */
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+  --color-brand-950: var(--brand-950);
+
+  --color-gold-50: var(--gold-50);
+  --color-gold-100: var(--gold-100);
+  --color-gold-200: var(--gold-200);
+  --color-gold-300: var(--gold-300);
+  --color-gold-400: var(--gold-400);
+  --color-gold-500: var(--gold-500);
+  --color-gold-600: var(--gold-600);
+  --color-gold-700: var(--gold-700);
+  --color-gold-800: var(--gold-800);
+  --color-gold-900: var(--gold-900);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* Base */
+  --background: oklch(0.985 0.004 90);
+  --foreground: oklch(0.22 0.035 240);
+
+  /* Surfaces */
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.035 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.035 240);
+
+  /* Brand Navy */
+  --primary: oklch(0.34 0.065 225);
+  --primary-foreground: oklch(0.985 0.004 90);
+
+  /* Soft Navy Surface */
+  --secondary: oklch(0.94 0.018 225);
+  --secondary-foreground: oklch(0.3 0.06 225);
+
+  /* Neutral */
+  --muted: oklch(0.96 0.006 240);
+  --muted-foreground: oklch(0.52 0.025 240);
+
+  /* Gold Accent */
+  --accent: oklch(0.88 0.075 80);
+  --accent-foreground: oklch(0.3 0.045 75);
+
+  /* States */
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.98 0.01 20);
+
+  /* Borders */
+  --border: oklch(0.91 0.01 240);
+  --input: oklch(0.91 0.01 240);
+
+  /* Focus */
+  --ring: oklch(0.42 0.075 225);
+
+  /* Charts */
+  --chart-1: oklch(0.42 0.075 225);
+  --chart-2: oklch(0.68 0.12 80);
+  --chart-3: oklch(0.55 0.09 190);
+  --chart-4: oklch(0.72 0.1 145);
+  --chart-5: oklch(0.6 0.16 35);
+
+  /* Sidebar — fixed dark-navy brand chrome, same in light & dark app theme */
+  --sidebar: var(--brand-900);
+  --sidebar-foreground: oklch(0.96 0.008 90);
+  --sidebar-primary: var(--brand-600);
+  --sidebar-primary-foreground: oklch(0.98 0.005 90);
+  --sidebar-accent: var(--brand-800);
+  --sidebar-accent-foreground: oklch(0.96 0.008 90);
+  --sidebar-border: var(--brand-800);
+  --sidebar-ring: var(--brand-400);
+
+  /* =========================
+     BRAND NAVY
+  ========================= */
+  --brand-50: oklch(0.97 0.01 225);
+  --brand-100: oklch(0.93 0.02 225);
+  --brand-200: oklch(0.86 0.035 225);
+  --brand-300: oklch(0.75 0.05 225);
+  --brand-400: oklch(0.62 0.065 225);
+  --brand-500: oklch(0.5 0.07 225);
+  --brand-600: oklch(0.42 0.075 225);
+  --brand-700: oklch(0.34 0.065 225);
+  --brand-800: oklch(0.28 0.055 225);
+  --brand-900: oklch(0.22 0.04 225);
+  --brand-950: oklch(0.15 0.03 225);
+
+  /* =========================
+     BRAND GOLD
+  ========================= */
+  --gold-50: oklch(0.98 0.02 85);
+  --gold-100: oklch(0.95 0.04 85);
+  --gold-200: oklch(0.91 0.06 85);
+  --gold-300: oklch(0.85 0.08 85);
+  --gold-400: oklch(0.78 0.1 80);
+  --gold-500: oklch(0.7 0.11 75);
+  --gold-600: oklch(0.62 0.1 70);
+  --gold-700: oklch(0.52 0.08 70);
+  --gold-800: oklch(0.42 0.06 70);
+  --gold-900: oklch(0.32 0.04 70);
+}
+
+.dark {
+  --background: oklch(0.17 0.02 240);
+  --foreground: oklch(0.96 0.008 90);
+
+  --card: oklch(0.21 0.025 235);
+  --card-foreground: oklch(0.96 0.008 90);
+  --popover: oklch(0.21 0.025 235);
+  --popover-foreground: oklch(0.96 0.008 90);
+
+  --primary: var(--gold-500);
+  --primary-foreground: var(--brand-950);
+
+  --secondary: var(--brand-800);
+  --secondary-foreground: oklch(0.94 0.01 225);
+
+  --muted: oklch(0.25 0.02 240);
+  --muted-foreground: oklch(0.66 0.02 240);
+
+  --accent: var(--gold-700);
+  --accent-foreground: oklch(0.97 0.02 85);
+
+  --destructive: oklch(0.63 0.22 27);
+  --destructive-foreground: oklch(0.98 0.01 20);
+
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: var(--brand-400);
+
+  --chart-1: var(--brand-400);
+  --chart-2: oklch(0.68 0.12 80);
+  --chart-3: oklch(0.55 0.09 190);
+  --chart-4: oklch(0.72 0.1 145);
+  --chart-5: oklch(0.6 0.16 35);
+
+  --sidebar: var(--brand-950);
+  --sidebar-foreground: oklch(0.96 0.008 90);
+  --sidebar-primary: var(--brand-600);
+  --sidebar-primary-foreground: oklch(0.98 0.005 90);
+  --sidebar-accent: var(--brand-800);
+  --sidebar-accent-foreground: oklch(0.96 0.008 90);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: var(--brand-400);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* The default monospace stack has no Arabic shaping, so code/pre inside
+   Arabic-heavy Markdown content (e.g. schema docs) render disconnected
+   letters — use the Arabic-aware sans font instead. */
+.prose :where(code, pre, kbd, samp) {
+  font-family: var(--font-sans);
+}
+
+/* AnimatedThemeToggler (components/ui/animated-theme-toggler.tsx): scoped to
+   the toggler — it sets data-magicui-theme-vt and the duration variable only
+   during a theme toggle, so this never affects other view transitions (e.g.
+   Next.js navigation transitions). */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html[data-magicui-theme-vt="active"]::view-transition-group(root) {
+  animation-duration: var(--magicui-theme-toggle-vt-duration);
+}
+
+/* Dashboard welcome banner's waving-hand emoji (app/dashboard/page.tsx) —
+   plays once on load, not looping, so it stays a greeting rather than a
+   distraction on a page teachers open many times a day. */
+@keyframes wave {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  10%,
+  30% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-wave {
+  transform-origin: 70% 70%;
+  animation: wave 1.6s ease-in-out 1;
+}

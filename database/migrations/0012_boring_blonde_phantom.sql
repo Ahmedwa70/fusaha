@@ -1,0 +1,1 @@
+ALTER TABLE "schema_definitions" ALTER COLUMN "template_id" SET NOT NULL;

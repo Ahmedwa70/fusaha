@@ -1,0 +1,1 @@
+ALTER TABLE "credit_packages" DROP COLUMN "color_light";
