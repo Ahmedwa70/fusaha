@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { db } from "@/lib/db";
-import { users, roles } from "@database/schema";
+import { users, roles } from "@/database/schema";
 import { ROUTES } from "@/constants/routes";
 import {
   loginSchema,
