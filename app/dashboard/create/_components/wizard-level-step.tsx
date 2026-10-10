@@ -16,32 +16,38 @@ export function WizardLevelStep({
   return (
     <div className="flex flex-col gap-4">
       <h2 className="text-center text-lg font-semibold">{t("levelStepTitle")}</h2>
-      <div className="flex flex-col gap-3">
-        {levelOptions.map((option) => (
-          <button
-            key={option.id}
-            type="button"
-            onClick={() => setSchemaDefinitionId(option.id)}
-            aria-pressed={schemaDefinitionId === option.id}
-            className={cn(
-              "flex items-start gap-3 rounded-lg border-2 p-4 text-start transition-colors",
-              schemaDefinitionId === option.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
-            )}
-          >
-            <div
+      {levelOptions.length === 0 ? (
+        <p className="rounded-lg border border-border p-4 text-center text-sm text-muted-foreground">
+          {t("levelStepEmpty")}
+        </p>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {levelOptions.map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              onClick={() => setSchemaDefinitionId(option.id)}
+              aria-pressed={schemaDefinitionId === option.id}
               className={cn(
-                "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2",
-                schemaDefinitionId === option.id
-                  ? "border-primary bg-primary text-primary-foreground"
-                  : "border-muted-foreground/30"
+                "flex items-start gap-3 rounded-lg border-2 p-4 text-start transition-colors",
+                schemaDefinitionId === option.id ? "border-primary bg-primary/5" : "border-border hover:border-primary/40"
               )}
             >
-              {schemaDefinitionId === option.id && <CheckIcon className="size-3.5" />}
-            </div>
-            <p className="font-semibold">{option.level}</p>
-          </button>
-        ))}
-      </div>
+              <div
+                className={cn(
+                  "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2",
+                  schemaDefinitionId === option.id
+                    ? "border-primary bg-primary text-primary-foreground"
+                    : "border-muted-foreground/30"
+                )}
+              >
+                {schemaDefinitionId === option.id && <CheckIcon className="size-3.5" />}
+              </div>
+              <p className="font-semibold">{option.level}</p>
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

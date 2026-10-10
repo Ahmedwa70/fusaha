@@ -161,7 +161,14 @@
       "createUserFailed": "无法为该邮箱创建账户。",
       "roleNotFound": "无法创建账户，请稍后重试。",
       "resetLinkExpired": "密码重置链接已过期，请重新申请。",
-      "resetPasswordFailed": "无法更新密码，请重试。"
+      "resetPasswordFailed": "无法更新密码，请重试。",
+      "serverNotConfigured": "服务器未配置账户创建服务，请联系支持人员。",
+      "unexpectedError": "出现意外错误，请重试。",
+      "profileMissing": "登录信息正确，但该账户没有对应的用户档案，请联系管理员。",
+      "accountLinkRequired": "该邮箱已属于另一个账户，请使用最初创建账户的方式登录。",
+      "oauthCallbackFailed": "Google 登录未完成——未收到授权码。请重试并完整完成账户选择。",
+      "oauthExchangeFailed": "无法激活 Google 会话。请清除本站 Cookie 后使用无痕窗口重试。",
+      "provisioningFailed": "登录成功，但无法创建用户档案。请重试；若问题依旧，请联系管理员。"
     }
   },
   "validation": {
@@ -1002,6 +1009,7 @@
       "reminderText2": "PDF 或 DOCX 文件：最多两页，且同一课程不能同时上传两种文件。",
       "reminderText3": "图片：最多两张。",
       "levelStepTitle": "选择学生级别",
+      "levelStepEmpty": "暂无可用于创建课程的级别，请联系管理员为级别关联模板。",
       "reviewStepTitle": "审阅并生成课程",
       "summarySource": "来源",
       "summaryLevel": "级别",

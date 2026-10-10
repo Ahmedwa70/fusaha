@@ -119,7 +119,7 @@ The read/write split is the main thing to respect:
 ### Working on the Trigger.dev task
 
 `src/trigger/generate-lesson.ts` deploys **separately** from the Next.js app, via the
-`trigger.dev` CLI. Project `proj_wpqmgsqxtcdhsnaaimqc`, runtime `node-24`,
+`trigger.dev` CLI. Project `proj_nauicvtsrvvuodxlfrqz` (see `trigger.config.ts`), runtime `node-24`,
 `maxDuration` 3600s globally and 600s for the task, 3 retries with exponential backoff.
 
 Remember that this process is not a Next.js request: `next-intl` server APIs and the

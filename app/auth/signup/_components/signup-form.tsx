@@ -44,6 +44,7 @@ function GoogleIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function SignupForm() {
   const t = useTranslations("auth.signup");
+  const tErrors = useTranslations("auth.errors");
   const tValidation = useTranslations("validation.auth");
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
@@ -58,8 +59,18 @@ export function SignupForm() {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    const result = await signUp(data);
-    if (result?.error) setError("root", { message: result.error });
+    try {
+      const result = await signUp(data);
+      if (result?.error) setError("root", { message: result.error });
+    } catch (error) {
+      // A successful signup ends in redirect(), which reaches the caller as
+      // a NEXT_REDIRECT error — rethrow it so the router navigates. Anything
+      // else is a real server failure and must become a visible message.
+      const message = error instanceof Error ? error.message : "";
+      const digest = (error as { digest?: string } | null)?.digest ?? "";
+      if (message.includes("NEXT_REDIRECT") || digest.startsWith("NEXT_REDIRECT")) throw error;
+      setError("root", { message: tErrors("unexpectedError") });
+    }
   });
 
   return (

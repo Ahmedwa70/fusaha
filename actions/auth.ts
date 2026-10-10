@@ -39,8 +39,10 @@ export async function signIn(data: LoginFormValues): Promise<AuthActionState> {
     .limit(1);
 
   if (!profile) {
+    // Authenticated successfully but has no public.users row — say so
+    // instead of blaming the credentials (ownership is already proven).
     await supabase.auth.signOut();
-    return { error: tErrors("invalidCredentials") };
+    return { error: tErrors("profileMissing") };
   }
 
   if (!profile.active) {
@@ -49,6 +51,18 @@ export async function signIn(data: LoginFormValues): Promise<AuthActionState> {
   }
 
   redirect(profile.roleName !== "teacher" ? ROUTES.admin : ROUTES.dashboard);
+}
+
+// FormData-shaped wrapper so the login form can bind this action directly
+// via <form action={...}> (useActionState). Progressive enhancement: with
+// client JS the form submits through the onSubmit path below; without JS the
+// browser POSTs to this action instead of falling back to a native GET that
+// would put the credentials in the URL.
+export async function signInWithFormData(_prevState: AuthActionState, formData: FormData): Promise<AuthActionState> {
+  return signIn({
+    email: String(formData.get("email") ?? ""),
+    password: String(formData.get("password") ?? ""),
+  });
 }
 
 export async function signUp(data: SignupFormValues): Promise<AuthActionState> {
@@ -64,16 +78,35 @@ export async function signUp(data: SignupFormValues): Promise<AuthActionState> {
   const [teacherRole] = await db.select({ id: roles.id }).from(roles).where(eq(roles.name, "teacher")).limit(1);
   if (!teacherRole) return { error: tErrors("roleNotFound") };
 
-  const { data: created, error: createError } = await createAdminClient().auth.admin.createUser({
-    email,
-    password,
-    email_confirm: true,
-  });
-  if (createError || !created.user) return { error: tErrors("createUserFailed") };
+  // Email/password signup needs the service-role key for auth.admin.createUser.
+  // Without it this action used to throw and the form died with no feedback.
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SECRET_KEY) {
+    return { error: tErrors("serverNotConfigured") };
+  }
 
-  await db
-    .insert(users)
-    .values({ id: created.user.id, name, email, roleId: teacherRole.id, creditsBalance: 0, active: true });
+  let createdUserId: string | null = null;
+  try {
+    const { data: created, error: createError } = await createAdminClient().auth.admin.createUser({
+      email,
+      password,
+      email_confirm: true,
+    });
+    if (createError || !created.user) return { error: tErrors("createUserFailed") };
+    createdUserId = created.user.id;
+
+    await db
+      .insert(users)
+      .values({ id: created.user.id, name, email, roleId: teacherRole.id, creditsBalance: 0, active: true });
+  } catch (cause) {
+    // Convert thrown failures (network, DB down, rejected service key) into
+    // a visible message instead of a silent dead button — and don't leave a
+    // half-created auth user behind for the next attempt to trip on.
+    console.error("[auth] signUp provisioning failed:", cause);
+    if (createdUserId) {
+      await createAdminClient().auth.admin.deleteUser(createdUserId).catch(() => {});
+    }
+    return { error: tErrors("createUserFailed") };
+  }
 
   const supabase = await createClient();
   const { error: signInError } = await supabase.auth.signInWithPassword({ email, password });

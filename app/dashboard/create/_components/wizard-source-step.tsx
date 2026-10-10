@@ -1,7 +1,7 @@
 import { FileTextIcon, ImageIcon, InfoIcon, PlusIcon, UploadIcon, XIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { MAX_IMAGES } from "@/constants/lesson-source-limits";
+import { MAX_IMAGES, MAX_PDF_PAGES, MAX_TEXT_WORDS } from "@/constants/lesson-source-limits";
 import type { SourceType, TextMode, UploadedFile, UploadedImage, Translator } from "./wizard-types";
 
 export function WizardSourceStep({
@@ -82,7 +82,7 @@ export function WizardSourceStep({
                 )}
               />
               <p className={cn("text-xs", textTooLong ? "text-destructive" : "text-muted-foreground")}>
-                {t("wordCount", { count: wordCount })} {textTooLong && t("textTooLong")}
+                {t("wordCount", { count: wordCount })} {textTooLong && t("textTooLong", { max: MAX_TEXT_WORDS })}
               </p>
             </div>
           ) : file ? (
@@ -148,9 +148,9 @@ export function WizardSourceStep({
           {t("reminderTitle")}
         </p>
         <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-          <li>{t("reminderText1")}</li>
-          <li>{t("reminderText2")}</li>
-          <li>{t("reminderText3")}</li>
+          <li>{t("reminderText1", { max: MAX_TEXT_WORDS })}</li>
+          <li>{t("reminderText2", { max: MAX_PDF_PAGES })}</li>
+          <li>{t("reminderText3", { max: MAX_IMAGES })}</li>
         </ul>
       </div>
     </div>
