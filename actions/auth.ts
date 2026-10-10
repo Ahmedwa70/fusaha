@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { db } from "@/lib/db";
-import { users, roles } from "@/database/schema";
+import { users, roles } from "@database/schema";
 import { ROUTES } from "@/constants/routes";
 import {
   loginSchema,
@@ -18,6 +18,7 @@ import {
   type ForgotPasswordFormValues,
 } from "@/validation/auth";
 import { updatePasswordSchema, type UpdatePasswordValues } from "@/validation/profile";
+import { resolveOAuthReturnOrigin } from "@/lib/auth/oauth-return-url";
 
 export type AuthActionState = { error: string } | null;
 
@@ -159,11 +160,19 @@ export async function resetPassword(data: UpdatePasswordValues): Promise<AuthAct
 }
 
 export async function signInWithGoogle() {
-  const origin = (await headers()).get("origin");
+  // Resolve the return address from trusted sources only. Relying on the
+  // raw `Origin` header produced "null/auth/callback" whenever the header
+  // was absent, which made Supabase fall back to its default Site URL
+  // (http://localhost:3000) after the Google round-trip.
+  const returnOrigin = resolveOAuthReturnOrigin(await headers());
+  if (!returnOrigin) {
+    console.error("[auth] signInWithGoogle: no trusted return origin resolved");
+    redirect(`${ROUTES.login}?error=oauth_callback_failed`);
+  }
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
-    options: { redirectTo: `${origin}${ROUTES.authCallback}` },
+    options: { redirectTo: `${returnOrigin}${ROUTES.authCallback}` },
   });
   if (error || !data.url) redirect(ROUTES.login);
 
