@@ -201,6 +201,13 @@ export async function generateLessonContent(
         },
         "LLM lesson generation call failed"
       );
+      // A response that cannot be parsed is usually transient — the same
+      // prompt typically succeeds on a fresh attempt (fresh sampling), as the
+      // manual "generate again" path keeps proving in production. Spend the
+      // remaining attempts on it; other errors keep their fail-fast behavior.
+      if (NoObjectGeneratedError.isInstance(err) && attempt < MAX_ATTEMPTS) {
+        continue;
+      }
       throw err;
     }
   }
