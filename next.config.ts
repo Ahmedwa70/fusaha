@@ -5,6 +5,12 @@ import { withSentryConfig } from "@sentry/nextjs/config";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  // Dev-only: allow browsers on the LAN (e.g. a second device reaching
+  // 192.168.1.102) to load HMR + JS chunks. Without this, Next blocks those
+  // cross-origin requests and the page hydrates with no JS at all — which
+  // kills every client interaction (theme toggle stays invisible, Google
+  // button dead). Dev-only option; production behavior is unaffected.
+  allowedDevOrigins: ["192.168.1.102"],
   async redirects() {
     return [
       {

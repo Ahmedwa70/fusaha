@@ -135,8 +135,20 @@ export async function createLesson(formData: FormData): Promise<CreateLessonActi
     await tasks.trigger<typeof generateLessonTask>("generate-lesson", payload);
   } catch (err) {
     logger.error({ lessonId, err }, "Failed to schedule lesson generation");
-    await db.transaction(async (tx) => {
-      await tx.update(lessons).set({ state: LessonState.GenerationFailed }).where(eq(lessons.id, lessonId));
+
+    // Only take over the lesson's lifecycle (and refund) if no run was
+    // accepted. If the state already moved past Generating, a run owns the
+    // lesson — refunding here would credit a task that is actually executing
+    // (and flipping it back to GenerationFailed would clobber the run's own
+    // outcome). The conditional update makes the check atomic with the refund.
+    const refund = await db.transaction(async (tx) => {
+      const [failed] = await tx
+        .update(lessons)
+        .set({ state: LessonState.GenerationFailed })
+        .where(and(eq(lessons.id, lessonId), eq(lessons.state, LessonState.Generating)))
+        .returning({ id: lessons.id });
+      if (!failed) return false;
+
       await tx
         .update(users)
         .set({ creditsBalance: sql`${users.creditsBalance} + ${generationCost}` })
@@ -147,9 +159,15 @@ export async function createLesson(formData: FormData): Promise<CreateLessonActi
         reason: "admin_adjustment",
         refId: lessonId,
       });
+      return true;
     });
+
     revalidatePath("/dashboard");
     revalidatePath(`/dashboard/lessons/${lessonId}`);
+    // The run was accepted despite the client error — the task itself reports
+    // success/failure and owns the credits (they are never refunded for a run
+    // that consumed AI cost).
+    if (!refund) return { success: true, lessonId };
     return { error: t("generationFailed") };
   }
 

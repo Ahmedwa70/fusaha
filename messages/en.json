@@ -161,7 +161,14 @@
       "createUserFailed": "Could not create an account for this email.",
       "roleNotFound": "Could not create the account. Please try again later.",
       "resetLinkExpired": "The password reset link has expired. Request a new one.",
-      "resetPasswordFailed": "Could not update the password. Please try again."
+      "resetPasswordFailed": "Could not update the password. Please try again.",
+      "serverNotConfigured": "Account creation is not configured on the server. Contact support.",
+      "unexpectedError": "Something went wrong. Please try again.",
+      "profileMissing": "Your credentials are correct, but this account has no user profile. Contact the administration.",
+      "accountLinkRequired": "This email belongs to a different existing account. Sign in the way you originally created it.",
+      "oauthCallbackFailed": "Google sign-in did not finish — no authorization code arrived. Try again and complete the account picker.",
+      "oauthExchangeFailed": "Could not activate the Google session. Clear this site's cookies and try again in a private window.",
+      "provisioningFailed": "Signed in, but the user profile could not be created. Retry; if it persists, contact the administration."
     }
   },
   "validation": {
@@ -1002,6 +1009,7 @@
       "reminderText2": "PDF or DOCX file: {max} pages maximum, and both cannot be uploaded together for the same lesson.",
       "reminderText3": "Images: up to {max} images maximum.",
       "levelStepTitle": "Choose the Students' Level",
+      "levelStepEmpty": "No levels are ready for lesson creation yet. Ask an admin to link a template to a level.",
       "reviewStepTitle": "Review and Create the Lesson",
       "summarySource": "Source",
       "summaryLevel": "Level",

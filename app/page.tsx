@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { localeDirections, type Locale } from "@/i18n/config";
 import { ArchPattern } from "@/app/auth/login/_components/arch-pattern";
-import { ImageSlot } from "@/app/_components/image-slot";
 import { MobileHeaderMenu } from "@/app/_components/mobile-header-menu";
 
 export default async function LandingPage() {
@@ -84,7 +83,19 @@ export default async function LandingPage() {
                 </Button>
               </div>
             </div>
-            <ImageSlot label={tHero("imagePlaceholder")} ratio="aspect-[4/3]" className="w-full" />
+            {/* Brand illustration — web1, 2368×1792 (37:28, matches
+                aspect-[37/28] exactly so object-cover crops nothing). Frame
+                replaces the old dashed placeholder slot. */}
+            <div className="relative aspect-[37/28] w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-brand-900/10 ring-1 ring-brand-900/10 dark:shadow-black/40 dark:ring-white/10">
+              <Image
+                src="/images/hero-illustration.jpeg"
+                alt={tHero("imagePlaceholder")}
+                fill
+                priority
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 560px, 50vw"
+                className="object-cover"
+              />
+            </div>
           </div>
         </section>
 
@@ -182,7 +193,18 @@ export default async function LandingPage() {
                   </li>
                 ))}
               </ul>
-              <ImageSlot label={tHero("imagePlaceholder")} ratio="aspect-square" className="hidden lg:flex" />
+              {/* Features illustration — web2, 2400×1792 (75:56, matches
+                  aspect-[75/56] exactly so object-cover crops nothing). Same
+                  frame style as the hero; visible on all screen sizes. */}
+              <div className="relative aspect-[75/56] w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-brand-900/10 ring-1 ring-brand-900/10 dark:shadow-black/40 dark:ring-white/10">
+                <Image
+                  src="/images/features-illustration.jpeg"
+                  alt={tFeatures("title")}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 560px"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </section>

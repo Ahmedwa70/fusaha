@@ -1,5 +1,5 @@
 import "server-only";
-import { generateText, Output, type ModelMessage } from "ai";
+import { generateText, NoObjectGeneratedError, Output, type ModelMessage } from "ai";
 import { getDeepSeekTextModel, getDeepSeekVisionModel } from "@/lib/ai/deepseek-client";
 import { lessonContentSchema, type LessonContent } from "@/lib/ai/lesson-content-schema";
 import { runTemplateValidation } from "@/lib/templates/run-validation";
@@ -135,6 +135,12 @@ export async function generateLessonContent(
         output: Output.object({ schema: lessonContentSchema(t) }),
         system,
         messages,
+        // deepseek-v4-* defaults to thinking mode, where reasoning_content
+        // shares the output-token budget and can leave `content` empty or
+        // truncated — which surfaces as AI_NoObjectGeneratedError ("could not
+        // parse the response") because there is no JSON to parse. DeepSeek's
+        // own JSON-mode examples pair response_format with thinking disabled.
+        providerOptions: { deepseek: { thinking: { type: "disabled" } } },
       });
       const durationMs = Date.now() - startedAt;
       content = result.output;
@@ -172,9 +178,21 @@ export async function generateLessonContent(
       messages.push({ role: "assistant", content: JSON.stringify(content) });
       messages.push({ role: "user", content: buildCorrectionMessage(validation.errors, echoIssue) });
     } catch (err) {
+      // For AI_NoObjectGeneratedError, pino's standard error serializer keeps
+      // only message/name/stack and drops the diagnostic fields the error
+      // carries — log them explicitly. Only metadata (no response content,
+      // no secrets): finishReason, token usage, and the raw text length.
+      const aiErrorDetails = NoObjectGeneratedError.isInstance(err)
+        ? {
+            finishReason: err.finishReason,
+            usage: err.usage,
+            responseTextLength: err.text == null ? null : err.text.length,
+          }
+        : undefined;
       logger.error(
         {
           err,
+          aiErrorDetails,
           attempt,
           durationMs: Date.now() - startedAt,
           systemPreview: system.slice(0, 1000),

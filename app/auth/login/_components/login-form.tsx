@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn, signInWithGoogle } from "@/actions/auth";
+import { signIn, signInWithFormData, signInWithGoogle } from "@/actions/auth";
 import { loginSchema, type LoginFormValues } from "@/validation/auth";
 import { ROUTES } from "@/constants/routes";
 import { Button } from "@/components/ui/button";
@@ -50,13 +50,24 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
+  // Bound to the form's action prop: when client JS is alive, onSubmit
+  // (handleSubmit) preventDefaults and the signIn path below runs instead;
+  // when JS is dead, the browser natively POSTs to this server action and
+  // signInState carries the error back — credentials never hit the URL.
+  const [signInState, signInFormAction] = useActionState(signInWithFormData, null);
   const oauthErrorCode = searchParams.get("error");
-  const oauthError =
-    oauthErrorCode === "account_inactive"
-      ? tErrors("accountInactive")
-      : oauthErrorCode === "account_not_found"
-        ? tErrors("accountNotFound")
-        : null;
+  // Every error code the auth callback can redirect with must map to a
+  // visible message — an unmapped code bounces the user back to this page
+  // looking like a silent no-op.
+  const oauthErrorMessages: Record<string, string> = {
+    account_inactive: tErrors("accountInactive"),
+    account_not_found: tErrors("accountNotFound"),
+    account_link_required: tErrors("accountLinkRequired"),
+    oauth_callback_failed: tErrors("oauthCallbackFailed"),
+    oauth_exchange_failed: tErrors("oauthExchangeFailed"),
+    provisioning_failed: tErrors("provisioningFailed"),
+  };
+  const oauthError = oauthErrorCode ? oauthErrorMessages[oauthErrorCode] : undefined;
   const {
     register,
     handleSubmit,
@@ -104,7 +115,7 @@ export function LoginForm() {
         <span className="h-px flex-1 bg-border" />
       </div>
 
-      <form onSubmit={onSubmit} noValidate>
+      <form action={signInFormAction} onSubmit={onSubmit} noValidate>
         <FieldGroup>
           <Field data-invalid={!!errors.email}>
             <FieldLabel htmlFor="email">{t("emailLabel")}</FieldLabel>
@@ -156,7 +167,9 @@ export function LoginForm() {
               {isSubmitting && <Spinner data-icon="inline-start" />}
               {isSubmitting ? t("submitting") : t("submit")}
             </Button>
-            {errors.root && <FieldError>{errors.root.message}</FieldError>}
+            {(errors.root?.message ?? signInState?.error) && (
+              <FieldError>{errors.root?.message ?? signInState?.error}</FieldError>
+            )}
           </Field>
         </FieldGroup>
       </form>

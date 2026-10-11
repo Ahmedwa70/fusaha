@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node database/seed.mjs"
+    "db:seed": "node database/seed.mjs",
+    "test": "node --test"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^3.0.39",
