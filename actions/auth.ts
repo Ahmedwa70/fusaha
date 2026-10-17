@@ -127,8 +127,17 @@ export async function requestPasswordReset(data: ForgotPasswordFormValues): Prom
   // Resolves the same way whether or not the email is registered — the
   // caller shows a generic "check your inbox" message either way, so this
   // never leaks account existence.
+  //
+  // Recovery links must land directly on the reset page: with the default
+  // (non-PKCE) email format Supabase puts the session tokens in the URL
+  // fragment, which never reaches a server route — a redirect into
+  // /auth/callback left the server seeing no `code` and misreporting the
+  // visit as a failed Google OAuth callback. The reset page's client gate
+  // handles both fragment tokens and a PKCE code. (Old emails that still
+  // point at /auth/callback?next=/auth/reset-password keep working via the
+  // recovery branch there.)
   await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-    redirectTo: `${origin}${ROUTES.authCallback}?next=${ROUTES.resetPassword}`,
+    redirectTo: `${origin}${ROUTES.resetPassword}`,
   });
 
   return null;

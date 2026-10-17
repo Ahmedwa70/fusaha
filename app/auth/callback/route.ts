@@ -61,11 +61,11 @@ export async function GET(request: Request) {
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=oauth_exchange_failed`);
   }
 
-  // Password-recovery links carry their own destination (set when the
-  // email was sent — see requestPasswordReset in actions/auth.ts) and
-  // skip the sign-in profile checks below: the session is already
-  // established, and resetting a password shouldn't depend on the
-  // account being active or provisioned as a teacher.
+  // Password-recovery links issued before the reset page learned to handle
+  // them directly (see requestPasswordReset in actions/auth.ts) arrive here
+  // with next=/auth/reset-password. Skip the sign-in profile checks below:
+  // the session is already established, and resetting a password shouldn't
+  // depend on the account being active or provisioned as a teacher.
   if (next === ROUTES.resetPassword) {
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.resetPassword}`);
   }
