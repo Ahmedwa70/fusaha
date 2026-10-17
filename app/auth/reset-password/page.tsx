@@ -1,21 +1,12 @@
 import Image from "next/image";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { ArchPattern } from "@/app/auth/login/_components/arch-pattern";
-import { createClient } from "@/lib/supabase/server";
-import { ROUTES } from "@/constants/routes";
-import { ResetPasswordForm } from "./_components/reset-password-form";
+import { RecoverySessionGate } from "./_components/recovery-session-gate";
 
 export default async function ResetPasswordPage() {
   const tApp = await getTranslations("app");
-  const tResetPassword = await getTranslations("auth.resetPassword");
-
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
   return (
     <main className="relative flex min-h-screen flex-col bg-background lg:flex-row">
@@ -45,26 +36,10 @@ export default async function ResetPasswordPage() {
 
       <div className="flex flex-1 items-center justify-center px-6 py-16">
         <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 w-full max-w-sm motion-safe:duration-700">
-          {user ? (
-            <>
-              <div className="mb-8 space-y-2 text-center lg:text-start">
-                <h2 className="font-heading text-2xl font-semibold">{tResetPassword("title")}</h2>
-                <p className="text-sm text-muted-foreground">{tResetPassword("description")}</p>
-              </div>
-              <ResetPasswordForm />
-            </>
-          ) : (
-            <div className="space-y-4 text-center lg:text-start">
-              <h2 className="font-heading text-2xl font-semibold">{tResetPassword("invalidLinkTitle")}</h2>
-              <p className="text-sm text-muted-foreground">{tResetPassword("invalidLinkDescription")}</p>
-              <Link
-                href={ROUTES.forgotPassword}
-                className="inline-block text-sm font-medium text-foreground underline underline-offset-4"
-              >
-                {tResetPassword("requestNewLink")}
-              </Link>
-            </div>
-          )}
+          {/* The gate establishes the recovery session client-side (tokens
+              arrive in the URL fragment, which never reaches the server) and
+              renders the form, or the invalid-link state, accordingly. */}
+          <RecoverySessionGate />
         </div>
       </div>
     </main>
