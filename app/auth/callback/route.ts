@@ -124,8 +124,8 @@ export async function GET(request: Request) {
     }
 
     if (!profile) {
-      // Either a deliberate rejection or the row still isn't there after the
-      // insert — in both cases sign out and report a specific cause.
+      // Either a deliberate rejection or the row still isn't there after
+      // the insert — in both cases sign out and report a specific cause.
       await supabase.auth.signOut();
       if (decision.action === "reject") {
         console.error("[auth/callback] new-user provisioning rejected:", decision.reason);
