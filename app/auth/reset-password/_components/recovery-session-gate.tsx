@@ -22,7 +22,14 @@ export function RecoverySessionGate() {
 
   useEffect(() => {
     const link = parseRecoveryLink(window.location.hash, window.location.search);
-    const supabase = createClient();
+    // auth-js exchanges a `?code=` it finds in the URL during client
+    // initialization (detectSessionInUrl defaults to true in browsers). That
+    // auto-exchange runs before the explicit exchange below (both await the
+    // same init promise), consumes the one-time code, and deletes the PKCE
+    // verifier — so the explicit exchange always fails and a valid recovery
+    // link is misreported as invalid. This page handles the URL itself, so
+    // auto-detection must stay off for this client.
+    const supabase = createClient({ auth: { detectSessionInUrl: false } });
 
     (async () => {
       try {
