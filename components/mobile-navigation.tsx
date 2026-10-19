@@ -16,10 +16,10 @@ const links = [
 export function MobileNavigation() {
   return (
     <details className="relative lg:hidden">
-      <summary aria-label="فتح القائمة" className="flex size-10 cursor-pointer list-none items-center justify-center rounded-lg text-brand-900 transition-colors hover:bg-gold-50 [&::-webkit-details-marker]:hidden">
+      <summary aria-label="فتح القائمة" className="flex size-10 cursor-pointer list-none items-center justify-center rounded-lg text-brand-900 transition-colors hover:bg-gold-50 dark:text-brand-50 dark:hover:bg-brand-800 [&::-webkit-details-marker]:hidden">
         <MenuIcon aria-hidden="true" />
       </summary>
-      <div className="absolute left-0 top-12 z-50 w-64 rounded-2xl border border-gold-200 bg-[#fbfaf5] p-3 text-right shadow-xl">
+      <div className="absolute left-0 top-12 z-50 w-64 rounded-2xl border border-gold-200 bg-[#fbfaf5] p-3 text-right shadow-xl dark:border-brand-700 dark:bg-brand-950">
         <div className="flex items-center justify-between border-b border-gold-100 px-2 pb-2">
           <span className="font-heading font-bold text-brand-950">التنقل</span>
           <XIcon aria-hidden="true" className="text-brand-700" />
