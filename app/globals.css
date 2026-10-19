@@ -87,11 +87,11 @@
   --popover-foreground: oklch(0.22 0.035 240);
 
   /* Brand Navy */
-  --primary: oklch(0.34 0.065 225);
+  --primary: oklch(0.34 0.075 155);
   --primary-foreground: oklch(0.985 0.004 90);
 
   /* Soft Navy Surface */
-  --secondary: oklch(0.94 0.018 225);
+  --secondary: oklch(0.94 0.025 155);
   --secondary-foreground: oklch(0.3 0.06 225);
 
   /* Neutral */
@@ -131,19 +131,19 @@
   --sidebar-ring: var(--brand-400);
 
   /* =========================
-     BRAND NAVY
+     DEEP GREEN BRAND
   ========================= */
-  --brand-50: oklch(0.97 0.01 225);
-  --brand-100: oklch(0.93 0.02 225);
-  --brand-200: oklch(0.86 0.035 225);
-  --brand-300: oklch(0.75 0.05 225);
-  --brand-400: oklch(0.62 0.065 225);
-  --brand-500: oklch(0.5 0.07 225);
-  --brand-600: oklch(0.42 0.075 225);
-  --brand-700: oklch(0.34 0.065 225);
-  --brand-800: oklch(0.28 0.055 225);
-  --brand-900: oklch(0.22 0.04 225);
-  --brand-950: oklch(0.15 0.03 225);
+  --brand-50: oklch(0.97 0.018 155);
+  --brand-100: oklch(0.93 0.035 155);
+  --brand-200: oklch(0.86 0.055 155);
+  --brand-300: oklch(0.75 0.075 155);
+  --brand-400: oklch(0.62 0.09 155);
+  --brand-500: oklch(0.5 0.095 155);
+  --brand-600: oklch(0.42 0.09 155);
+  --brand-700: oklch(0.34 0.075 155);
+  --brand-800: oklch(0.28 0.06 155);
+  --brand-900: oklch(0.22 0.05 155);
+  --brand-950: oklch(0.15 0.035 155);
 
   /* =========================
      BRAND GOLD

@@ -1,250 +1,107 @@
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRightIcon, ArrowLeftIcon, CheckIcon } from "lucide-react";
-import { getLocale, getTranslations } from "next-intl/server";
+import {
+  ArrowLeftIcon,
+  ArrowUpLeftIcon,
+  BookOpenIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  FeatherIcon,
+  LanguagesIcon,
+  LibraryBigIcon,
+  MenuIcon,
+  PenLineIcon,
+  SparklesIcon,
+  WandSparklesIcon,
+} from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-import { localeDirections, type Locale } from "@/i18n/config";
-import { ArchPattern } from "@/app/auth/login/_components/arch-pattern";
-import { MobileHeaderMenu } from "@/app/_components/mobile-header-menu";
+
+const tools = [
+  { icon: WandSparklesIcon, title: "منشئ الدروس", body: "حوّل أي مصدر إلى درس تفاعلي منظم" },
+  { icon: PenLineIcon, title: "استوديو الكتابة", body: "اكتب العربية بثقة ووضوح أكبر" },
+  { icon: LanguagesIcon, title: "مدقق اللغة", body: "تحسينات دقيقة للسياق والأسلوب" },
+  { icon: LibraryBigIcon, title: "مكتبتك", body: "كل دروسك ومواردك في مكان واحد" },
+];
+
+const steps = ["اختر مستواك", "أضف مصدرك", "خصص الدرس", "ابدأ التعلم"];
 
 export default async function LandingPage() {
-  const locale = (await getLocale()) as Locale;
-  const isRtl = localeDirections[locale] === "rtl";
-  const ForwardIcon = isRtl ? ArrowLeftIcon : ArrowRightIcon;
-
   const tApp = await getTranslations("app");
-  const tHero = await getTranslations("landing.hero");
-  const tBefore = await getTranslations("landing.before");
-  const tHow = await getTranslations("landing.how");
-  const tLevels = await getTranslations("landing.levels");
-  const tFeatures = await getTranslations("landing.features");
-  const tClosing = await getTranslations("landing.closing");
   const tFooter = await getTranslations("landing.footer");
 
-  const steps = [1, 2, 3, 4, 5, 6].map((n) => ({
-    title: tHow(`step${n}Title`),
-    body: tHow(`step${n}Body`),
-  }));
-
-  const levels = [1, 2, 3].map((n) => ({
-    title: tLevels(`level${n}Title`),
-    body: tLevels(`level${n}Body`),
-  }));
-
-  const features = [1, 2, 3, 4, 5, 6].map((n) => ({
-    title: tFeatures(`f${n}Title`),
-    body: tFeatures(`f${n}Body`),
-  }));
-
-  const oldSteps = [1, 2, 3, 4].map((n) => tBefore(`oldStep${n}`));
-
   return (
-    <div className="flex min-h-full flex-col bg-background">
-      {/* Header */}
-      <header className="flex items-center justify-between px-6 py-5 sm:px-10">
-        <div className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt={tApp("name")} width={32} height={32} priority className="size-8" />
-          <span className="font-heading text-lg font-semibold text-brand-900 dark:text-brand-50">
-            {tApp("name")}
+    <div className="min-h-full overflow-hidden bg-background" dir="rtl">
+      <header className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:py-7">
+        <Link href={ROUTES.home} className="flex items-center gap-3" aria-label={tApp("name")}>
+          <span className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/15">
+            <FeatherIcon className="size-5" />
           </span>
+          <span className="font-heading text-xl font-bold tracking-tight text-brand-950 dark:text-brand-50">فُصحى</span>
+        </Link>
+        <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground lg:flex" aria-label="التنقل الرئيسي">
+          <a href="#tools" className="transition-colors hover:text-primary">الأدوات</a>
+          <a href="#studio" className="transition-colors hover:text-primary">استوديو الكتابة</a>
+          <a href="#library" className="transition-colors hover:text-primary">المكتبة</a>
+          <a href="#how" className="transition-colors hover:text-primary">كيف تعمل</a>
+        </nav>
+        <div className="flex items-center gap-2">
+          <div className="hidden sm:flex"><ThemeToggle /><LanguageSwitcher /></div>
+          <Button variant="ghost" size="sm" nativeButton={false} render={<Link href={ROUTES.login} />}>تسجيل الدخول</Button>
+          <Button size="sm" nativeButton={false} render={<Link href={ROUTES.signup} />}>ابدأ مجانًا</Button>
+          <Button variant="ghost" size="icon" className="lg:hidden" aria-label="فتح القائمة"><MenuIcon /></Button>
         </div>
-        <div className="hidden items-center gap-2 sm:flex">
-          <ThemeToggle />
-          <LanguageSwitcher />
-          <Button variant="ghost" size="sm" nativeButton={false} render={<Link href={ROUTES.login} />}>
-            {tHero("ctaSecondary")}
-          </Button>
-        </div>
-        <MobileHeaderMenu className="sm:hidden" />
       </header>
 
-      <main className="flex flex-1 flex-col">
-        {/* Hero */}
-        <section className="relative overflow-hidden px-6 pt-8 pb-20 sm:px-10 lg:pt-14 lg:pb-28">
-          <ArchPattern className="absolute inset-0 -z-10 h-full w-full text-brand-900/4 dark:text-gold-400/5" />
-          <div className="mx-auto grid max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-10">
-            <div className="text-center lg:text-start">
-              <h1 className="text-balance font-heading text-4xl leading-[1.15] font-semibold text-brand-900 dark:text-brand-50 sm:text-5xl lg:text-[3.25rem]">
-                {tHero("headline")}
-              </h1>
-              <p className="mx-auto mt-5 max-w-md text-balance text-lg leading-relaxed text-muted-foreground lg:mx-0">
-                {tHero("subheadline")}
-              </p>
-              <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
-                <Button size="lg" nativeButton={false} render={<Link href={ROUTES.signup} />} className="w-full sm:w-auto">
-                  {tHero("ctaPrimary")}
-                  <ForwardIcon data-icon="inline-end" />
-                </Button>
-                <Button size="lg" variant="outline" nativeButton={false} render={<Link href={ROUTES.login} />} className="w-full sm:w-auto">
-                  {tHero("ctaSecondary")}
-                </Button>
-              </div>
-            </div>
-            {/* Brand illustration — web1, 2368×1792 (37:28, matches
-                aspect-[37/28] exactly so object-cover crops nothing). Frame
-                replaces the old dashed placeholder slot. */}
-            <div className="relative aspect-[37/28] w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-brand-900/10 ring-1 ring-brand-900/10 dark:shadow-black/40 dark:ring-white/10">
-              <Image
-                src="/images/hero-illustration.jpeg"
-                alt={tHero("imagePlaceholder")}
-                fill
-                priority
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 560px, 50vw"
-                className="object-cover"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Before / After */}
-        <section className="border-y border-border bg-brand-50/50 px-6 py-16 dark:bg-white/2 sm:px-10 lg:py-20">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-center font-heading text-2xl font-semibold text-brand-900 dark:text-brand-50 sm:text-3xl">
-              {tBefore("title")}
-            </h2>
-            <div className="mt-10 grid gap-6 lg:grid-cols-2 lg:gap-8">
-              <div className="rounded-2xl border border-border bg-card p-7">
-                <p className="text-sm font-medium text-muted-foreground">{tBefore("oldLabel")}</p>
-                <ol className="mt-4 space-y-3">
-                  {oldSteps.map((step, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-foreground/80">
-                      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-medium text-muted-foreground">
-                        {i + 1}
-                      </span>
-                      {step}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <div className="flex flex-col justify-center rounded-2xl border border-gold-400/30 bg-brand-900 p-7 text-brand-50 dark:bg-brand-950">
-                <p className="text-sm font-medium text-gold-300">{tBefore("newLabel")}</p>
-                <p className="mt-4 text-lg leading-relaxed">{tBefore("newStep")}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section className="px-6 py-16 sm:px-10 lg:py-24">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-center font-heading text-2xl font-semibold text-brand-900 dark:text-brand-50 sm:text-3xl">
-              {tHow("title")}
-            </h2>
-            <ol className="mt-14 grid grid-cols-2 gap-x-4 gap-y-12 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-3">
-              {steps.map((step, i) => (
-                <li key={i} className="flex flex-col items-center text-center">
-                  <div className="flex size-16 items-center justify-center rounded-t-full border-2 border-b-0 border-brand-300 bg-brand-50 dark:border-gold-400/40 dark:bg-white/5">
-                    <span className="font-heading text-base font-semibold text-brand-700 dark:text-gold-300">
-                      {i + 1}
-                    </span>
-                  </div>
-                  <div className="h-px w-16 bg-brand-300 dark:bg-gold-400/40" />
-                  <h3 className="mt-4 text-sm font-semibold text-foreground">{step.title}</h3>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{step.body}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
-        {/* Levels */}
-        <section className="border-y border-border bg-brand-50/50 px-6 py-16 dark:bg-white/2 sm:px-10 lg:py-20">
-          <div className="mx-auto max-w-4xl text-center">
-            <h2 className="font-heading text-2xl font-semibold text-brand-900 dark:text-brand-50 sm:text-3xl">
-              {tLevels("title")}
-            </h2>
-            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted-foreground">
-              {tLevels("subtitle")}
-            </p>
-            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              {levels.map((level, i) => (
-                <div key={i} className="flex-1 rounded-2xl border border-border bg-card p-6 text-start">
-                  <div className="flex items-center gap-2.5">
-                    <span className="flex size-7 items-center justify-center rounded-full bg-gold-100 text-xs font-semibold text-gold-800 dark:bg-gold-500/15 dark:text-gold-300">
-                      {i + 1}
-                    </span>
-                    <h3 className="font-heading text-base font-semibold text-foreground">{level.title}</h3>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{level.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Features */}
-        <section className="px-6 py-16 sm:px-10 lg:py-24">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="text-center font-heading text-2xl font-semibold text-brand-900 dark:text-brand-50 sm:text-3xl">
-              {tFeatures("title")}
-            </h2>
-            <div className="mt-4 grid gap-16 lg:grid-cols-2 lg:items-center">
-              <ul className="divide-y divide-border">
-                {features.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-3.5 py-5">
-                    <CheckIcon className="mt-0.5 size-5 shrink-0 text-gold-600 dark:text-gold-400" strokeWidth={2} />
-                    <div>
-                      <h3 className="text-sm font-semibold text-foreground">{feature.title}</h3>
-                      <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{feature.body}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-              {/* Features illustration — web2, 2400×1792 (75:56, matches
-                  aspect-[75/56] exactly so object-cover crops nothing). Same
-                  frame style as the hero; visible on all screen sizes. */}
-              <div className="relative aspect-[75/56] w-full overflow-hidden rounded-2xl border border-border bg-card shadow-xl shadow-brand-900/10 ring-1 ring-brand-900/10 dark:shadow-black/40 dark:ring-white/10">
-                <Image
-                  src="/images/features-illustration.jpeg"
-                  alt={tFeatures("title")}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 560px"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Closing CTA */}
-        <section className="px-6 pb-20 sm:px-10">
-          <div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl bg-brand-900 px-8 py-16 text-center dark:bg-brand-950 sm:px-16">
-            <ArchPattern className="absolute inset-0 h-full w-full text-gold-400/8" />
+      <main>
+        <section className="relative mx-auto max-w-7xl px-5 pb-20 pt-12 sm:px-8 lg:pb-32 lg:pt-20">
+          <div className="pointer-events-none absolute -left-32 top-0 size-96 rounded-full bg-gold-200/30 blur-3xl" />
+          <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_.95fr] lg:gap-20">
             <div className="relative">
-              <h2 className="font-heading text-2xl font-semibold text-brand-50 sm:text-3xl">
-                {tClosing("title")}
-              </h2>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-brand-100/70">
-                {tClosing("subtitle")}
-              </p>
-              <Button
-                size="lg"
-                nativeButton={false}
-                render={<Link href={ROUTES.signup} />}
-                className="mt-8 bg-gold-500 text-brand-950 hover:bg-gold-400"
-              >
-                {tClosing("cta")}
-                <ForwardIcon data-icon="inline-end" />
-              </Button>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-gold-300/60 bg-gold-50 px-3 py-1.5 text-xs font-semibold text-gold-800 dark:bg-gold-900/20 dark:text-gold-300">
+                <SparklesIcon className="size-3.5" /> مساحة أذكى لتعلّم العربية
+              </div>
+              <h1 className="max-w-2xl font-heading text-4xl font-bold leading-[1.2] tracking-tight text-brand-950 dark:text-brand-50 sm:text-6xl lg:text-[4.35rem]">العربية ليست مادة،<br /><span className="text-gold-600 dark:text-gold-400">إنها مساحة.</span></h1>
+              <p className="mt-7 max-w-xl text-lg leading-loose text-muted-foreground sm:text-xl">فُصحى تساعدك على بناء دروس عربية أعمق، وكتابة أوضح، وتجربة تعلم تنمو معك.</p>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <Button size="lg" nativeButton={false} render={<Link href={ROUTES.signup} />}>ابدأ رحلتك الآن <ArrowLeftIcon data-icon="inline-end" /></Button>
+                <Button size="lg" variant="outline" nativeButton={false} render={<Link href="#tools" />}>اكتشف الأدوات <ChevronLeftIcon data-icon="inline-end" /></Button>
+              </div>
+              <div className="mt-10 flex items-center gap-6 text-sm text-muted-foreground"><span className="flex -space-x-2 space-x-reverse"><span className="size-8 rounded-full border-2 border-background bg-gold-300" /><span className="size-8 rounded-full border-2 border-background bg-brand-400" /><span className="size-8 rounded-full border-2 border-background bg-brand-700" /></span><span>ينضم إلينا معلمون ومتعلمون من كل مكان</span></div>
+            </div>
+            <div className="relative mx-auto w-full max-w-xl">
+              <div className="absolute -inset-5 rounded-[2.5rem] bg-brand-100/60 blur-2xl dark:bg-brand-900/20" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-brand-200 bg-brand-900 p-4 shadow-2xl shadow-brand-900/20 dark:border-brand-700">
+                <div className="rounded-[1.35rem] bg-brand-800/80 p-5 sm:p-7">
+                  <div className="mb-12 flex items-center justify-between text-brand-200"><span className="text-xs">درس اليوم</span><span className="rounded-full bg-gold-400/15 px-3 py-1 text-xs text-gold-300">مستوى متوسط</span></div>
+                  <p className="font-heading text-3xl leading-relaxed text-brand-50 sm:text-4xl">اللغة بيتٌ يسكنه<br /><span className="text-gold-300">الجميع.</span></p>
+                  <div className="mt-10 grid grid-cols-3 gap-2"><div className="h-1.5 rounded-full bg-gold-400" /><div className="h-1.5 rounded-full bg-gold-400/30" /><div className="h-1.5 rounded-full bg-gold-400/30" /></div>
+                  <div className="mt-6 flex items-center justify-between text-xs text-brand-200"><span>تقدمك في الدرس</span><span>٣٥٪</span></div>
+                </div>
+                <div className="flex items-center justify-between px-3 pt-4 text-xs text-brand-300"><span>فُصحى / الدروس التفاعلية</span><ArrowUpLeftIcon className="size-4" /></div>
+              </div>
             </div>
           </div>
         </section>
+
+        <section id="tools" className="border-y border-border/70 bg-brand-50/50 px-5 py-20 sm:px-8 lg:py-28 dark:bg-brand-950/20">
+          <div className="mx-auto max-w-7xl"><div className="mb-12 flex flex-col justify-between gap-5 sm:flex-row sm:items-end"><div><p className="mb-3 text-sm font-semibold text-gold-700 dark:text-gold-400">كل ما تحتاجه في مكان واحد</p><h2 className="font-heading text-3xl font-bold text-brand-950 dark:text-brand-50 sm:text-4xl">أدوات تصنع فرقًا حقيقيًا</h2></div><p className="max-w-sm text-sm leading-relaxed text-muted-foreground">من الفكرة الأولى إلى درس جاهز، صممنا فُصحى لترافقك في كل خطوة.</p></div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{tools.map(({ icon: Icon, title, body }, index) => <div key={title} className={`rounded-2xl border p-6 transition-transform hover:-translate-y-1 ${index === 1 ? "border-gold-300 bg-gold-50 dark:bg-gold-900/10" : "border-border bg-card"}`}><div className="mb-10 flex size-11 items-center justify-center rounded-xl bg-brand-100 text-brand-700 dark:bg-brand-800 dark:text-gold-300"><Icon className="size-5" /></div><h3 className="font-heading text-lg font-bold">{title}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{body}</p><ArrowLeftIcon className="mt-6 size-4 text-gold-600" /></div>)}</div>
+          </div>
+        </section>
+
+        <section id="studio" className="mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 sm:px-8 lg:grid-cols-2 lg:gap-24 lg:py-32"><div><p className="mb-3 text-sm font-semibold text-gold-700 dark:text-gold-400">استوديو الكتابة العربية</p><h2 className="font-heading text-3xl font-bold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">اكتب بصوتك.<br />ودع فُصحى تصقل الأثر.</h2><p className="mt-6 max-w-lg leading-loose text-muted-foreground">مساحة كتابة هادئة تفهم العربية. راجع أسلوبك، اكتشف الأخطاء، وحوّل أفكارك إلى نصوص تستحق أن تُقرأ.</p><ul className="mt-8 flex flex-col gap-4 text-sm"><li className="flex items-center gap-3"><CheckIcon className="size-5 text-gold-600" /> اقتراحات تحافظ على صوتك</li><li className="flex items-center gap-3"><CheckIcon className="size-5 text-gold-600" /> ملاحظات لغوية في سياقها</li><li className="flex items-center gap-3"><CheckIcon className="size-5 text-gold-600" /> تجربة كتابة بلا تشتيت</li></ul></div><div className="rounded-[2rem] border border-border bg-card p-4 shadow-xl shadow-brand-900/5"><div className="rounded-2xl bg-brand-50 p-6 dark:bg-brand-950"><div className="mb-8 flex items-center justify-between border-b border-brand-200 pb-4 dark:border-brand-800"><span className="text-sm font-semibold">مسودة جديدة</span><span className="text-xs text-muted-foreground">حُفظت للتو</span></div><p className="font-heading text-xl leading-loose text-brand-900 dark:text-brand-100">حين نكتب، نحن لا ننقل الكلمات فقط؛<br /><span className="rounded bg-gold-200/70 px-1 text-brand-950 dark:bg-gold-700/40 dark:text-gold-100">نحن نمنح الفكرة بيتًا.</span></p><div className="mt-10 flex justify-between text-xs text-muted-foreground"><span>١٢٤ كلمة</span><span className="text-gold-700">اقتراح واحد متاح</span></div></div></div></section>
+
+        <section id="library" className="bg-brand-900 px-5 py-20 text-brand-50 sm:px-8 lg:py-28"><div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-center"><div><p className="mb-3 text-sm font-semibold text-gold-300">المكتبة والموارد</p><h2 className="font-heading text-3xl font-bold leading-tight sm:text-5xl">معرفتك،<br />مرتبة كما تحب.</h2><p className="mt-6 max-w-md leading-loose text-brand-200">احفظ دروسك، اجمع مصادرك، وابنِ مكتبة خاصة تنمو مع مسيرتك التعليمية.</p><Button className="mt-8 bg-gold-400 text-brand-950 hover:bg-gold-300" size="lg" nativeButton={false} render={<Link href={ROUTES.signup} />}>أنشئ مكتبتك <ArrowLeftIcon data-icon="inline-end" /></Button></div><div className="grid grid-cols-2 gap-3 sm:grid-cols-3"><div className="col-span-2 rounded-2xl bg-brand-800 p-5 sm:col-span-1"><BookOpenIcon className="mb-10 size-6 text-gold-300" /><p className="font-heading text-2xl font-bold">١٢</p><p className="mt-1 text-sm text-brand-300">درسًا تفاعليًا</p></div><div className="rounded-2xl bg-gold-400 p-5 text-brand-950"><LibraryBigIcon className="mb-10 size-6" /><p className="font-heading text-2xl font-bold">٤٨</p><p className="mt-1 text-sm opacity-70">موردًا محفوظًا</p></div><div className="rounded-2xl border border-brand-700 p-5"><PenLineIcon className="mb-10 size-6 text-gold-300" /><p className="font-heading text-2xl font-bold">٢٤</p><p className="mt-1 text-sm text-brand-300">مسودة مكتملة</p></div></div></div></section>
+
+        <section id="how" className="mx-auto max-w-7xl px-5 py-20 sm:px-8 lg:py-28"><div className="text-center"><p className="mb-3 text-sm font-semibold text-gold-700 dark:text-gold-400">بداية بسيطة</p><h2 className="font-heading text-3xl font-bold text-brand-950 dark:text-brand-50 sm:text-4xl">أربع خطوات وتبدأ</h2></div><div className="mt-14 grid gap-8 sm:grid-cols-4">{steps.map((step, index) => <div key={step} className="relative text-center"><div className="mx-auto flex size-14 items-center justify-center rounded-full border border-gold-300 bg-gold-50 font-heading text-lg font-bold text-gold-700 dark:bg-gold-900/20">{index + 1}</div><h3 className="mt-5 font-heading font-bold">{step}</h3><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{["اختر المسار الذي يناسب هدفك", "أضف نصًا أو ملفًا من مكتبتك", "دع الأدوات ترتب التجربة", "تعلم واكتب وشارك"] [index]}</p>{index < 3 && <div className="absolute right-[calc(50%+2.5rem)] top-7 hidden h-px w-[calc(100%-5rem)] bg-border sm:block" />}</div>)}</div></section>
+
+        <section className="px-5 pb-20 sm:px-8 lg:pb-28"><div className="mx-auto max-w-5xl rounded-[2rem] bg-gold-100 px-6 py-16 text-center dark:bg-gold-900/20 sm:px-12"><h2 className="font-heading text-3xl font-bold text-brand-950 dark:text-brand-50 sm:text-4xl">جاهز لتكتب فصلًا جديدًا؟</h2><p className="mx-auto mt-4 max-w-md leading-relaxed text-muted-foreground">ابدأ مجانًا، واكتشف كيف يمكن للأدوات الصحيحة أن تغيّر علاقتك بالعربية.</p><Button size="lg" className="mt-8" nativeButton={false} render={<Link href={ROUTES.signup} />}>ابدأ مع فُصحى <ArrowLeftIcon data-icon="inline-end" /></Button></div></section>
       </main>
 
-      <footer className="border-t border-border px-6 py-8 sm:px-10">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Image src="/logo.png" alt={tApp("name")} width={20} height={20} className="size-5" />
-            <span>{tApp("name")}</span>
-            <span className="text-border">·</span>
-            <span>{tApp("tagline")}</span>
-          </div>
-          <p className="text-xs text-muted-foreground">{tFooter("rights")}</p>
-        </div>
-      </footer>
+      <footer className="border-t border-border px-5 py-10 sm:px-8"><div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex items-center gap-3"><span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground"><FeatherIcon className="size-4" /></span><span className="font-heading text-lg font-bold">فُصحى</span></div><p className="mt-3 max-w-xs text-sm text-muted-foreground">مساحتك الأهدأ لتعلّم العربية وصناعة المعرفة.</p></div><div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"><a href="#tools" className="hover:text-primary">الأدوات</a><a href="#studio" className="hover:text-primary">الكتابة</a><a href="#library" className="hover:text-primary">المكتبة</a><Link href={ROUTES.login} className="hover:text-primary">تسجيل الدخول</Link></div><p className="text-xs text-muted-foreground">{tFooter("rights")}</p></div></footer>
     </div>
   );
 }
