@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeftIcon,
@@ -5,8 +6,6 @@ import {
   BookOpenIcon,
   CheckIcon,
   ChevronLeftIcon,
-  FeatherIcon,
-  LanguagesIcon,
   LibraryBigIcon,
   MenuIcon,
   PenLineIcon,
@@ -21,9 +20,8 @@ import { ROUTES } from "@/constants/routes";
 
 const tools = [
   { icon: WandSparklesIcon, title: "منشئ الدروس", body: "حوّل أي مصدر إلى درس تفاعلي منظم" },
-  { icon: PenLineIcon, title: "استوديو الكتابة", body: "اكتب العربية بثقة ووضوح أكبر" },
-  { icon: LanguagesIcon, title: "مدقق اللغة", body: "تحسينات دقيقة للسياق والأسلوب" },
-  { icon: LibraryBigIcon, title: "مكتبتك", body: "كل دروسك ومواردك في مكان واحد" },
+  { icon: PenLineIcon, title: "استوديو الكتابة العربية", body: "اكتب العربية بثقة ووضوح أكبر" },
+  { icon: LibraryBigIcon, title: "المكتبة التعليمية", body: "كل دروسك ومواردك في مكان واحد" },
 ];
 
 const steps = ["اختر مستواك", "أضف مصدرك", "خصص الدرس", "ابدأ التعلم"];
@@ -36,9 +34,7 @@ export default async function LandingPage() {
     <div className="min-h-full overflow-hidden bg-background" dir="rtl">
       <header className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:py-7">
         <Link href={ROUTES.home} className="flex items-center gap-3" aria-label={tApp("name")}>
-          <span className="flex size-10 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-lg shadow-primary/15">
-            <FeatherIcon className="size-5" />
-          </span>
+          <Image src="/logo.png" alt="فُصحاء" width={44} height={44} className="size-11 object-contain" priority />
           <span className="font-heading text-xl font-bold tracking-tight text-brand-950 dark:text-brand-50">فُصحى</span>
         </Link>
         <nav className="hidden items-center gap-8 text-sm font-medium text-muted-foreground lg:flex" aria-label="التنقل الرئيسي">
@@ -101,7 +97,7 @@ export default async function LandingPage() {
         <section className="px-5 pb-20 sm:px-8 lg:pb-28"><div className="mx-auto max-w-5xl rounded-[2rem] bg-gold-100 px-6 py-16 text-center dark:bg-gold-900/20 sm:px-12"><h2 className="font-heading text-3xl font-bold text-brand-950 dark:text-brand-50 sm:text-4xl">جاهز لتكتب فصلًا جديدًا؟</h2><p className="mx-auto mt-4 max-w-md leading-relaxed text-muted-foreground">ابدأ مجانًا، واكتشف كيف يمكن للأدوات الصحيحة أن تغيّر علاقتك بالعربية.</p><Button size="lg" className="mt-8" nativeButton={false} render={<Link href={ROUTES.signup} />}>ابدأ مع فُصحى <ArrowLeftIcon data-icon="inline-end" /></Button></div></section>
       </main>
 
-      <footer className="border-t border-border px-5 py-10 sm:px-8"><div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex items-center gap-3"><span className="flex size-9 items-center justify-center rounded-lg bg-primary text-primary-foreground"><FeatherIcon className="size-4" /></span><span className="font-heading text-lg font-bold">فُصحى</span></div><p className="mt-3 max-w-xs text-sm text-muted-foreground">مساحتك الأهدأ لتعلّم العربية وصناعة المعرفة.</p></div><div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"><a href="#tools" className="hover:text-primary">الأدوات</a><a href="#studio" className="hover:text-primary">الكتابة</a><a href="#library" className="hover:text-primary">المكتبة</a><Link href={ROUTES.login} className="hover:text-primary">تسجيل الدخول</Link></div><p className="text-xs text-muted-foreground">{tFooter("rights")}</p></div></footer>
+      <footer className="border-t border-border px-5 py-10 sm:px-8"><div className="mx-auto flex max-w-7xl flex-col gap-8 sm:flex-row sm:items-center sm:justify-between"><div><div className="flex items-center gap-3"><Image src="/logo.png" alt="فُصحاء" width={36} height={36} className="size-9 object-contain" /><span className="font-heading text-lg font-bold">فُصحاء</span></div><p className="mt-3 max-w-xs text-sm text-muted-foreground">مساحتك الأهدأ لتعلّم العربية وصناعة المعرفة.</p></div><div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-muted-foreground"><a href="#tools" className="hover:text-primary">الأدوات</a><a href="#studio" className="hover:text-primary">الكتابة</a><a href="#library" className="hover:text-primary">المكتبة</a><Link href={ROUTES.login} className="hover:text-primary">تسجيل الدخول</Link></div><p className="text-xs text-muted-foreground">{tFooter("rights")}</p></div></footer>
     </div>
   );
 }
