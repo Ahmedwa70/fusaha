@@ -171,6 +171,9 @@ export async function CreditPackageCard({
           <WhatsappContactButton
             whatsappNumber={whatsappContactNumber}
             packageName={pkg.name}
+            creditsAmount={pkg.creditsAmount}
+            priceCents={pkg.price}
+            currency={pkg.currency}
             isBestValue={isBestValue}
             hasAccent={hasAccent}
           />
