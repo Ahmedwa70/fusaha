@@ -16,7 +16,7 @@ export default async function SignupPage() {
         <LanguageSwitcher />
       </div>
 
-      <div className="relative flex shrink-0 items-center justify-center overflow-hidden bg-brand-50 px-8 py-14 dark:bg-brand-900 lg:w-1/2">
+      <div className="relative flex shrink-0 items-center justify-center overflow-hidden bg-brand-50 px-8 py-14 dark:bg-background lg:w-1/2">
         <ArchPattern className="absolute inset-0 h-full w-full text-brand-900/10 dark:text-gold-400/15" />
         <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 relative flex flex-col items-center gap-5 text-center motion-safe:duration-700">
           <Image
