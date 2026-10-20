@@ -161,48 +161,47 @@
 }
 
 .dark {
-  /* Deep blue-black chrome; green remains a restrained secondary surface. */
-  --background: oklch(0.12 0.025 245);
-  --foreground: oklch(0.96 0.008 90);
+  --background: lab(4.43965% -1.75043 -5.15133);
+  --foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --card: oklch(0.18 0.03 240);
-  --card-foreground: oklch(0.96 0.008 90);
-  --popover: oklch(0.18 0.03 240);
-  --popover-foreground: oklch(0.96 0.008 90);
+  --card: lab(8.39645% -3.98012 -7.53505);
+  --card-foreground: lab(95.4012% -0.0117719 3.05686);
+  --popover: lab(8.39645% -3.98012 -7.53505);
+  --popover-foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --primary: var(--gold-500);
-  --primary-foreground: oklch(0.13 0.025 245);
+  --primary: lab(65.1506% 13.7743 46.2724);
+  --primary-foreground: lab(3.10187% -2.88614 -5.23812);
 
-  --secondary: var(--brand-800);
-  --secondary-foreground: oklch(0.94 0.01 225);
+  --secondary: lab(16.6665% -10.8145 -14.1479);
+  --secondary-foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --muted: oklch(0.2 0.025 240);
-  --muted-foreground: oklch(0.72 0.02 240);
+  --muted: lab(13.0129% -2.89283 -6.43002);
+  --muted-foreground: lab(60.5861% -3.16283 -6.54073);
 
-  --accent: var(--gold-700);
-  --accent-foreground: oklch(0.97 0.02 85);
+  --accent: lab(44.2024% 12.091 32.4918);
+  --accent-foreground: lab(96.5967% 0.633419 7.66813);
 
   --destructive: oklch(0.63 0.22 27);
   --destructive-foreground: oklch(0.98 0.01 20);
 
-  --border: oklch(1 0 0 / 14%);
-  --input: oklch(1 0 0 / 18%);
-  --ring: var(--gold-400);
+  --border: lab(100% 0 0 / 0.12);
+  --input: lab(100% 0 0 / 0.16);
+  --ring: lab(56.1949% -14.0995 -17.0568);
 
-  --chart-1: var(--gold-400);
-  --chart-2: var(--brand-400);
+  --chart-1: lab(65.1506% 13.7743 46.2724);
+  --chart-2: lab(56.1949% -14.0995 -17.0568);
   --chart-3: oklch(0.55 0.09 190);
   --chart-4: oklch(0.72 0.1 145);
   --chart-5: oklch(0.6 0.16 35);
 
-  --sidebar: oklch(0.1 0.022 245);
-  --sidebar-foreground: oklch(0.96 0.008 90);
-  --sidebar-primary: var(--gold-500);
-  --sidebar-primary-foreground: oklch(0.13 0.025 245);
-  --sidebar-accent: var(--brand-800);
-  --sidebar-accent-foreground: oklch(0.96 0.008 90);
-  --sidebar-border: oklch(1 0 0 / 12%);
-  --sidebar-ring: var(--gold-400);
+  --sidebar: lab(4.43965% -1.75043 -5.15133);
+  --sidebar-foreground: lab(95.4012% -0.0117719 3.05686);
+  --sidebar-primary: lab(65.1506% 13.7743 46.2724);
+  --sidebar-primary-foreground: lab(3.10187% -2.88614 -5.23812);
+  --sidebar-accent: lab(16.6665% -10.8145 -14.1479);
+  --sidebar-accent-foreground: lab(95.4012% -0.0117719 3.05686);
+  --sidebar-border: lab(100% 0 0 / 0.12);
+  --sidebar-ring: lab(56.1949% -14.0995 -17.0568);
 }
 
 @layer base {

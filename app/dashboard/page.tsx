@@ -31,7 +31,7 @@ export default async function DashboardPage({
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="relative overflow-hidden rounded-2xl bg-gold-100 px-4 py-5 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-700 sm:rounded-3xl sm:px-8 sm:py-7 dark:bg-brand-950">
+      <div className="relative overflow-hidden rounded-2xl bg-gold-100 px-4 py-5 motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 motion-safe:duration-700 sm:rounded-3xl sm:px-8 sm:py-7 dark:bg-background">
         <ArchPattern className="absolute inset-0 h-full w-full text-brand-900/8 dark:text-gold-400/8" />
         <div className="relative flex items-start gap-3 sm:gap-4">
           <span
