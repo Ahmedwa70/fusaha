@@ -28,7 +28,7 @@ export default async function LoginPage() {
             className="h-20 w-20 lg:h-28 lg:w-28"
           />
           <div className="space-y-1.5">
-            <h1 className="font-heading text-3xl font-semibold text-brand-900 dark:text-brand-50">{tApp("name")}</h1>
+            <h1 className="font-heading text-3xl font-semibold text-brand-900 dark:text-foreground">{tApp("name")}</h1>
             <p className="text-sm text-brand-700/70 dark:text-brand-100/70">{tApp("description")}</p>
           </div>
           <p className="mt-2 text-sm font-medium tracking-wide text-gold-700 dark:text-gold-300">{tApp("tagline")}</p>

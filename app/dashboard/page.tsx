@@ -42,7 +42,7 @@ export default async function DashboardPage({
             👋
           </span>
           <div className="min-w-0">
-            <h1 className="font-heading text-lg leading-tight font-semibold text-brand-900 sm:text-3xl dark:text-brand-50">
+            <h1 className="font-heading text-lg leading-tight font-semibold text-brand-900 sm:text-3xl dark:text-foreground">
               {t("greeting", { name: teacher.name })}
             </h1>
             <p className="mt-1 text-sm text-brand-900/70 sm:text-base dark:text-brand-100/70">{t("subtitle")}</p>
