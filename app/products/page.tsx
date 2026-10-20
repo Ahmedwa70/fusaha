@@ -1,0 +1,87 @@
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeftIcon, BookOpenIcon, PenLineIcon, WandSparklesIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/constants/routes";
+import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
+
+const products = [
+  {
+    title: "مولّد الدروس التفاعلية",
+    description: "حوّل مصدر الدرس إلى درس تفاعلي متكامل، ثم راجعه واعتمده من مساحة العمل.",
+    status: "متاح",
+    image: "/images/hero-illustration.jpeg",
+    icon: WandSparklesIcon,
+    href: ROUTES.dashboardCreate,
+    action: "ابدأ إنشاء درس",
+    featured: true,
+  },
+  {
+    title: "استوديو الكتابة العربية",
+    description: "صفحة المنتج الحالية للتعرّف على طريقة تحويل المحتوى إلى تجربة تعليمية.",
+    status: "صفحة تعريفية",
+    image: "/images/features-illustration.jpeg",
+    icon: PenLineIcon,
+    href: ROUTES.lessonStudio,
+    action: "استكشف الاستوديو",
+    featured: false,
+  },
+];
+
+export default function ProductsPage() {
+  return (
+    <div dir="rtl" className="min-h-full bg-background text-foreground">
+      <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 sm:px-10">
+        <Link href={ROUTES.home} className="flex items-center gap-2.5" aria-label="العودة إلى فصحاء">
+          <Image src="/logo.png" alt="فصحاء" width={32} height={32} priority className="size-8" />
+          <span className="font-heading text-lg font-semibold text-brand-900 dark:text-brand-50">فُصحاء</span>
+        </Link>
+        <nav className="hidden items-center gap-3 sm:flex" aria-label="التنقل في صفحة المنتجات">
+          <ThemeToggle />
+          <LanguageSwitcher />
+          <Button variant="ghost" size="sm" nativeButton={false} render={<Link href={ROUTES.login} />}>تسجيل الدخول</Button>
+        </nav>
+      </header>
+
+      <main>
+        <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.14),transparent_28%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-6 py-16 dark:!bg-background sm:px-10 lg:py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-bold text-gold-700">منتجات فُصحاء</p>
+            <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-foreground sm:text-5xl">أدوات عربية تصنع فرقًا في التعليم</h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-brand-100/75">استكشف المنتجات المتاحة حاليًا، واعرف بوضوح ما يمكنك استخدامه الآن وما هو متاح للتجربة والتعرّف.</p>
+          </div>
+        </section>
+
+        <section className="px-6 py-14 sm:px-10 lg:py-20">
+          <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
+            {products.map(({ title, description, status, image, icon: Icon, href, action, featured }) => (
+              <article key={title} className={`overflow-hidden rounded-3xl border p-3 shadow-sm ${featured ? "border-brand-800 bg-brand-800 text-brand-50 shadow-xl" : "border-border bg-card"}`}>
+                <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-brand-50 dark:bg-secondary">
+                  <Image src={image} alt={`معاينة ${title}`} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" />
+                </div>
+                <div className="p-5 text-right sm:p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className={`rounded-full px-3 py-1 text-xs font-bold ${featured ? "bg-gold-300 text-brand-950" : "bg-gold-100 text-gold-800 dark:bg-gold-500/15 dark:text-gold-300"}`}>{status}</span>
+                    <span className={`flex size-11 shrink-0 items-center justify-center rounded-full ${featured ? "bg-gold-300 text-brand-950" : "bg-gold-100 text-gold-700"}`}><Icon /></span>
+                  </div>
+                  <h2 className="mt-5 font-heading text-2xl font-bold">{title}</h2>
+                  <p className={`mt-3 min-h-14 leading-8 ${featured ? "text-brand-50/80" : "text-muted-foreground"}`}>{description}</p>
+                  <Button className="mt-5" variant={featured ? "secondary" : "outline"} nativeButton={false} render={<Link href={href} />}>{action}<ArrowLeftIcon data-icon="inline-end" /></Button>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-border px-6 py-14 sm:px-10 lg:py-20">
+          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
+            <span className="flex size-12 items-center justify-center rounded-full bg-gold-100 text-gold-700"><BookOpenIcon /></span>
+            <h2 className="mt-4 font-heading text-2xl font-bold text-brand-950 dark:text-foreground">منتجات قيد التطوير</h2>
+            <p className="mt-3 leading-8 text-muted-foreground">سنضيف المنتجات الجاهزة هنا عند اكتمالها. لا توجد حاليًا منتجات أخرى متاحة للبيع أو الشراء على هذه الصفحة.</p>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}

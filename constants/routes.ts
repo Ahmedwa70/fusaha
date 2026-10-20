@@ -1,5 +1,6 @@
 export const ROUTES = {
   home: "/",
+  products: "/products",
   lessonStudio: "/lesson-studio",
   login: "/auth/login",
   signup: "/auth/signup",
