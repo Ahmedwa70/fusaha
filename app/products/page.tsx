@@ -45,11 +45,11 @@ export default function ProductsPage() {
       </header>
 
       <main>
-        <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.14),transparent_28%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-6 py-16 dark:!bg-background sm:px-10 lg:py-24">
+        <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.14),transparent_28%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-6 py-16 dark:border-border dark:bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.12),transparent_28%),linear-gradient(120deg,#111b28,#182231_55%,#101923)] sm:px-10 lg:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-bold text-gold-700 dark:text-gold-700">منتجات فُصحاء</p>
-            <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-950 sm:text-5xl">أدوات عربية تصنع فرقًا في التعليم</h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-brand-900/75">استكشف المنتجات المتاحة حاليًا، واعرف بوضوح ما يمكنك استخدامه الآن وما هو متاح للتجربة والتعرّف.</p>
+            <p className="text-sm font-bold text-gold-700 dark:text-gold-300">منتجات فُصحاء</p>
+            <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">أدوات عربية تصنع فرقًا في التعليم</h1>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-slate-300">استكشف المنتجات المتاحة حاليًا، واعرف بوضوح ما يمكنك استخدامه الآن وما هو متاح للتجربة والتعرّف.</p>
           </div>
         </section>
 
