@@ -7,7 +7,7 @@ import { ROUTES } from "@/constants/routes";
 const links = [
   ["الرئيسية", "#top"],
   ["المنتجات", ROUTES.products],
-  ["الموارد", "#library"],
+  ["الموارد", ROUTES.resources],
   ["الأسعار", "#pricing"],
   ["مركز المساعدة", "#footer"],
   ["عن فصحاء", "#footer"],
