@@ -17,7 +17,10 @@ function closeMobileMenu(event: React.MouseEvent<HTMLElement>) {
   event.currentTarget.closest("details")?.removeAttribute("open");
 }
 
-export function MobileNavigation() {
+export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
+  const sectionHref = (section: string) => homeHref === "#top" ? `#${section}` : `${ROUTES.home}#${section}`;
+  const navigationLinks = links.map(([label, href]) => href.startsWith("#") ? [label, sectionHref(href.slice(1))] as const : [label, href] as const);
+
   return (
     <details className="relative lg:hidden">
       <summary aria-label="فتح القائمة" className="flex size-10 cursor-pointer list-none items-center justify-center rounded-lg text-brand-900 transition-colors hover:bg-gold-50 dark:text-brand-50 dark:hover:bg-brand-800 [&::-webkit-details-marker]:hidden">
@@ -31,7 +34,7 @@ export function MobileNavigation() {
           </button>
         </div>
         <nav className="flex flex-col gap-1 pt-2" aria-label="التنقل على الهاتف">
-          {links.map(([label, href]) => (
+          {navigationLinks.map(([label, href]) => (
             <a key={href + label} href={href} onClick={closeMobileMenu} className="rounded-lg px-3 py-2.5 text-sm font-semibold text-brand-900 hover:bg-gold-50">
               {label}
             </a>

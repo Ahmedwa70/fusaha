@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthHeader } from "@/app/auth/_components/auth-header";
 import { LoginForm } from "./_components/login-form";
 import { ArchPattern } from "./_components/arch-pattern";
 
@@ -11,10 +10,7 @@ export default async function LoginPage() {
 
   return (
     <main className="relative flex min-h-screen flex-col bg-background lg:flex-row">
-      <div className="absolute top-4 inset-e-4 z-20 flex items-center gap-2">
-        <ThemeToggle />
-        <LanguageSwitcher />
-      </div>
+      <AuthHeader />
 
       <div className="relative flex shrink-0 items-center justify-center overflow-hidden bg-brand-50 px-8 py-14 dark:bg-background lg:w-1/2">
         <ArchPattern className="absolute inset-0 h-full w-full text-brand-900/10 dark:text-gold-400/15" />

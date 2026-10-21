@@ -98,6 +98,14 @@ This decision does not implement or redesign the shells. It does not change rout
 
 - `/l/[token]` is a public shared-lesson player route, but it is not a marketing page and currently has no explicit shell classification. Treat it as **standalone/shared-player** for implementation review rather than forcing it into the Public Website Shell.
 - `/unauthorized` is an access-denied page with no clear current shell ownership. Classify it during implementation review; default recommendation is a minimal standalone/auth-adjacent shell, not full public navigation.
+
+### Implementation clarification (2026-10-21)
+
+- `/l/[token]` is confirmed as **standalone/shared-player**: it resolves an approved lesson by share token and renders only the sandboxed lesson frame, so it must not receive the public or application header.
+- `/unauthorized` is confirmed as **standalone/access-denied**: it renders an access-denied message and an admin return action without session navigation, so it remains outside the three reusable shells.
+- The Public Website Shell is implemented by `app/_components/public-header.tsx` and is shared by `/` and `/products`; its mobile links preserve section destinations from either route.
+- The Authentication Shell is implemented by `app/auth/_components/auth-header.tsx` and is shared by all four authentication pages.
+- Dashboard, studio, and administration retain their distinct application compositions because their controls and permissions differ.
 - `/dashboard/lessons/[id]/run/frame` and `/l/[token]/frame` are route handlers used to render/embed lesson frames, not navigation pages.
 - The requested future pages for Pricing, Resources, Help Center, and About Fusaha have no current routes and therefore remain unclassified until routes are created.
 

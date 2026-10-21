@@ -3,8 +3,7 @@ import Link from "next/link";
 import { ArrowLeftIcon, BookOpenIcon, PenLineIcon, WandSparklesIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { PublicHeader } from "@/app/_components/public-header";
 
 const products = [
   {
@@ -32,17 +31,7 @@ const products = [
 export default function ProductsPage() {
   return (
     <div dir="rtl" className="min-h-full bg-background text-foreground">
-      <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 sm:px-10">
-        <Link href={ROUTES.home} className="flex items-center gap-2.5" aria-label="العودة إلى فصحاء">
-          <Image src="/book-transparent.png" alt="فصحاء" width={112} height={60} priority className="h-8 w-auto object-contain" />
-          <span className="font-heading text-lg font-semibold text-brand-900 dark:text-brand-50">فُصحاء</span>
-        </Link>
-        <nav className="hidden items-center gap-3 sm:flex" aria-label="التنقل في صفحة المنتجات">
-          <ThemeToggle />
-          <LanguageSwitcher />
-          <Button variant="ghost" size="sm" nativeButton={false} render={<Link href={ROUTES.login} />}>تسجيل الدخول</Button>
-        </nav>
-      </header>
+      <PublicHeader homeHref={ROUTES.home} />
 
       <main>
         <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.14),transparent_28%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-6 py-16 dark:border-border dark:bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.12),transparent_28%),linear-gradient(120deg,#111b28,#182231_55%,#101923)] sm:px-10 lg:py-24">
