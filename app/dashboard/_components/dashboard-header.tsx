@@ -83,7 +83,7 @@ export function DashboardHeader({
         </Button>
 
         <Link href={ROUTES.dashboard} className="flex shrink-0 items-center gap-2">
-          <Image src="/logo.png" alt={tApp("name")} width={32} height={32} className="rounded-full" />
+          <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} className="h-8 w-auto object-contain" />
           <span className="hidden font-semibold sm:inline">{tApp("name")}</span>
         </Link>
 
@@ -112,7 +112,7 @@ export function DashboardHeader({
           <SheetContent side={direction === "rtl" ? "right" : "left"} className="w-3/4 lg:hidden">
             <SheetHeader className="border-b border-border">
               <SheetTitle className="flex items-center gap-2">
-                <Image src="/logo.png" alt={tApp("name")} width={28} height={28} className="rounded-full" />
+                <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} className="h-7 w-auto object-contain" />
                 {tApp("name")}
               </SheetTitle>
             </SheetHeader>

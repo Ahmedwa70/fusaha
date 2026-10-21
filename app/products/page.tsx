@@ -34,7 +34,7 @@ export default function ProductsPage() {
     <div dir="rtl" className="min-h-full bg-background text-foreground">
       <header className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-5 sm:px-10">
         <Link href={ROUTES.home} className="flex items-center gap-2.5" aria-label="العودة إلى فصحاء">
-          <Image src="/logo.png" alt="فصحاء" width={32} height={32} priority className="size-8" />
+          <Image src="/book-transparent.png" alt="فصحاء" width={112} height={60} priority className="h-8 w-auto object-contain" />
           <span className="font-heading text-lg font-semibold text-brand-900 dark:text-brand-50">فُصحاء</span>
         </Link>
         <nav className="hidden items-center gap-3 sm:flex" aria-label="التنقل في صفحة المنتجات">

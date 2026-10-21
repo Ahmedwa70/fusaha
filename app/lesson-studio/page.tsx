@@ -46,7 +46,7 @@ export default async function LandingPage() {
       {/* Header */}
       <header className="flex items-center justify-between px-6 py-5 sm:px-10">
         <div className="flex items-center gap-2.5">
-          <Image src="/logo.png" alt={tApp("name")} width={32} height={32} priority className="size-8" />
+          <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} priority className="h-8 w-auto object-contain" />
           <span className="font-heading text-lg font-semibold text-brand-900 dark:text-brand-50">
             {tApp("name")}
           </span>
@@ -237,7 +237,7 @@ export default async function LandingPage() {
       <footer className="border-t border-border px-6 py-8 sm:px-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Image src="/logo.png" alt={tApp("name")} width={20} height={20} className="size-5" />
+            <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} className="h-5 w-auto object-contain" />
             <span>{tApp("name")}</span>
             <span className="text-border">·</span>
             <span>{tApp("tagline")}</span>

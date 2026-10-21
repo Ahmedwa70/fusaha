@@ -20,12 +20,12 @@ export default async function ForgotPasswordPage() {
         <ArchPattern className="absolute inset-0 h-full w-full text-brand-900/10 dark:text-gold-400/15" />
         <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2 relative flex flex-col items-center gap-5 text-center motion-safe:duration-700">
           <Image
-            src="/logo.png"
+            src="/book-transparent.png"
             alt={tApp("name")}
             width={112}
-            height={112}
+            height={60}
             priority
-            className="h-20 w-20 lg:h-28 lg:w-28"
+            className="h-20 w-auto object-contain lg:h-28"
           />
           <div className="space-y-1.5">
             <h1 className="font-heading text-3xl font-semibold text-brand-900 dark:text-brand-50">{tApp("name")}</h1>
