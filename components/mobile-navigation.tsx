@@ -9,7 +9,7 @@ const links = [
   ["المنتجات", ROUTES.products],
   ["الموارد", ROUTES.resources],
   ["الأسعار", "#pricing"],
-  ["مركز المساعدة", "#footer"],
+  ["مركز المساعدة", ROUTES.help],
   ["عن فصحاء", "#footer"],
 ] as const;
 

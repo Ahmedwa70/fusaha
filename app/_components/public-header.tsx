@@ -19,7 +19,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
         <Link href={ROUTES.products}>المنتجات</Link>
         <Link href={ROUTES.resources}>الموارد</Link>
         <Link href={sectionHref("pricing")}>الأسعار</Link>
-        <Link href={sectionHref("footer")}>مركز المساعدة</Link>
+        <Link href={ROUTES.help}>مركز المساعدة</Link>
         <Link href={sectionHref("footer")}>عن فصحاء</Link>
       </nav>
       <div className="flex items-center gap-2">

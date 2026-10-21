@@ -2,6 +2,7 @@ export const ROUTES = {
   home: "/",
   products: "/products",
   resources: "/resources",
+  help: "/help",
   lessonStudio: "/lesson-studio",
   login: "/auth/login",
   signup: "/auth/signup",
