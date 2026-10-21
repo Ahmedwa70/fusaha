@@ -75,10 +75,23 @@ export default function ProductsPage() {
         </section>
 
         <section className="border-t border-border px-6 py-14 sm:px-10 lg:py-20">
-          <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-            <span className="flex size-12 items-center justify-center rounded-full bg-gold-100 text-gold-700"><BookOpenIcon /></span>
-            <h2 className="mt-4 font-heading text-2xl font-bold text-brand-950 dark:text-foreground">منتجات قيد التطوير</h2>
-            <p className="mt-3 leading-8 text-muted-foreground">سنضيف المنتجات الجاهزة هنا عند اكتمالها. لا توجد حاليًا منتجات أخرى متاحة للبيع أو الشراء على هذه الصفحة.</p>
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col items-center text-center">
+              <span className="flex size-12 items-center justify-center rounded-full bg-gold-100 text-gold-700"><BookOpenIcon /></span>
+              <h2 className="mt-4 font-heading text-2xl font-bold text-brand-950 dark:text-foreground">منتجات قيد التطوير</h2>
+              <p className="mt-3 max-w-2xl leading-8 text-muted-foreground">منتجات نعمل على تطويرها بعناية، وستتوفر تفاصيل الإتاحة عند اكتمالها.</p>
+            </div>
+            <article className="mx-auto mt-10 max-w-2xl overflow-hidden rounded-3xl border border-border bg-card p-3 shadow-sm">
+              <div className="relative overflow-hidden rounded-2xl bg-secondary">
+                <Image src="/images/arabic-letter-engine-light.png" alt="معاينة محرك رسم الحروف العربية في الوضع الفاتح" width={2048} height={1152} className="h-auto w-full dark:hidden" />
+                <Image src="/images/arabic-letter-engine-dark.png" alt="معاينة محرك رسم الحروف العربية في الوضع الليلي" width={2048} height={1152} className="hidden h-auto w-full dark:block" />
+              </div>
+              <div className="p-5 text-right sm:p-6">
+                <span className="rounded-full bg-gold-100 px-3 py-1 text-xs font-bold text-gold-800 dark:bg-gold-500/15 dark:text-gold-300">قيد التطوير</span>
+                <h3 className="mt-5 font-heading text-2xl font-bold">محرك رسم الحروف العربية</h3>
+                <p className="mt-3 leading-8 text-muted-foreground">أداة تعليمية للتدريب على رسم الحروف العربية وتتبع خطوات كتابتها.</p>
+              </div>
+            </article>
           </div>
         </section>
       </main>
