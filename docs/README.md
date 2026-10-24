@@ -23,6 +23,8 @@ real complexity stays inside the system.*
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
 | [product/VISION.md](./product/VISION.md) | Strategic vision and product principles |
 | [product/BOOK_LIBRARY_SPECIFICATION.md](./product/BOOK_LIBRARY_SPECIFICATION.md) | Organizational standard for adding, classifying, and linking books and references (not an implemented feature) |
+| [architecture/REPOSITORY_TREE.md](./architecture/REPOSITORY_TREE.md) | Verified repository directory tree and major code groups |
+| [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
 
 ## Read this first
 
