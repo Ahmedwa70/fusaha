@@ -22,6 +22,7 @@ real complexity stays inside the system.*
 | [development.md](./development.md) | Local setup, environment variables, migrations, deployment, known issues |
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
 | [product/VISION.md](./product/VISION.md) | Strategic vision and product principles |
+| [product/BOOK_LIBRARY_SPECIFICATION.md](./product/BOOK_LIBRARY_SPECIFICATION.md) | Organizational standard for adding, classifying, and linking books and references (not an implemented feature) |
 
 ## Read this first
 
