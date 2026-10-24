@@ -21,6 +21,7 @@ real complexity stays inside the system.*
 | [ai-pipeline.md](./ai-pipeline.md) | Lesson generation end to end, source ingestion, templates, billing, integrations |
 | [development.md](./development.md) | Local setup, environment variables, migrations, deployment, known issues |
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
+| [product/VISION.md](./product/VISION.md) | Strategic vision and product principles |
 
 ## Read this first
 
