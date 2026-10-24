@@ -1,0 +1,11 @@
+import type { Metadata } from "next";
+import { BookOpenIcon, LibraryBigIcon } from "lucide-react";
+import { PublicHeader } from "@/app/_components/public-header";
+import { LibraryBrowser } from "@/app/library/_components/library-browser";
+import { ROUTES } from "@/constants/routes";
+
+export const metadata: Metadata = { title: "المكتبة التعليمية | فُصحاء", description: "كتالوج كتب وموارد تعليمية مختارة لدعم تعليم اللغة العربية." };
+
+export default function LibraryPage() {
+  return <div dir="rtl" className="min-h-full overflow-hidden bg-background text-foreground"><PublicHeader homeHref={ROUTES.home} /><main><section className="border-y border-gold-100 bg-[radial-gradient(circle_at_85%_18%,rgba(184,145,77,0.16),transparent_26%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-5 py-16 dark:border-border dark:bg-[radial-gradient(circle_at_85%_18%,rgba(184,145,77,0.12),transparent_26%),linear-gradient(120deg,#111b28,#182231_55%,#101923)] sm:px-8 lg:py-24"><div className="mx-auto max-w-4xl text-center"><LibraryBigIcon className="mx-auto size-12 text-gold-600" aria-hidden="true" /><p className="mt-4 text-sm font-bold text-gold-700 dark:text-gold-300">مكتبة فُصحاء</p><h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">كتب وموارد تدعم رحلة تعلّم العربية</h1><p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-slate-300">تصفح مجموعة مختارة من الكتب والمواد التعليمية، وتعرّف على طريقة الوصول إلى كل مورد.</p></div></section><section className="px-5 py-12 sm:px-8 lg:py-16"><div className="mx-auto max-w-6xl"><div className="mb-8 flex items-end justify-between gap-4"><div><p className="text-sm font-bold text-gold-700 dark:text-gold-300">الكتالوج العام</p><h2 className="mt-2 font-heading text-3xl font-bold text-brand-950 dark:text-foreground">استكشف الكتب</h2></div><BookOpenIcon className="hidden size-9 text-gold-600 sm:block" aria-hidden="true" /></div><LibraryBrowser /></div></section></main></div>;
+}
