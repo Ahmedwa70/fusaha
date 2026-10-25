@@ -271,8 +271,8 @@ html[lang="zh"] {
    existing text-* utilities (and their proportional line-heights) are scaled once
    — no transform and no second, local scale. */
 html[lang="ar"] {
-  --ar-heading-scale: 1.05;
-  --ar-control-scale: 1.04;
+  --ar-heading-scale: 1.08;
+  --ar-control-scale: 1.07;
 }
 
 html[lang="ar"] [data-ar-type="calibrated"] :is(h1, h2, h3, h4) {

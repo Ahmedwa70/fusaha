@@ -277,7 +277,7 @@ claim that every existing screen already conforms.
   breakpoints, English typography, or Chinese typography.
 - Optical calibration (experimental, Phase 3 pilot): Noto Naskh reads smaller than the
   previous Arabic face at the same `font-size`. `globals.css` defines
-  `--ar-heading-scale: 1.05` and `--ar-control-scale: 1.04`, active only for
+  `--ar-heading-scale: 1.08` and `--ar-control-scale: 1.07`, active only for
   `html[lang="ar"]` inside a `data-ar-type="calibrated"` subtree (currently the `(public)`
   layout). Headings (h1–h4) rescale the Tailwind `--text-*` tokens, so existing `text-*`
   utilities and their proportional line-heights scale once; headings without a utility
@@ -285,9 +285,16 @@ claim that every existing screen already conforms.
   `data-ar-control`, and header nav links use the control scale. Paragraphs/body text are
   not scaled. No transform or second local scale is used; remove the attribute to
   disable the pilot. English and Chinese are unaffected.
-- Pilot evidence (homepage and products at 390/1032/1440, same-document before/after):
-  255 measured elements, 0 line-count changes, 0 new overflow, no horizontal page
-  overflow.
+- Phase 4 calibration target: the values above are total multipliers from the
+  uncalibrated Arabic baseline, not additive changes over Phase 3. Paragraphs remain at
+  1.00 because the Phase 3 evidence did not justify increasing body text. The homepage,
+  products, library, resources, help, and studio routes must be checked at 390/1032/1440
+  before treating this pilot as final. One reviewed exception at 1032px on `/help`: the
+  FAQ section heading `أسئلة يطرحها المستخدمون كثيرًا` changes from one line at 24px to
+  two lines at 25.92px; the 390px visible FAQ card headings remain single-line and the
+  page has no overflow. This is a deliberate, reviewed wrap rather than an untracked
+  layout regression. `/studio` is outside the public layout and therefore does not receive
+  this public Arabic calibration.
 - Verify local inclusion by checking the generated build assets and confirming no Arabic
   font request targets Google Fonts or another external origin. Verify Arabic glyphs,
   shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.
