@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import { IBM_Plex_Sans_Arabic, Noto_Sans_SC } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -9,10 +9,17 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { localeDirections, type Locale } from "@/i18n/config";
 import "./globals.css";
 
-const fontSans = IBM_Plex_Sans_Arabic({
-  variable: "--font-sans",
+const fontArabic = IBM_Plex_Sans_Arabic({
+  variable: "--font-arabic",
   subsets: ["arabic"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
+});
+
+const fontCjk = Noto_Sans_SC({
+  variable: "--font-cjk",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -32,7 +39,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={locale}
       dir={direction}
-      className={`${fontSans.variable} h-full antialiased`}
+      className={`${fontArabic.variable} ${fontCjk.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

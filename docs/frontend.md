@@ -246,10 +246,11 @@ claim that every existing screen already conforms.
 - Chinese is LTR even though its glyphs may be vertically or ideographically balanced;
   do not infer direction from the script. Allow normal wrapping and avoid fixed widths
   that assume Latin word lengths.
-- The current app loads `IBM_Plex_Sans_Arabic` with only the `arabic` subset. This is
-  sufficient for Arabic but is a known gap for Chinese coverage; any Chinese-facing
-  typography change must provide a verified CJK-capable fallback before treating it as
-  production-ready.
+- Arabic uses `IBM_Plex_Sans_Arabic` with the `arabic` subset. Chinese uses the centrally
+  configured `Noto_Sans_SC` family through `--font-cjk`, while English keeps the existing
+  Arabic/Latin-compatible stack with explicit system Latin fallbacks. The generated build
+  output must be checked for real CJK unicode ranges; a family name or system fallback alone
+  is not sufficient evidence of Chinese coverage.
 
 #### Shared rules for mixed content and UI
 
