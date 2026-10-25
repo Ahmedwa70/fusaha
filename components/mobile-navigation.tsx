@@ -67,7 +67,7 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
           {navigationLinks.map(([label, href]) => {
             const isActive = href === pathname || (pathname === ROUTES.home && label === "home");
             return (
-              <a key={href + label} href={href} onClick={closeMobileMenu} aria-current={isActive ? "page" : undefined} className={`rounded-lg border border-transparent px-3 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 dark:text-foreground dark:hover:bg-gold-900/40 dark:focus-visible:ring-gold-300 ${isActive ? "border-gold-200 bg-gold-50/80" : ""}`}>
+              <a key={href + label} href={href} onClick={closeMobileMenu} aria-current={isActive ? "page" : undefined} className={`rounded-lg border border-transparent px-3 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 dark:text-foreground dark:hover:bg-gold-900/40 dark:focus-visible:ring-gold-300 ${isActive ? "border-gold-200 bg-gold-50/80 dark:bg-background" : ""}`}>
                 {t(label)}
               </a>
             );
