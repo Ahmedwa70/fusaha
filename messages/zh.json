@@ -8,6 +8,29 @@
     "darkMode": "深色模式",
     "language": "语言"
   },
+  "public": {
+    "brandAlt": "Fusaha",
+    "mainNavigation": "主导航",
+    "mobileNavigation": "移动端导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "navigationTitle": "导航",
+    "home": "首页",
+    "products": "产品",
+    "library": "图书馆",
+    "resources": "资源",
+    "pricing": "价格",
+    "help": "帮助中心",
+    "about": "关于 Fusaha",
+    "login": "登录",
+    "startNow": "立即开始",
+    "tools": "工具",
+    "writingEngine": "写作引擎",
+    "educationalLibrary": "学习资料库",
+    "howItWorks": "平台如何运作",
+    "description": "帮助打造更好学习体验的阿拉伯语平台。",
+    "copyright": "版权所有 © {year} Fusaha。保留所有权利。"
+  },
   "landing": {
     "hero": {
       "headline": "把课程素材变成互动课程",
@@ -549,7 +572,7 @@
       "fieldActive": "套餐已启用",
       "fieldCreatedAt": "创建日期",
       "fieldBadgeLabel": "顶部标签文字",
-      "fieldBadgeLabelDescription": "以横幅形式显示在卡片上方，例如“性价比之选”。留空则不显示任何标签（自动出现的“最超值”标签除外）。",
+      "fieldBadgeLabelDescription": "��横幅形式显示在卡片上方，例如“性价比之选”。留空则不显示任何标签（自动出现的“最超值”标签除外）。",
       "fieldSubtitle": "名称下方的副标题",
       "fieldSubtitleDescription": "显示在套餐名称下方的简短说明，例如“适合高强度、持续使用”。",
       "fieldFooterText": "卡片底部文字",
@@ -881,7 +904,7 @@
       },
       "purchaseProcessing": "正在确认支付……积分将很快添加到您的账户。",
       "purchaseSuccess": "支付成功，积分已添加到您的账户。",
-      "purchaseDelayed": "支付成功，但余额更新时间比预期长。请在一分钟后刷新页面，如果问题持续存在，请联系管理员。",
+      "purchaseDelayed": "支付成功，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
       "purchaseCancelled": "支付已取消，未产生任何扣款。",
       "errors": {
         "packageNotFound": "所选套餐不可用。",

@@ -8,6 +8,29 @@
     "darkMode": "الوضع الليلي",
     "language": "اللغة"
   },
+  "public": {
+    "brandAlt": "فُصحاء",
+    "mainNavigation": "التنقل الرئيسي",
+    "mobileNavigation": "التنقل على الهاتف",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "navigationTitle": "التنقل",
+    "home": "الرئيسية",
+    "products": "المنتجات",
+    "library": "المكتبة",
+    "resources": "الموارد",
+    "pricing": "الأسعار",
+    "help": "مركز المساعدة",
+    "about": "عن فُصحاء",
+    "login": "تسجيل الدخول",
+    "startNow": "ابدأ الآن",
+    "tools": "الأدوات",
+    "writingEngine": "محرك الكتابة",
+    "educationalLibrary": "المكتبة التعليمية",
+    "howItWorks": "كيف تعمل المنصة",
+    "description": "منصة عربية لصناعة تجارب تعليمية أفضل.",
+    "copyright": "حقوق النشر © {year} فُصحاء. جميع الحقوق محفوظة."
+  },
   "landing": {
     "hero": {
       "headline": "حوّل مصدر الدرس إلى حصة تفاعلية",
@@ -523,7 +546,7 @@
       "filterAllStatuses": "كل الحالات",
       "statusActive": "مفعّلة",
       "statusInactive": "موقوفة",
-      "columnName": "اسم الباقة",
+      "columnName": "اسم الباق��",
       "columnCreditsAmount": "عدد الأرصدة",
       "columnPrice": "السعر",
       "columnBadge": "البادچ",
@@ -781,7 +804,7 @@
       "submitName": "حفظ الاسم",
       "submitPassword": "تحديث كلمة المرور",
       "nameUpdateSuccess": "تم تحديث الاسم بنجاح.",
-      "passwordUpdateSuccess": "تم تحديث كلمة المرور بنجاح.",
+      "passwordUpdateSuccess": "تم تحديث كلمة المرور ��نجاح.",
       "errors": {
         "invalidData": "بيانات غير صحيحة.",
         "updatePasswordFailed": "تعذر تحديث كلمة المرور. حاول مرة أخرى."
@@ -1035,7 +1058,7 @@
         "fileRequired": "من فضلك اختر ملفًا لرفعه.",
         "unsupportedFileType": "صيغة الملف غير مدعومة. من فضلك ارفع ملف PDF أو Word (.docx) فقط.",
         "pdfTooLong": "يتجاوز ملف الـ PDF الحد الأقصى (صفحتان). من فضلك اختصر الملف بدلاً من رفعه كاملاً.",
-        "fileTooLong": "يتجاوز ملف Word الحد الأقصى (صفحتان تقريبًا). من فضلك اختصر الملف بدلاً من رفعه كاملاً.",
+        "fileTooLong": "يتجاوز ��لف Word الحد الأقصى (صفحتان تقريبًا). من فضلك اختصر الملف بدلاً من رفعه كاملاً.",
         "fileExtractionFailed": "تعذّرت قراءة محتوى الملف. تأكد من أنه غير تالف أو محمي بكلمة مرور.",
         "imagesRequired": "من فضلك أضف صورة واحدة على الأقل.",
         "tooManyImages": "الحد الأقصى صورتان لكل درس.",

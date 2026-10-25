@@ -8,6 +8,29 @@
     "darkMode": "Dark Mode",
     "language": "Language"
   },
+  "public": {
+    "brandAlt": "Fusaha",
+    "mainNavigation": "Main navigation",
+    "mobileNavigation": "Mobile navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "navigationTitle": "Navigation",
+    "home": "Home",
+    "products": "Products",
+    "library": "Library",
+    "resources": "Resources",
+    "pricing": "Pricing",
+    "help": "Help Center",
+    "about": "About Fusaha",
+    "login": "Log in",
+    "startNow": "Get started",
+    "tools": "Tools",
+    "writingEngine": "Writing engine",
+    "educationalLibrary": "Learning library",
+    "howItWorks": "How it works",
+    "description": "An Arabic platform for creating better learning experiences.",
+    "copyright": "Copyright © {year} Fusaha. All rights reserved."
+  },
   "landing": {
     "hero": {
       "headline": "Turn a lesson source into an interactive class",
