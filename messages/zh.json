@@ -271,7 +271,7 @@
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
       "noDiacritics": "答案字段不应包含阿拉伯语变音符号。",
-      "pageTitleMissingSeparator": "页面标题必须包含分�����符 \"|\"。",
+      "pageTitleMissingSeparator": "页面标题必须包含分�������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
       "vocabCount": "词汇项数量必须在 15 到 35 之间。",
@@ -1107,5 +1107,9 @@
     "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "没有匹配的书籍", "emptyDescription": "请尝试更改搜索词或筛选选项。",
     "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
     "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学者阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿拉伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+  },
+  "resourcesPage": {
+    "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
+    "items": {"interactive-lesson-generator": {"title": "互动课程生成器", "description": "将课程来源转换为可审核并可用于课堂的互动体验。", "action": "创建课程", "imageAlt": "Fusaha 互动课程创建器预览"}, "arabic-writing-studio": {"title": "阿拉伯语写作工作室", "description": "用于整理阿拉伯语内容并将其转化为学习材料的专用环境。", "action": "打开工作室", "imageAlt": "Fusaha 阿拉伯语写作工作室预览"}}
   }
 }
