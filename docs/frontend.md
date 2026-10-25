@@ -13,7 +13,7 @@ and fall through to the Next.js built-in 404.
 
 | Path | Type | Notes |
 |---|---|---|
-| `app/layout.tsx` | Server | Resolves the locale server-side, sets `<html lang dir>`, loads `IBM_Plex_Sans_Arabic`. Provider stack: `NextTopLoader` → `ThemeProvider` → `NextIntlClientProvider` → `DirectionProvider` → `TooltipProvider`. `generateMetadata()` pulls title and description from the `app` message namespace |
+| `app/layout.tsx` | Server | Resolves the locale server-side, sets `<html lang dir>`, and loads the locale-aware local Arabic font, preserved English stack, and CJK font. Provider stack: `NextTopLoader` → `ThemeProvider` → `NextIntlClientProvider` → `DirectionProvider` → `TooltipProvider`. `generateMetadata()` pulls title and description from the `app` message namespace |
 | `/` | Server | Public marketing landing page — hero, before/after, six-step explainer, levels, features, CTA, footer. Swaps the arrow icon by direction |
 | `/unauthorized` | Server | Permission-denied screen; `requirePermission()` redirects here |
 
@@ -246,11 +246,43 @@ claim that every existing screen already conforms.
 - Chinese is LTR even though its glyphs may be vertically or ideographically balanced;
   do not infer direction from the script. Allow normal wrapping and avoid fixed widths
   that assume Latin word lengths.
-- Arabic uses `IBM_Plex_Sans_Arabic` with the `arabic` subset. Chinese uses the centrally
-  configured `Noto_Sans_SC` family through `--font-cjk`, while English keeps the existing
-  Arabic/Latin-compatible stack with explicit system Latin fallbacks. The generated build
-  output must be checked for real CJK unicode ranges; a family name or system fallback alone
-  is not sufficient evidence of Chinese coverage.
+## Official Typography and Local Font Asset Standard
+
+- Arabic uses the centrally loaded local `Noto Naskh Arabic` variable font from
+  `public/fonts/noto-naskh-arabic/NotoNaskhArabic[wght].ttf`. It is the official Arabic
+  font for headings, body text, navigation, forms, dialogs, tables, dashboard, studio,
+  and shared UI.
+- The bundled font is sourced from the Google Fonts repository's `ofl/notonaskharabic`
+  directory and records the upstream Noto source commit, archive metadata, and SIL Open
+  Font License 1.1 in `public/fonts/noto-naskh-arabic/METADATA.pb` and `OFL.txt`.
+  The checked-in file is the official variable TTF, version metadata points to Noto
+  Naskh Arabic v2.021, and its supported `wght` axis is 400–700.
+- `next/font/local` defines the local asset as `--font-arabic`; Arabic does not use
+  `next/font/google`, a Google Fonts CSS import, or a runtime external font request.
+- English preserves its existing IBM Plex Sans Arabic/Latin-compatible stack through
+  `--font-english`; Chinese preserves `Noto Sans SC` through `--font-cjk`. The central
+  `--font-locale` variable selects `--font-arabic` for `lang="ar"`, `--font-cjk` for
+  `lang="zh"`, and `--font-english` for English and other LTR locales.
+- `lang` and `dir` remain controlled by the existing i18n registry. Font selection must
+  follow the actual `lang`, not a component-local direction guess.
+- New components must use `font-sans` / `font-heading` and must not add a local Arabic
+  font override. A new weight requires verifying the variable axis, updating this record,
+  and checking rendered Arabic at narrow and wide widths.
+- Verify local inclusion by checking the generated build assets and confirming no Arabic
+  font request targets Google Fonts or another external origin. Verify Arabic glyphs,
+  shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.
+- Keep `Noto Sans SC` and the English stack unchanged unless a separate typography decision
+  is approved. Any exception must be documented next to the component and reviewed in all
+  three locales.
+
+### Typography evidence and maintenance
+
+- Source URL: `https://github.com/google/fonts/tree/main/ofl/notonaskharabic`.
+- Upstream archive metadata: Noto Naskh Arabic v2.021; source commit is recorded in
+  `METADATA.pb`. Keep `OFL.txt` beside the font when redistributing it.
+- When updating the font, replace the TTF and metadata/license together, recheck the axis
+  range and coverage, run TypeScript and production build checks, inspect generated assets,
+  and compare Arabic/English/Chinese pages before merging.
 
 #### Shared rules for mixed content and UI
 

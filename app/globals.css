@@ -6,7 +6,11 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --font-locale: var(--font-arabic), Arial, Helvetica, sans-serif;
+  --font-locale: var(--font-english), Arial, Helvetica, sans-serif;
+}
+
+html[lang="ar"] {
+  --font-locale: var(--font-arabic), Arial, sans-serif;
 }
 
 html[lang="zh"] {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import { IBM_Plex_Sans_Arabic, Noto_Sans_SC } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
 import { NextIntlClientProvider } from "next-intl";
@@ -9,8 +10,16 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { localeDirections, type Locale } from "@/i18n/config";
 import "./globals.css";
 
-const fontArabic = IBM_Plex_Sans_Arabic({
+const fontArabic = localFont({
+  src: "../public/fonts/noto-naskh-arabic/NotoNaskhArabic[wght].ttf",
   variable: "--font-arabic",
+  weight: "400 700",
+  style: "normal",
+  display: "swap",
+});
+
+const fontEnglish = IBM_Plex_Sans_Arabic({
+  variable: "--font-english",
   subsets: ["arabic"],
   weight: ["100", "200", "300", "400", "500", "600", "700"],
 });
@@ -39,7 +48,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang={locale}
       dir={direction}
-      className={`${fontArabic.variable} ${fontCjk.variable} h-full antialiased`}
+      className={`${fontArabic.variable} ${fontEnglish.variable} ${fontCjk.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
