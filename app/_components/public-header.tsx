@@ -40,7 +40,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
   return (
     <header className="mx-auto flex max-w-[1400px] items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:grid lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:py-3">
       <Link className="lg:justify-self-start" href={homeHref} aria-label={t("brandAlt")}><Image src="/book-transparent.png" alt={t("brandAlt")} width={112} height={60} className="h-12 w-auto object-contain" priority /></Link>
-      <nav className="hidden items-center gap-7 text-[15px] font-semibold text-brand-900 dark:text-foreground lg:flex rtl:translate-x-[136px]" aria-label={t("mainNavigation")}>
+      <nav className="hidden items-center gap-7 text-[15px] font-semibold text-brand-900 dark:text-foreground lg:flex ltr:translate-x-0 min-[1200px]:ltr:-translate-x-[100px] rtl:translate-x-[136px]" aria-label={t("mainNavigation")}>
         <Link href={homeHref} className={linkClass(homeHref)}>{t("home")}</Link>
         <Link href={ROUTES.products} className={linkClass(ROUTES.products)}>{t("products")}</Link>
         <Link href={ROUTES.library} className={linkClass(ROUTES.library)}>{t("library")}</Link>
