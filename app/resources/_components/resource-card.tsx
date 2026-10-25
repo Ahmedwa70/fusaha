@@ -14,9 +14,9 @@ export function ResourceCard({ resource }: { resource: ResourceItem }) {
         </span>
       </div>
       <div className="flex flex-1 flex-col p-5 text-right">
-        <h3 className="font-heading text-xl font-bold text-brand-950 dark:text-card-foreground">{resource.title}</h3>
-        <p className="mt-3 flex-1 text-sm leading-7 text-brand-800 dark:text-brand-100/70">{resource.description}</p>
-        <Link href={resource.href} className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <h3 className="font-heading text-xl font-bold text-foreground dark:text-card-foreground">{resource.title}</h3>
+        <p className="mt-3 flex-1 text-sm leading-7 text-foreground/75 dark:text-brand-100/70">{resource.description}</p>
+        <Link href={resource.href} className="mt-5 inline-flex w-fit items-center gap-2 rounded-lg bg-foreground px-4 py-2.5 text-sm font-bold text-background transition-colors hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           {resource.action}
           <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" />
         </Link>
