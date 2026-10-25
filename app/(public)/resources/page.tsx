@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowLeftIcon, BookOpenIcon, PenLineIcon, WandSparklesIcon } from "lucide-react";
-import { PublicHeader } from "@/app/_components/public-header";
-import { ResourceCard } from "@/app/resources/_components/resource-card";
+import { ResourceCard } from "@/app/(public)/resources/_components/resource-card";
 import { resourceCatalog } from "@/content/resources";
 import { ROUTES } from "@/constants/routes";
 
@@ -16,8 +15,7 @@ const educationalResources = resourceCatalog.filter((resource) => resource.kind 
 export default function ResourcesPage() {
   return (
     <div dir="rtl" className="min-h-full overflow-hidden bg-background text-foreground">
-      <PublicHeader homeHref={ROUTES.home} />
-      <main>
+            <main>
         <section className="border-y border-border bg-background px-5 py-16 sm:px-8 lg:py-24">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">موارد فُصحاء</p>

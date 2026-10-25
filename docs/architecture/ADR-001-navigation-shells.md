@@ -109,6 +109,16 @@ This decision does not implement or redesign the shells. It does not change rout
 - `/dashboard/lessons/[id]/run/frame` and `/l/[token]/frame` are route handlers used to render/embed lesson frames, not navigation pages.
 - The requested future pages for Pricing, Resources, Help Center, and About Fusaha have no current routes and therefore remain unclassified until routes are created.
 
+## Public footer ownership policy
+
+The public website shell owns the single complete footer component at `app/_components/site-footer.tsx`. It is rendered exactly once by `app/(public)/layout.tsx`, after the route content, and is not rendered manually by public pages.
+
+The public route group currently covers `/`, `/products`, `/library`, `/library/[slug]`, `/resources`, and `/help`. New public pages must be placed in `app/(public)/` so they inherit `PublicHeader` and `SiteFooter` automatically. A public page must not add a complete footer, duplicate the footer markup, or add a second public layout wrapper.
+
+Authentication pages, teacher workspaces, lesson studio, dashboards, administration, shared lesson players, and access-denied pages remain outside this public layout. They must retain their existing shell or use a separately documented minimal shell; they do not receive the marketing footer automatically.
+
+`SiteFooter` is copied from the approved homepage footer and is the only source of truth for its logo, description, link groups, destinations, RTL behavior, dynamic Arabic copyright line, responsive layout, theme colors, hover states, and keyboard focus states. The public layout uses a flex column with a flexible content region, so short pages place the footer after the content without fixed or absolute positioning and long pages flow naturally into it.
+
 ## Acceptance criteria for later implementation
 
 1. Every rendered page route has one explicit shell classification or is listed as unresolved above.

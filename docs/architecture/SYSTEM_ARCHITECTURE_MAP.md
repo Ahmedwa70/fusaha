@@ -47,8 +47,11 @@ flowchart TD
 ### 3.2 Layouts and navigation
 
 - `app/layout.tsx` is the root shell. It establishes locale/direction, Arabic font and theme providers, translations, tooltip support, and global loading UI.
+- `app/(public)/layout.tsx` is the shared public website shell. It renders `PublicHeader`, the route content, and `SiteFooter` exactly once.
 - `app/_components/public-header.tsx` is the shared public header. Its desktop navigation includes the Arabic link `المكتبة` between `المنتجات` and `الموارد`, using `ROUTES.library`.
+- `app/_components/site-footer.tsx` is the single source of truth for the complete public footer. Public pages must not render footer markup directly.
 - `components/mobile-navigation.tsx` provides the responsive public navigation and includes the same library destination.
+- Public pages are grouped under `app/(public)/`; authentication and application workspaces remain outside this shell.
 - `app/dashboard/layout.tsx` calls `requireTeacher()` and renders `DashboardHeader` before teacher content.
 - The admin area has its own sidebar and layout components under `app/admin/`; the current authorization model is role/permission based rather than public navigation based.
 - Shared UI primitives live under `components/ui/`; feature-specific components are colocated under route `_components` directories.
