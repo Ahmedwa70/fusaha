@@ -1088,5 +1088,26 @@
         "unexpectedError": "Something unexpected happened. Please try again."
       }
     }
+  },
+  "products": {
+    "eyebrow": "Fusaha products",
+    "title": "Arabic tools that make a difference in education",
+    "description": "Explore the products available today and see clearly what you can use now and what is available to preview.",
+    "interactiveTitle": "Interactive lesson generator",
+    "interactiveDescription": "Turn a lesson source into a complete interactive lesson, then review and approve it from your workspace.",
+    "interactiveAction": "Create a lesson",
+    "writingTitle": "Arabic writing studio",
+    "writingDescription": "Explore how content can be transformed into an engaging learning experience.",
+    "writingAction": "Explore the studio",
+    "available": "Available",
+    "informational": "Overview",
+    "developmentTitle": "In development",
+    "developmentDescription": "Products we are developing carefully, with availability details to follow when they are ready.",
+    "inDevelopment": "In development",
+    "engineTitle": "Arabic letter drawing engine",
+    "engineDescription": "An educational tool for practicing Arabic letter forms and following their writing steps.",
+    "productImageAlt": "Preview of {title}",
+    "engineLightAlt": "Preview of the Arabic letter drawing engine in light mode",
+    "engineDarkAlt": "Preview of the Arabic letter drawing engine in dark mode"
   }
 }

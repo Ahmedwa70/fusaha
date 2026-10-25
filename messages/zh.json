@@ -271,7 +271,7 @@
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
       "noDiacritics": "答案字段不应包含阿拉伯语变音符号。",
-      "pageTitleMissingSeparator": "页面标题必须包含分隔符 \"|\"。",
+      "pageTitleMissingSeparator": "页面标题必须包含分���符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
       "vocabCount": "词汇项数量必须在 15 到 35 之间。",
@@ -459,7 +459,7 @@
       "rolesList": "查看角色列表",
       "rolesCreate": "添加角色",
       "rolesUpdate": "编辑角色",
-      "rolesDelete": "删除角色",
+      "rolesDelete": "删��角色",
       "lessonsList": "查看课程列表",
       "lessonsRestore": "恢复课程",
       "lessonsDelete": "永久删除课程",
@@ -917,7 +917,7 @@
       },
       "purchaseProcessing": "正在确认支付……积分将很快添加到您的账户。",
       "purchaseSuccess": "支付成功，积分已添加到您的账户。",
-      "purchaseDelayed": "支付成功，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
+      "purchaseDelayed": "支付成��，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
       "purchaseCancelled": "支付已取消，未产生任何扣款。",
       "errors": {
         "packageNotFound": "所选套餐不可用。",
@@ -938,7 +938,7 @@
       "share": "分享",
       "approve": "批准",
       "contentTitle": "课程内容",
-      "approvedContentLockedTitle": "该版本已批准",
+      "approvedContentLockedTitle": "该版本已批��",
       "approvedContentLockedDescription": "已批准的内容已被锁定，因为它正是「运行课程」和任何分享链接当前使用的内容。请在下方的版本历史中使用「恢复」来创建可编辑的草稿。",
       "generatingTitle": "正在生成课程…",
       "generatingDescription": "生成可能需要一些时间。你可以放心离开此页面 —— 我们会在后台继续处理，回来时课程就会准备好。",
@@ -1081,5 +1081,26 @@
         "unexpectedError": "发生了意外错误，请重试。"
       }
     }
+  },
+  "products": {
+    "eyebrow": "Fusaha 产品",
+    "title": "为教育带来改变的阿拉伯语工具",
+    "description": "探索当前可用的产品，清楚了解现在可以使用的功能以及可供体验的内容。",
+    "interactiveTitle": "互动课程生成器",
+    "interactiveDescription": "将课程来源转换为完整的互动课程，并在工作区中进行审核和确认。",
+    "interactiveAction": "创建课程",
+    "writingTitle": "阿拉伯语写作工作室",
+    "writingDescription": "了解如何将内容转化为更具吸引力的学习体验。",
+    "writingAction": "探索工作室",
+    "available": "可用",
+    "informational": "产品介绍",
+    "developmentTitle": "正在开发",
+    "developmentDescription": "我们正在认真开发这些产品，准备就绪后将公布可用详情。",
+    "inDevelopment": "正在开发",
+    "engineTitle": "阿拉伯字母绘制引擎",
+    "engineDescription": "用于练习阿拉伯字母形态并跟随书写步骤的教育工具。",
+    "productImageAlt": "{title} 预览",
+    "engineLightAlt": "浅色模式下的阿拉伯字母绘制引擎预览",
+    "engineDarkAlt": "深色模式下的阿拉伯字母绘制引擎预览"
   }
 }
