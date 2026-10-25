@@ -86,12 +86,12 @@ The application must use semantic roles rather than page-specific palettes. The 
 | Elevated surface | `--popover`: same as `--card` | Not verifiable from an open popover/dialog state | Keep `--popover` equal to `--card` until a homepage overlay is measured | Hover/open/focus states were not measured in this pass. |
 | Border/divider | `--border`: `lab(100% 0 0 / 0.12)` | Live body/header/button computed border: same `lab(100 0 0 / 0.12)`; button input border is `/0.16` | Keep `--border`; keep `--input` at `/0.16` for fields/controls | Exact border role varies by control; focus and hover borders need separate measurements. |
 | Form/control surface | `--input`: `lab(100% 0 0 / 0.16)` | Live button background: `oklab(0.999998 -0.00000980496 0.0000234246 / 0.048)` | Use `--input` for fields; use `--secondary`/component tokens for translucent controls | Button is not necessarily a form input; this is the closest verified control evidence, not an exact input value. |
-| Primary action / gold | `--primary`: `lab(65.1506% 13.7743 46.2724)`; `--primary-foreground`: `lab(3.10187% -2.88614 -5.23812)` | Live page visibly confirms gold primary CTA with dark text, but exact CTA selector/value was not isolated | Keep current `--primary`/`--primary-foreground` as the unified gold CTA pair | Exact rendered CTA color and contrast ratio require sampling the specific CTA element. |
+| Primary action / gold | Light: `--primary`: `oklch(0.34 0.075 155)`; `--primary-foreground`: `oklch(0.985 0.004 90)` (green-toned source token). Dark: `--primary`: `lab(65.1506% 13.7743 46.2724)`; `--primary-foreground`: `lab(3.10187% -2.88614 -5.23812)` (gold-toned). | Live homepage evidence confirms a gold primary CTA in dark mode; the light token is source-confirmed but its use as the primary light CTA is not the approved navy treatment for recently reviewed public surfaces | Preserve the current pair where `primary` is semantically required; use `foreground/background` for the approved light-mode navy CTA treatment documented below | Exact contrast and all consumer states require broader browser measurement. |
 | Secondary action | `--secondary`: `lab(16.6665% -10.8145 -14.1479)`; foreground equals `--foreground` | Live page visibly confirms a darker outlined secondary action | Keep current `--secondary` pair and `--border` outline | Exact secondary button computed background was not isolated. |
 | Accent/selected | `--accent`: `lab(44.2024% 12.091 32.4918)`; foreground `lab(96.5967% 0.633419 7.66813)` | Gold/warm accent is visible, but selected/hover state was not captured | Keep current `--accent` pair; use it consistently for selected/hover surfaces | Interactive states were not measured in this pass. |
 | Focus indicator | `--ring`: `lab(56.1949% -14.0995 -17.0568)` | Not verifiable without keyboard focus capture | Keep `--ring`; require visible focus and contrast testing | Needs browser keyboard-state evidence and contrast measurement. |
 | Sidebar/navigation | `--sidebar`: same dark background; sidebar border `/0.12` | Live public header is transparent over the dark canvas; no sidebar was sampled | Use `--background` for public chrome and existing `--sidebar-*` family for dashboards | Public header and dashboard sidebar are different functional surfaces; exact public mobile menu state remains unverified. |
-| Footer/deep brand surface | `--brand-950` source token; page implementation uses `bg-brand-950` | Live footer was not isolated in this viewport pass | Keep `--brand-950` only for intentional deep-brand/footer surfaces; do not use it as a substitute for `--background` | Exact deployed footer value and relationship to homepage canvas need a full-page sample. |
+| Footer/deep brand surface | Approved public footer implementation uses `bg-foreground` in light mode and `dark:bg-background` in dark mode; `--brand-950` remains an available legacy brand token | Repository and browser verification confirmed the homepage footer and CTA panels use the navy semantic foreground/light background pairing | Use `bg-foreground`/`text-background` for the reviewed light public footer; preserve `dark:bg-background`/`dark:text-foreground` in dark mode | Other footers and intentional deep-brand surfaces have not been fully audited. |
 | Links | Existing foreground/brand styles plus focus ring | Live ordinary link sampled as `lab(95.4012 -0.0117719 3.05686)` | Use semantic foreground/brand link roles with `--ring`; no new link color yet | Hover/visited/link-on-gold states remain unmeasured. |
 | Gradients/decorative imagery | Page-level gradients and `fusaha-hero.png` | Live hero visibly uses dark canvas plus a light editorial illustration; exact gradient layers not reliably isolated | Preserve homepage gradient/image treatment as decorative exceptions, documented and theme-aware | Exact gradient stops, image blend mode, and mobile treatment need DOM/CSS inspection and screenshots. |
 
@@ -250,6 +250,58 @@ The sequence below follows the current dependency structure and minimizes regres
 10. **Acceptance and documentation.** Record approved brand exceptions, unresolved decisions, browser evidence, and any follow-up items. Do not start implementation work from this document until the decisions and scope are approved.
 
 This sequence is a recommendation. It does not authorize implementation and should not be interpreted as a request to redesign unrelated areas.
+
+## Mandatory Rules for New Pages and Components
+
+The following rules are binding for every new page and component. They apply to both light and dark themes and are part of the implementation contract, not optional styling guidance.
+
+1. Before creating or modifying a page or component, consult this specification.
+2. Use approved semantic tokens such as `bg-background`, `text-foreground`, `bg-card`, `text-card-foreground`, `bg-popover`, `text-muted-foreground`, `border-border`, `bg-input`, `ring-ring`, and the existing state/sidebar token families according to the element's actual role.
+3. Do not introduce a fixed color, `brand-*` scale, or `primary` token merely because it exists. Verify its actual light and dark meaning before using it.
+4. Do not use the legacy green brand scale as a light-mode primary background or primary button in surfaces where navy has been approved, unless the exception is documented and explicitly approved.
+5. Every new component must work in both light and dark themes with readable text, icons, borders, controls, and focus indicators.
+6. Hover, focus-visible, active, selected, disabled, loading, and validation states must use the same semantic color system as the resting state.
+7. Do not create parallel color variables, page-specific theme providers, or a second token system.
+8. Review the colors already present in the component; do not merely add a `dark:` class while leaving an unapproved light-mode color in place.
+9. Run a visual check in both themes, plus TypeScript and `git diff --check` when available.
+10. If requirements conflict or an approved value is missing, record the conflict and request a decision instead of guessing.
+
+### Verified navy light-mode adoption
+
+The following repository changes were verified from the current source and browser checks; they are implementation facts, not a claim that the entire platform is green-free:
+
+| Area | Verified light-mode treatment | Dark-mode treatment | Verification status | Known exception/gap |
+|---|---|---|---|---|
+| Homepage featured tool card | `bg-foreground`, `text-background`, with navy CTA treatment | `dark:bg-card`, `dark:text-card-foreground` | Verified in `app/page.tsx` and browser at desktop | Other homepage decorative gradients and image layers remain to be audited. |
+| Homepage CTAs and writing CTA | `bg-foreground`/`text-background`; writing CTA is scoped by `.writing-section` | `dark:bg-primary`/`dark:text-primary-foreground` | Verified in source and browser | `primary` remains green-toned in the light token definition; the reviewed CTA override is intentional and scoped. |
+| Homepage invitation panel and footer | `bg-foreground` with `text-background`; footer uses `bg-foreground` | `dark:bg-background` with foreground/muted text | Verified in source and browser, including mobile footer | Other site footers are not covered by this row. |
+| Public header actions | `bg-foreground`/`text-background` for the reviewed CTA | `dark:bg-primary`/`dark:text-primary-foreground` | Verified in source and browser | Header height and active-link behavior were checked; mobile navigation remains a separate audit area. |
+| Products featured card | `bg-foreground`/`text-background` | `dark:bg-card`/`dark:text-card-foreground` | Verified in `app/products/page.tsx` and browser | Non-featured cards and product gradients require broader state review. |
+| Library cards and actions | `text-foreground`; reviewed actions use `bg-foreground`/`text-background` | Actions restore `dark:bg-primary` and dark foreground pairing | Verified in library source and browser | Library detail page and filters are not fully audited. |
+| Resources cards and CTA panel | `text-foreground`; reviewed actions and panel use `bg-foreground`/`text-background` | Reviewed actions use `dark:bg-primary`; panel uses `dark:bg-background` | Verified in resources source and browser | Resource image backplates and all nested states require broader review. |
+| Active public navigation | Active route/hash receives `text-gold-700` in light mode and `dark:text-gold-300` in dark mode | Same semantic gold relationship | Verified in `public-header.tsx` and route checks | Mobile active navigation and all locales remain unverified. |
+
+The verified scope above must not be generalized to the whole application. A page or component not listed as verified remains uninspected until it passes the checks in Section I.
+
+### Role mapping for the reviewed public surfaces
+
+| Color role | Approved semantic token/class | Light value from current CSS | Dark value from current CSS | Reviewed usage | Verification / exception |
+|---|---|---|---|---|---|
+| Main canvas | `bg-background` / `text-foreground` | `--background: oklch(0.985 0.004 90)`; `--foreground: oklch(0.22 0.035 240)` | `--background: lab(4.43965% -1.75043 -5.15133)`; `--foreground: lab(95.4012% -0.0117719 3.05686)` | Public page canvas and ordinary text | Source-verified; full contrast matrix pending. |
+| Standard card | `bg-card` / `text-card-foreground` | `--card: oklch(1 0 0)`; `--card-foreground: oklch(0.22 0.035 240)` | `--card: lab(8.39645% -3.98012 -7.53505)`; `--card-foreground: lab(95.4012% -0.0117719 3.05686)` | Library/product cards and dark featured-card fallback | Source-verified; all consumers not audited. |
+| Approved light navy surface | `bg-foreground` / `text-background` | `--foreground: oklch(0.22 0.035 240)`; `--background: oklch(0.985 0.004 90)` | Use explicit dark override appropriate to the component, normally `bg-card` or `bg-background` | Reviewed public CTAs, featured panels, and footer | Verified in listed surfaces; not a replacement for every `bg-primary`. |
+| Gold accent and active link | `text-gold-700`, `text-gold-300`, `bg-gold-300`, existing `gold-*` tokens | `--gold-700: oklch(0.52 0.08 70)`; `--gold-300: oklch(0.85 0.08 85)` | Gold scale variables are unchanged by `.dark`; component contrast and usage determine the rendered result | Active links, badges, icons, selected accents | Source-verified; contrast for every combination remains pending. |
+| Primary semantic action | `bg-primary` / `text-primary-foreground` | `--primary: oklch(0.34 0.075 155)`; `--primary-foreground: oklch(0.985 0.004 90)` | `--primary: lab(65.1506% 13.7743 46.2724)`; `--primary-foreground: lab(3.10187% -2.88614 -5.23812)` | Components that semantically require the primary token | Important conflict: light `primary` is green-toned; do not call it navy or replace it without approval. |
+| Secondary/muted surface | `bg-secondary`, `bg-muted`, `text-muted-foreground` | `--secondary: oklch(0.94 0.025 155)`; `--muted: oklch(0.96 0.006 240)`; `--muted-foreground: oklch(0.52 0.025 240)` | `--secondary: lab(16.6665% -10.8145 -14.1479)`; `--muted: lab(13.0129% -2.89283 -6.43002)`; `--muted-foreground: lab(60.5861% -3.16283 -6.54073)` | Supporting copy, secondary controls, and muted surfaces | Source-verified; exact component-by-component adoption is incomplete. |
+| Borders and focus | `border-border`, `ring-ring` | `--border: oklch(0.91 0.01 240)`; `--ring: oklch(0.42 0.075 225)` | `--border: lab(100% 0 0 / 0.12)`; `--ring: lab(56.1949% -14.0995 -17.0568)` | Dividers, control outlines, focus-visible states | Source-verified; keyboard contrast sweep pending. |
+| Functional states | `destructive`, `success`, `warning`, `info` families | `--destructive: oklch(0.58 0.22 27)`; `--success: oklch(0.92 0.06 145)`; `--warning: oklch(0.93 0.08 85)`; `--info: oklch(0.92 0.05 230)` | `--destructive: oklch(0.63 0.22 27)`; `--success: oklch(0.3 0.08 145)`; `--warning: oklch(0.34 0.08 75)`; `--info: oklch(0.3 0.08 230)` | Shared status and validation roles | Source-verified; broad browser and contrast verification pending. |
+
+### Evidence status and coverage boundary
+
+- **Documented and verified:** current provider strategy, current CSS token values, and the listed navy/active-link changes in the homepage, products, library, resources, public header, and homepage footer.
+- **Documented but not fully verified:** complete route coverage, all hover/focus/disabled/loading/error states, all mobile navigation controls, all locales, and all dashboard/admin consumers.
+- **Proposed, not yet approved:** replacing or renaming the light-mode green `--primary` token globally; changing the centralized theme values; removing legacy `brand-*` scales; or declaring the whole platform green-free.
+- **Not inspected in this task:** full authentication, dashboard, admin, lesson studio, all library detail states, all resource nested states, and non-homepage footers.
 
 ## Unresolved Decisions Requiring Approval
 
