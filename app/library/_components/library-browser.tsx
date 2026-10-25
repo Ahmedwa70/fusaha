@@ -13,17 +13,17 @@ function BookCard({ book }: { book: LibraryBook }) {
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold-200 bg-card shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg dark:border-border">
       <div className="relative flex h-44 items-center justify-center overflow-hidden bg-secondary">
         {book.cover ? <Image src={book.cover} alt={`غلاف ${book.title}`} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" /> : <BookOpenIcon className="size-14 text-gold-600" aria-hidden="true" />}
-        <Badge className="absolute right-4 top-4 bg-card/95 text-brand-900 shadow-sm dark:text-card-foreground">{book.level}</Badge>
+        <Badge className="absolute right-4 top-4 bg-card/95 text-foreground shadow-sm dark:text-card-foreground">{book.level}</Badge>
       </div>
       <div className="flex flex-1 flex-col p-5 text-right">
         <div className="flex items-start justify-between gap-3">
-          <h2 className="font-heading text-xl font-bold text-brand-950 dark:text-card-foreground">{book.title}</h2>
+          <h2 className="font-heading text-xl font-bold text-foreground dark:text-card-foreground">{book.title}</h2>
           <BookOpenIcon className="mt-1 size-5 shrink-0 text-gold-600" aria-hidden="true" />
         </div>
         <p className="mt-2 text-sm text-muted-foreground">{book.author}</p>
         <div className="mt-4 flex flex-wrap gap-2 text-xs"><Badge variant="secondary">{book.category}</Badge><Badge variant="outline">{book.audience}</Badge></div>
         <p className="mt-4 line-clamp-3 flex-1 text-sm leading-7 text-muted-foreground">{book.description}</p>
-        <Link href={`/library/${book.slug}`} className="mt-5 inline-flex w-fit items-center rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">عرض تفاصيل الكتاب</Link>
+        <Link href={`/library/${book.slug}`} className="mt-5 inline-flex w-fit items-center rounded-lg bg-foreground px-4 py-2.5 text-sm font-bold text-background transition-colors hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90">عرض تفاصيل الكتاب</Link>
       </div>
     </article>
   );
@@ -48,7 +48,7 @@ export function LibraryBrowser() {
       </div>
     </section>
     <p className="mt-6 text-sm text-muted-foreground">{filteredBooks.length} كتب منشورة</p>
-    {filteredBooks.length > 0 ? <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{filteredBooks.map((book) => <BookCard key={book.slug} book={book} />)}</div> : <div className="mt-4 rounded-2xl border border-dashed border-gold-300 px-6 py-14 text-center"><BookOpenIcon className="mx-auto size-10 text-gold-600" aria-hidden="true" /><p className="mt-4 font-bold">لم نعثر على كتب مطابقة</p><p className="mt-2 text-sm text-muted-foreground">جرّب تغيير كلمات البحث أو خيارات التصفية.</p></div>}
+    {filteredBooks.length > 0 ? <div className="mt-4 grid gap-6 md:grid-cols-2 lg:grid-cols-3">{filteredBooks.map((book) => <BookCard key={book.slug} book={book} />)}</div> : <div className="mt-4 rounded-2xl border border-dashed border-border px-6 py-14 text-center"><BookOpenIcon className="mx-auto size-10 text-gold-600" aria-hidden="true" /><p className="mt-4 font-bold">لم نعثر على كتب مطابقة</p><p className="mt-2 text-sm text-muted-foreground">جرّب تغيير كلمات البحث أو خيارات التصفية.</p></div>}
   </>;
 }
 
