@@ -273,9 +273,21 @@ claim that every existing screen already conforms.
   applies to the homepage, products, library, library detail, resources, and help headings.
   Body and UI weights already within 400–700 remain unchanged. The font definition was not
   widened, and no synthetic or unsupported weight is requested.
-- This weight-mapping phase does not change `font-size`, `line-height`, letter spacing,
-  spacing, layout, colors, breakpoints, English typography, or Chinese typography. It does
-  not include visual size calibration; optical-size evaluation is a separate later phase.
+- The weight-mapping phase does not change letter spacing, spacing, layout, colors,
+  breakpoints, English typography, or Chinese typography.
+- Optical calibration (experimental, Phase 3 pilot): Noto Naskh reads smaller than the
+  previous Arabic face at the same `font-size`. `globals.css` defines
+  `--ar-heading-scale: 1.05` and `--ar-control-scale: 1.04`, active only for
+  `html[lang="ar"]` inside a `data-ar-type="calibrated"` subtree (currently the `(public)`
+  layout). Headings (h1–h4) rescale the Tailwind `--text-*` tokens, so existing `text-*`
+  utilities and their proportional line-heights scale once; headings without a utility
+  scale through a base-layer `font-size`. Buttons (`data-slot="button"`), elements marked
+  `data-ar-control`, and header nav links use the control scale. Paragraphs/body text are
+  not scaled. No transform or second local scale is used; remove the attribute to
+  disable the pilot. English and Chinese are unaffected.
+- Pilot evidence (homepage and products at 390/1032/1440, same-document before/after):
+  255 measured elements, 0 line-count changes, 0 new overflow, no horizontal page
+  overflow.
 - Verify local inclusion by checking the generated build assets and confirming no Arabic
   font request targets Google Fonts or another external origin. Verify Arabic glyphs,
   shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.

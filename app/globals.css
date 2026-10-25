@@ -264,6 +264,47 @@ html[lang="zh"] {
   }
 }
 
+/* Experimental Arabic optical calibration (Noto Naskh Arabic reads smaller than
+   the previous Arabic face at the same font-size). Opt-in per subtree through
+   data-ar-type="calibrated"; applies to lang="ar" only and never to paragraphs.
+   It rescales Tailwind's --text-* tokens on the target element itself, so the
+   existing text-* utilities (and their proportional line-heights) are scaled once
+   — no transform and no second, local scale. */
+html[lang="ar"] {
+  --ar-heading-scale: 1.05;
+  --ar-control-scale: 1.04;
+}
+
+html[lang="ar"] [data-ar-type="calibrated"] :is(h1, h2, h3, h4) {
+  --text-xs: calc(0.75rem * var(--ar-heading-scale));
+  --text-sm: calc(0.875rem * var(--ar-heading-scale));
+  --text-base: calc(1rem * var(--ar-heading-scale));
+  --text-lg: calc(1.125rem * var(--ar-heading-scale));
+  --text-xl: calc(1.25rem * var(--ar-heading-scale));
+  --text-2xl: calc(1.5rem * var(--ar-heading-scale));
+  --text-3xl: calc(1.875rem * var(--ar-heading-scale));
+  --text-4xl: calc(2.25rem * var(--ar-heading-scale));
+  --text-5xl: calc(3rem * var(--ar-heading-scale));
+  --text-6xl: calc(3.75rem * var(--ar-heading-scale));
+}
+
+html[lang="ar"]
+  [data-ar-type="calibrated"]
+  :is([data-slot="button"], [data-ar-control], header nav a) {
+  --text-xs: calc(0.75rem * var(--ar-control-scale));
+  --text-sm: calc(0.875rem * var(--ar-control-scale));
+  --text-base: calc(1rem * var(--ar-control-scale));
+  --text-lg: calc(1.125rem * var(--ar-control-scale));
+}
+
+/* Headings without a text-* utility inherit their size (preflight); scale them
+   in the base layer so any utility on the element still wins and is not doubled. */
+@layer base {
+  html[lang="ar"] [data-ar-type="calibrated"] :is(h1, h2, h3, h4) {
+    font-size: calc(1em * var(--ar-heading-scale));
+  }
+}
+
 /* The default monospace stack has no Arabic shaping, so code/pre inside
    Arabic-heavy Markdown content (e.g. schema docs) render disconnected
    letters — use the Arabic-aware sans font instead. */
