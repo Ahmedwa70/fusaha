@@ -157,8 +157,23 @@ only `@tailwindcss/postcss`.
 - `@custom-variant dark (&:is(.dark *))`
 - `@theme inline` maps every semantic token to a CSS variable and exposes two brand ramps
   as utilities: **`brand-50…950`** (navy) and **`gold-50…900`**
-- All colours are **OKLCH**. Light mode is a warm off-white background with a navy primary
-  and gold accent; dark mode flips the primary to `--gold-500` on `--brand-950`
+- All colours are **OKLCH**. Light mode remains the warm off-white Fusaha palette with
+  navy/green primary and gold accent. Dark mode is a layered academic palette: `--background`
+  is deep green-navy, `--card` is a raised surface, `--popover` is a distinct brighter
+  surface, `--muted-foreground` is the secondary reading color, and `--border`/`--ring`
+  are lifted for visible controls. Primary, success, warning, info, and destructive
+  foreground pairs are defined centrally rather than relying on ad-hoc inversions.
+- New components should use semantic tokens (`bg-background`, `bg-card`, `bg-popover`,
+  `text-foreground`, `text-muted-foreground`, `border-border`, `bg-accent`, `ring-ring`)
+  instead of fixed white/black or light-only brand backgrounds. The mobile floating menu
+  deliberately uses an opaque `bg-popover` surface: page imagery must not bleed through
+  readable navigation text in dark mode. Its active link uses `bg-primary/15` and
+  `border-primary/50`, not a light gold background.
+- Contrast spot checks in the dark theme use browser-resolved colors: body foreground on
+  background measured 16.76:1, and floating-menu foreground on popover measured 14.26:1
+  at 300px Arabic RTL. These exceed WCAG 2.2 AA for normal text. Borders and rings use
+  the lifted semantic tokens; component-specific border contrast should be rechecked when
+  adding new surfaces.
 - The radius scale is derived from `--radius: 0.75rem` by multipliers (0.6 → 2.6)
 - **Sidebar tokens are deliberately fixed dark navy in both themes** — it is brand chrome,
   not themed surface

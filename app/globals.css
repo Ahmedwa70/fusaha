@@ -185,38 +185,39 @@ html[lang="zh"] {
 }
 
 .dark {
-  --background: lab(4.43965% -1.75043 -5.15133);
-  --foreground: lab(95.4012% -0.0117719 3.05686);
+  /* Deep green/navy surfaces: separate page, card, popover, and control layers. */
+  --background: oklch(0.16 0.028 180);
+  --foreground: oklch(0.95 0.018 95);
 
-  --card: lab(8.39645% -3.98012 -7.53505);
-  --card-foreground: lab(95.4012% -0.0117719 3.05686);
-  --popover: lab(8.39645% -3.98012 -7.53505);
-  --popover-foreground: lab(95.4012% -0.0117719 3.05686);
+  --card: oklch(0.205 0.032 180);
+  --card-foreground: oklch(0.95 0.018 95);
+  --popover: oklch(0.235 0.038 180);
+  --popover-foreground: oklch(0.95 0.018 95);
 
-  --primary: lab(65.1506% 13.7743 46.2724);
-  --primary-foreground: lab(3.10187% -2.88614 -5.23812);
+  --primary: oklch(0.66 0.12 155);
+  --primary-foreground: oklch(0.16 0.028 180);
 
-  --secondary: lab(16.6665% -10.8145 -14.1479);
-  --secondary-foreground: lab(95.4012% -0.0117719 3.05686);
+  --secondary: oklch(0.26 0.045 180);
+  --secondary-foreground: oklch(0.93 0.02 95);
 
-  --muted: lab(13.0129% -2.89283 -6.43002);
-  --muted-foreground: lab(60.5861% -3.16283 -6.54073);
+  --muted: oklch(0.235 0.03 180);
+  --muted-foreground: oklch(0.76 0.025 100);
 
-  --accent: lab(44.2024% 12.091 32.4918);
-  --accent-foreground: lab(96.5967% 0.633419 7.66813);
+  --accent: oklch(0.34 0.065 78);
+  --accent-foreground: oklch(0.97 0.025 95);
 
-  --destructive: oklch(0.63 0.22 27);
+  --destructive: oklch(0.68 0.18 27);
   --destructive-foreground: oklch(0.98 0.01 20);
-  --success: oklch(0.3 0.08 145);
-  --success-foreground: oklch(0.9 0.08 145);
-  --warning: oklch(0.34 0.08 75);
-  --warning-foreground: oklch(0.94 0.1 85);
-  --info: oklch(0.3 0.08 230);
-  --info-foreground: oklch(0.9 0.06 230);
+  --success: oklch(0.67 0.12 145);
+  --success-foreground: oklch(0.14 0.03 155);
+  --warning: oklch(0.78 0.13 85);
+  --warning-foreground: oklch(0.2 0.04 75);
+  --info: oklch(0.7 0.1 230);
+  --info-foreground: oklch(0.14 0.03 230);
 
-  --border: lab(100% 0 0 / 0.12);
-  --input: lab(100% 0 0 / 0.16);
-  --ring: lab(56.1949% -14.0995 -17.0568);
+  --border: oklch(0.42 0.045 180);
+  --input: oklch(0.37 0.04 180);
+  --ring: oklch(0.76 0.12 85);
 
   --chart-1: lab(65.1506% 13.7743 46.2724);
   --chart-2: lab(56.1949% -14.0995 -17.0568);
