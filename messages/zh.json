@@ -156,7 +156,7 @@
       "emailLabel": "电子邮箱",
       "submit": "发送重置链接",
       "submitting": "正在发送...",
-      "successMessage": "如果该邮箱已注册，几分钟内会收到一封重置密码的邮件。",
+      "successMessage": "如果该邮箱已注册，几分钟内会收到一封重置密码的���件。",
       "backToLogin": "返回登录"
     },
     "resetPassword": {
@@ -271,7 +271,7 @@
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
       "noDiacritics": "答案字段不应包含阿拉伯语变音符号。",
-      "pageTitleMissingSeparator": "页面标题必须包含分�������符 \"|\"。",
+      "pageTitleMissingSeparator": "页面标题必须包含分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
       "vocabCount": "词汇项数量必须在 15 到 35 之间。",
@@ -671,7 +671,7 @@
       "createDialogDescription": "上传模板 ZIP 文件（index.html、blueprint.js、validation.js），并设置名称和预览图。",
       "editDialogTitle": "编辑模板",
       "editDialogDescription": "更新模板的名称、预览图、启用状态，或替换其 ZIP 文件。",
-      "viewDialogTitle": "模板信息",
+      "viewDialogTitle": "模板��息",
       "actionEdit": "编辑",
       "cancel": "取消",
       "searchPlaceholder": "按模板名称搜索...",
@@ -984,7 +984,7 @@
         "addItem": "添加项目",
         "removeItem": "删除项目",
         "back": "返回",
-        "cancel": "取消",
+        "cancel": "取���",
         "addItemDone": "完���",
         "deleteItemTitle": "删除此项？",
         "deleteItemDescription": "此操作无法撤销。",
@@ -1106,10 +1106,15 @@
   "libraryPage": {
     "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "没有匹配的书籍", "emptyDescription": "请尝试更改搜索词或筛选选项。",
     "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
-    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学者阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿拉伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学者阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
   },
   "resourcesPage": {
     "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
     "items": {"interactive-lesson-generator": {"title": "互动课程生成器", "description": "将课程来源转换为可审核并可用于课堂的互动体验。", "action": "创建课程", "imageAlt": "Fusaha 互动课程创建器预览"}, "arabic-writing-studio": {"title": "阿拉伯语写作工作室", "description": "用于整理阿拉伯语内容并将其转化为学习材料的专用环境。", "action": "打开工作室", "imageAlt": "Fusaha 阿拉伯语写作工作室预览"}}
+  },
+  "helpPage": {
+    "metaTitle": "帮助中心 | Fusaha", "metaDescription": "帮助您使用 Fusaha 工具并解决常见问题的简明答案和指南。", "title": "我们能如何帮助您？", "description": "搜索问题、故障或使用指南。", "searchLabel": "搜索帮助中心", "searchPlaceholder": "在这里输入您的问题...", "categoriesLabel": "帮助中心分区", "verifiedEyebrow": "经过平台体验验证的信息", "faqTitle": "常见问题", "resultsCount": "{count} 个结果", "relatedLink": "探索相关入口", "emptyTitle": "没有匹配的结果", "emptyDescription": "请尝试其他关键词或选择其他分区。", "contactTitle": "联系我们", "contactDescription": "项目目前尚未公布官方联系渠道。确定联系渠道后，我们会补充此部分。",
+    "categories": {"guides": {"title": "使用指南", "description": "了解如何使用 Fusaha 工具。"}, "faq": {"title": "常见问题", "description": "常见问题的快速答案。"}, "troubleshooting": {"title": "故障排查", "description": "解决问题的实用步骤。"}, "contact": {"title": "联系我们", "description": "联系渠道确定后公布官方信息。"}},
+    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未记录的步骤或设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录页面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
   }
 }
