@@ -222,6 +222,24 @@
   --sidebar-ring: lab(56.1949% -14.0995 -17.0568);
 }
 
+.writing-section a.bg-primary {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+.writing-section a.bg-primary:hover {
+  background-color: color-mix(in oklab, var(--foreground) 90%, transparent);
+}
+
+.dark .writing-section a.bg-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.dark .writing-section a.bg-primary:hover {
+  background-color: color-mix(in oklab, var(--primary) 80%, transparent);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

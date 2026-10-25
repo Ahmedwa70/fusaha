@@ -50,7 +50,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
       <div className="flex items-center gap-2">
         <div className="hidden items-center gap-2 sm:flex"><ThemeToggle /><LanguageSwitcher /></div>
         <Link href={ROUTES.login} className="hidden rounded-lg border border-input px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground sm:block">تسجيل الدخول</Link>
-        <Button size="sm" nativeButton={false} render={<Link href={ROUTES.dashboardCreate} />}>ابدأ الآن</Button>
+        <Button className="bg-foreground text-background hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90" size="sm" nativeButton={false} render={<Link href={ROUTES.dashboardCreate} />}>ابدأ الآن</Button>
         <MobileNavigation homeHref={homeHref} />
       </div>
     </header>
