@@ -32,6 +32,26 @@
     "copyright": "Copyright © {year} Fusaha. All rights reserved."
   },
   "landing": {
+    "heroEyebrow": "Fusaha educational tools",
+    "heroTitleLine1": "From content",
+    "heroTitleLine2": "to an interactive",
+    "heroTitleLine3": "learning experience",
+    "heroDescription": "Specialized tools to design Arabic lessons, produce teaching materials, and turn content into a more engaging, professional learning experience.",
+    "heroPrimary": "Create a lesson",
+    "heroSecondary": "Explore Fusaha tools",
+    "heroImageAlt": "Fusaha on multiple devices",
+    "toolsTitle": "The Fusaha toolkit",
+    "toolsDescription": "Everything you need to produce complete Arabic learning content in one place.",
+    "tool1Title": "Interactive lesson generator", "tool1Body": "Turn any text or topic into a complete lesson with activities and assessments.", "tool1Action": "Try it now",
+    "tool2Title": "Arabic writing studio", "tool2Body": "A specialized environment for supporting Arabic writing and organization.", "tool2Action": "Use the studio",
+    "tool3Title": "Learning library", "tool3Body": "Access ready-to-use books and learning resources.", "tool3Action": "Browse the library",
+    "heroDevicesAlt": "Fusaha on multiple devices", "writingImageAlt": "Visual preview of the Arabic writing engine", "writingToolAlt": "Specialized tools for Arabic", "writingAudienceAlt": "Designed for teachers and learners",     "writingTime": "Save time and effort", "featureTitle": "From idea to classroom in minutes", "featureBody": "Professional, editable content", "featureLevel": "Suitable for different levels", "writingLetter": "A", "writingTitle": "Arabic writing engine", "writingDescription": "Turn letters and words into professional graphics and educational videos ready for your lessons.", "writingBullet1": "Enter an Arabic letter or word and choose a visual style.", "writingBullet2": "Customizable and exportable visual outputs.", "writingBullet3": "Ideal for interactive activities and presentations.", "writingCta": "Try the writing engine", "writingVideo": "Video", "writingBadge": "Turn writing into video", "writingStyle": "Teaching style", "writingPlay": "Play preview",
+    "stepsTitle": "From idea to lesson in four steps", "stepsDescription": "A simple workflow for producing complete learning content.",
+    "step1Title": "Add content", "step1Body": "Write text or attach a file", "step2Title": "Customize settings", "step2Body": "Choose the level and activities", "step3Title": "Create the lesson", "step3Body": "Get a ready-to-use lesson", "step4Title": "Use it in class", "step4Body": "Share it and start learning",
+    "libraryTitle": "Learning library", "libraryDescription": "Curated resources to support your learning journey, from books and stories to activities and cultural materials.", "libraryCta": "Browse resources", "resourcesPending": "Learning resources are coming soon", "resourcesDescription": "Explore the tools available now. We will add published resources here when they are ready.", "resourcesCta": "Open resources",
+    "audienceTitle": "Designed for those making a difference in Arabic education", "audienceDescription": "Fusaha supports teachers and learners across different contexts.", "audienceTeachers": "Teachers", "audienceTeachersBody": "Produce professional content with ease", "audienceInstitutions": "Educational institutions", "audienceInstitutionsBody": "Specialized resources and tools", "audienceLearners": "Learners", "audienceLearnersBody": "Interactive activities and resources", "audienceDevelopers": "Developers", "audienceDevelopersBody": "An environment for innovating new content",
+    "closingTitle": "Start your Fusaha journey today", "closingDescription": "Join the community of teachers creating better Arabic learning experiences.", "closingPrimary": "Create your account", "closingSecondary": "Explore the tools",
+
     "hero": {
       "headline": "Turn a lesson source into an interactive class",
       "subheadline": "Upload an image or text, and the system generates a complete interactive lesson. All you do is review and approve — no files, no code.",
