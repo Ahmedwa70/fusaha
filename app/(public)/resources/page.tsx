@@ -24,7 +24,7 @@ export default async function ResourcesPage() {
         <section className="border-y border-border bg-background px-5 py-16 sm:px-8 lg:py-24">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">{t("eyebrow")}</p>
-            <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-foreground dark:text-brand-50 sm:text-5xl">{t("title")}</h1>
+            <h1 className="mt-3 font-heading text-4xl font-bold leading-tight text-foreground dark:text-brand-50 sm:text-5xl">{t("title")}</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted-foreground">{t("description")}</p>
             <Link href={ROUTES.dashboardCreate} className="mt-7 inline-flex items-center gap-2 rounded-lg bg-foreground px-5 py-3 text-sm font-bold text-background transition-colors hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">{t("heroAction")} <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" /></Link>
           </div>

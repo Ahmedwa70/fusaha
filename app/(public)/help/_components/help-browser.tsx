@@ -24,7 +24,7 @@ export function HelpBrowser() {
     <>
       <section className="rounded-[2rem] border border-border bg-card/75 px-5 py-12 text-center shadow-sm sm:px-10 lg:py-16">
         <SearchIcon className="mx-auto size-10 text-gold-500" aria-hidden="true" />
-        <h1 className="mt-5 font-heading text-3xl font-extrabold tracking-tight sm:text-4xl">{t("title")}</h1>
+        <h1 className="mt-5 font-heading text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h1>
         <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">{t("description")}</p>
         <label className="mx-auto mt-8 flex max-w-4xl items-center gap-3 rounded-2xl border border-border bg-muted/70 px-5 py-4 text-start transition-colors focus-within:border-gold-500 focus-within:ring-2 focus-within:ring-gold-500/20">
           <SearchIcon className="size-5 shrink-0 text-muted-foreground" aria-hidden="true" />

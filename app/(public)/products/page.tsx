@@ -39,7 +39,7 @@ export default async function ProductsPage() {
         <section className="border-y border-border bg-background px-6 py-16 sm:px-10 lg:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">{t("eyebrow")}</p>
-            <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">{t("title")}</h1>
+            <h1 className="mt-3 font-heading text-4xl font-bold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">{t("title")}</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted-foreground">{t("description")}</p>
           </div>
         </section>

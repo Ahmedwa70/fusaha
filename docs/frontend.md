@@ -268,6 +268,14 @@ claim that every existing screen already conforms.
 - New components must use `font-sans` / `font-heading` and must not add a local Arabic
   font override. A new weight requires verifying the variable axis, updating this record,
   and checking rendered Arabic at narrow and wide widths.
+- The local font's supported `wght` range is 400–700. Arabic headings that previously used
+  `font-extrabold` (800) now use `font-bold` (700), the nearest supported weight. This
+  applies to the homepage, products, library, library detail, resources, and help headings.
+  Body and UI weights already within 400–700 remain unchanged. The font definition was not
+  widened, and no synthetic or unsupported weight is requested.
+- This weight-mapping phase does not change `font-size`, `line-height`, letter spacing,
+  spacing, layout, colors, breakpoints, English typography, or Chinese typography. It does
+  not include visual size calibration; optical-size evaluation is a separate later phase.
 - Verify local inclusion by checking the generated build assets and confirming no Arabic
   font request targets Google Fonts or another external origin. Verify Arabic glyphs,
   shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.
