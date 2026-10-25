@@ -239,6 +239,14 @@ html[lang="zh"] {
   color: var(--background);
 }
 
+/* Directional icons follow the language direction across the English platform UI. */
+[dir="ltr"] svg.lucide-arrow-left,
+[dir="ltr"] svg.lucide-arrow-right,
+[dir="ltr"] svg.lucide-chevron-left,
+[dir="ltr"] svg.lucide-chevron-right {
+  transform: scaleX(-1);
+}
+
 .writing-section a.bg-primary:hover {
   background-color: color-mix(in oklab, var(--foreground) 90%, transparent);
 }
