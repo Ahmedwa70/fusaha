@@ -45,7 +45,7 @@ export default function ProductsPage() {
         <section className="px-6 py-14 sm:px-10 lg:py-20">
           <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-2">
             {products.map(({ title, description, status, image, icon: Icon, href, action, featured }) => (
-              <article key={title} className={`overflow-hidden rounded-3xl border p-3 shadow-sm ${featured ? "border-brand-800 bg-brand-800 text-brand-50 shadow-xl dark:border-border dark:bg-card dark:text-card-foreground" : "border-border bg-card"}`}>
+              <article key={title} className={`overflow-hidden rounded-3xl border p-3 shadow-sm ${featured ? "border-foreground bg-foreground text-background shadow-xl dark:border-border dark:bg-card dark:text-card-foreground" : "border-border bg-card"}`}>
                 <div className="relative aspect-[16/9] overflow-hidden rounded-2xl bg-brand-50 dark:bg-secondary">
                   <Image src={image} alt={`معاينة ${title}`} fill sizes="(max-width: 1024px) 100vw, 560px" className="object-cover" />
                 </div>
@@ -55,7 +55,7 @@ export default function ProductsPage() {
                     <span className={`flex size-11 shrink-0 items-center justify-center rounded-full ${featured ? "bg-gold-300 text-brand-950" : "bg-gold-100 text-gold-700"}`}><Icon /></span>
                   </div>
                   <h2 className="mt-5 font-heading text-2xl font-bold">{title}</h2>
-                  <p className={`mt-3 min-h-14 leading-8 ${featured ? "text-brand-50/80 dark:text-muted-foreground" : "text-muted-foreground"}`}>{description}</p>
+                  <p className={`mt-3 min-h-14 leading-8 ${featured ? "text-background/80 dark:text-muted-foreground" : "text-muted-foreground"}`}>{description}</p>
                   <Button className="mt-5" variant={featured ? "secondary" : "outline"} nativeButton={false} render={<Link href={href} />}>{action}<ArrowLeftIcon data-icon="inline-end" /></Button>
                 </div>
               </article>
