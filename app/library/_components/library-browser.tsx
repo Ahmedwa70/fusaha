@@ -23,7 +23,7 @@ function BookCard({ book }: { book: LibraryBook }) {
         <p className="mt-2 text-sm text-muted-foreground">{book.author}</p>
         <div className="mt-4 flex flex-wrap gap-2 text-xs"><Badge variant="secondary">{book.category}</Badge><Badge variant="outline">{book.audience}</Badge></div>
         <p className="mt-4 line-clamp-3 flex-1 text-sm leading-7 text-muted-foreground">{book.description}</p>
-        <Link href={`/library/${book.slug}`} className="mt-5 inline-flex w-fit items-center rounded-lg bg-brand-800 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 dark:bg-gold-500 dark:text-brand-950">عرض تفاصيل الكتاب</Link>
+        <Link href={`/library/${book.slug}`} className="mt-5 inline-flex w-fit items-center rounded-lg bg-primary px-4 py-2.5 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">عرض تفاصيل الكتاب</Link>
       </div>
     </article>
   );

@@ -24,7 +24,7 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
 
   return (
     <details className="relative lg:hidden">
-      <summary aria-label="فتح القائمة" className="flex size-10 cursor-pointer list-none items-center justify-center rounded-lg text-brand-900 transition-colors hover:bg-gold-50 dark:text-brand-50 dark:hover:bg-brand-800 [&::-webkit-details-marker]:hidden">
+      <summary aria-label="فتح القائمة" className="flex size-10 cursor-pointer list-none items-center justify-center rounded-lg text-foreground transition-colors hover:bg-accent hover:text-accent-foreground [&::-webkit-details-marker]:hidden">
         <MenuIcon aria-hidden="true" />
       </summary>
       <div className="absolute left-0 top-12 z-50 w-64 rounded-2xl border border-border bg-popover p-3 text-right text-popover-foreground shadow-xl">

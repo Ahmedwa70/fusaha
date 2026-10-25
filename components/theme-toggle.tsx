@@ -35,7 +35,7 @@ export function ThemeToggle({ className }: { className?: string }) {
     <AnimatedThemeToggler
       theme={resolvedTheme as "light" | "dark"}
       onThemeChange={setTheme}
-      className={cn(buttonVariants({ variant: "outline", size: "icon-sm" }), "dark:border-brand-700 dark:bg-brand-900 dark:text-brand-50", className)}
+      className={cn(buttonVariants({ variant: "outline", size: "icon-sm" }), className)}
     />
   );
 }

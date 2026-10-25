@@ -57,7 +57,7 @@ export function GenerationEventsTable({ generationEvents }: { generationEvents: 
         header: t("columnStatus"),
         cell: ({ row }) =>
           row.original.success ? (
-            <Badge className="bg-green-100 text-green-800">{t("statusSuccess")}</Badge>
+            <Badge className="bg-success text-success-foreground">{t("statusSuccess")}</Badge>
           ) : (
             <Badge variant="destructive">{t("statusFailed")}</Badge>
           ),

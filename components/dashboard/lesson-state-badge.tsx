@@ -3,10 +3,10 @@ import { Badge } from "@/components/ui/badge";
 import { LessonState } from "@/database/schema";
 
 export const lessonStateClassName: Record<LessonState, string> = {
-  [LessonState.Approved]: "bg-green-100 text-green-800",
-  [LessonState.Draft]: "bg-amber-100 text-amber-800",
-  [LessonState.Generating]: "bg-blue-100 text-blue-800",
-  [LessonState.GenerationFailed]: "bg-red-100 text-red-800",
+  [LessonState.Approved]: "bg-success text-success-foreground",
+  [LessonState.Draft]: "bg-warning text-warning-foreground",
+  [LessonState.Generating]: "bg-info text-info-foreground",
+  [LessonState.GenerationFailed]: "bg-destructive text-destructive-foreground",
 };
 
 // Maps a lesson state to its "dashboard.lessonStates" translation key, so

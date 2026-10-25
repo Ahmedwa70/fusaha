@@ -46,7 +46,7 @@ export default async function CreditsPage({
 
       {purchase === "success" && <PurchaseBalancePoller creditsBalance={teacher.creditsBalance} />}
       {purchase === "cancelled" && (
-        <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        <div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning p-4 text-sm text-warning-foreground">
           <XCircleIcon className="size-4 shrink-0" />
           {t("purchaseCancelled")}
         </div>
@@ -54,7 +54,7 @@ export default async function CreditsPage({
 
       <Card>
         <CardContent className="flex items-center gap-3 sm:gap-4">
-          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-gold-100 text-gold-700 sm:size-12">
+          <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-accent-foreground sm:size-12">
             <CoinsIcon className="size-5 sm:size-6" />
           </div>
           <div>
@@ -134,7 +134,7 @@ export default async function CreditsPage({
                     <TableCell
                       className={cn(
                         "text-end font-medium tabular-nums",
-                        entry.delta >= 0 ? "text-green-700" : "text-destructive"
+                        entry.delta >= 0 ? "text-success-foreground" : "text-destructive"
                       )}
                     >
                       {entry.delta >= 0 ? "+" : ""}

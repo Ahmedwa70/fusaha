@@ -5,10 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { LessonState } from "@/database/schema";
 
 const stateBadge: Record<LessonState, { labelKey: string; className: string }> = {
-  [LessonState.Approved]: { labelKey: "statusApproved", className: "bg-green-100 text-green-800" },
-  [LessonState.Draft]: { labelKey: "statusDraft", className: "bg-amber-100 text-amber-800" },
-  [LessonState.Generating]: { labelKey: "statusGenerating", className: "bg-blue-100 text-blue-800" },
-  [LessonState.GenerationFailed]: { labelKey: "statusGenerationFailed", className: "bg-red-100 text-red-800" },
+  [LessonState.Approved]: { labelKey: "statusApproved", className: "bg-success text-success-foreground" },
+  [LessonState.Draft]: { labelKey: "statusDraft", className: "bg-warning text-warning-foreground" },
+  [LessonState.Generating]: { labelKey: "statusGenerating", className: "bg-info text-info-foreground" },
+  [LessonState.GenerationFailed]: { labelKey: "statusGenerationFailed", className: "bg-destructive text-destructive-foreground" },
 };
 
 // Deleted-ness (`deletedAt`) is orthogonal to `state` — a lesson can be
@@ -18,7 +18,7 @@ export function LessonStatusBadge({ state, deletedAt }: { state: LessonState; de
   const t = useTranslations("admin.lessons");
 
   if (deletedAt) {
-    return <Badge className="bg-gray-200 text-gray-800">{t("statusDeleted")}</Badge>;
+    return <Badge className="bg-muted text-muted-foreground">{t("statusDeleted")}</Badge>;
   }
 
   const info = stateBadge[state];

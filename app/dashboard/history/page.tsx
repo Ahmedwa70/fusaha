@@ -18,8 +18,8 @@ export default async function VersionHistoryPage() {
   const versions = await getVersionHistory(teacher.id);
 
   const statusBadge: Record<VersionStatus, { label: string; className: string }> = {
-    [VersionStatus.Approved]: { label: tStates("approved"), className: "bg-green-100 text-green-800" },
-    [VersionStatus.Draft]: { label: tStates("draft"), className: "bg-amber-100 text-amber-800" },
+    [VersionStatus.Approved]: { label: tStates("approved"), className: "bg-success text-success-foreground" },
+    [VersionStatus.Draft]: { label: tStates("draft"), className: "bg-warning text-warning-foreground" },
   };
 
   return (

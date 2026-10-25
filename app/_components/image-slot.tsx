@@ -15,7 +15,7 @@ export function ImageSlot({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-brand-300/60 bg-brand-50/60 px-6 text-center dark:border-gold-400/25 dark:bg-white/5",
+        "flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-border bg-muted/60 px-6 text-center",
         ratio,
         className
       )}

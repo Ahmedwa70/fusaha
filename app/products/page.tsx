@@ -38,7 +38,7 @@ export default function ProductsPage() {
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">منتجات فُصحاء</p>
             <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">أدوات عربية تصنع فرقًا في التعليم</h1>
-            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-slate-300">استكشف المنتجات المتاحة حاليًا، واعرف بوضوح ما يمكنك استخدامه الآن وما هو متاح للتجربة والتعرّف.</p>
+            <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-muted-foreground">استكشف المنتجات المتاحة حاليًا، واعرف بوضوح ما يمكنك استخدامه الآن وما هو متاح للتجربة والتعرّف.</p>
           </div>
         </section>
 

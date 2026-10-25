@@ -51,9 +51,9 @@ export default async function DashboardPage({
       </div>
 
       <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
-        <StatCard icon={Share2Icon} value={shared} label={t("statShared")} tint="bg-blue-50 text-blue-600" />
-        <StatCard icon={CheckCircle2Icon} value={approved} label={t("statApproved")} tint="bg-green-50 text-green-600" />
-        <StatCard icon={FileEditIcon} value={drafts} label={t("statDrafts")} tint="bg-amber-50 text-amber-600" />
+        <StatCard icon={Share2Icon} value={shared} label={t("statShared")} tint="bg-info text-info-foreground" />
+        <StatCard icon={CheckCircle2Icon} value={approved} label={t("statApproved")} tint="bg-success text-success-foreground" />
+        <StatCard icon={FileEditIcon} value={drafts} label={t("statDrafts")} tint="bg-warning text-warning-foreground" />
         <StatCard icon={BookOpenIcon} value={total} label={t("statTotal")} tint="bg-secondary text-secondary-foreground" />
       </div>
 
