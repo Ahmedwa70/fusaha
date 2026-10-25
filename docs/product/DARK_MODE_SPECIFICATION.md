@@ -14,6 +14,31 @@ This document separates:
 - **Proposed standards:** rules that future implementation must follow.
 - **Unresolved decisions:** points that need product/design approval or browser validation.
 
+## A1. Binding Homepage Source of Truth
+
+The current Fusaha homepage at `https://www.fusaha.com/` is the sole authoritative visual reference for the platform's dark-mode identity. This is a binding product decision, not optional inspiration. Public pages, library pages, authentication, teacher and administration dashboards, lesson studio, educational tools, shared components, and desktop/mobile interfaces may use different layouts when functionality requires it, but they must not invent different visual identities.
+
+The platform contract is:
+
+> The homepage defines the approved visual reference; the centralized semantic theme tokens implement that reference; all other pages and components consume those same tokens.
+
+The homepage must be inspected before defining or changing dark-mode values. Evidence must be gathered in this order: rendered homepage in a browser, homepage repository implementation, centralized theme variables, then shared components used by the homepage. No hex value, color relationship, gradient, shadow, opacity, or state may be attributed to the homepage unless it is verified from one of those sources. If the live homepage is unavailable, the specification must explicitly say so and label repository-based findings provisional; visual equivalence must not be claimed.
+
+### Verified live homepage evidence (2026-10-25)
+
+The live homepage was successfully opened at `https://www.fusaha.com/` in the browser at 1032×576 with dark color scheme. The rendered evidence verified:
+
+- A very dark blue-black main canvas across the hero.
+- Near-white Arabic headline and readable muted supporting text.
+- Gold primary CTA treatment with dark text, contrasted against a darker outlined secondary action.
+- Dark translucent/outlined theme and language controls in the public header.
+- A light editorial product illustration that remains visually prominent against the dark canvas.
+- RTL Arabic composition with the text/CTA block on the right and the illustration on the left at the tested desktop viewport.
+
+The screenshot and accessibility snapshot verify appearance and structure, but do not establish exact computed color values, hover/focus behavior, mobile behavior, or contrast ratios for every state. The repository implementation currently contains a richer warm-light/semantic-token system and dark overrides, including `--background: lab(4.43965% -1.75043 -5.15133)`, near-white `--foreground`, dark card/popover values, gold-toned `--primary`, translucent dark borders, and a dark hero override. These source values are evidence of the current implementation, not proof that every deployed pixel equals the live reference; computed-color extraction and broader browser comparison remain required.
+
+No dashboard, library, authentication screen, or shared component may establish a page-specific dark palette. Any legitimate functional exception must be documented, use the homepage's design language, and remain within the centralized semantic token contract.
+
 ## B. Existing Implementation
 
 ### Verified infrastructure
@@ -50,7 +75,7 @@ These findings are source-level observations. They are not a substitute for a br
 
 ## C. Unified Color System
 
-The application should use semantic roles rather than page-specific palettes. Existing tokens should be reused where they already represent the role. New tokens should only be introduced when an existing role cannot express the required distinction; adding a token is an unresolved implementation decision until the affected components are mapped.
+The application must use semantic roles rather than page-specific palettes. The homepage is the visual authority for the role relationships, perceived brightness, brand/gold treatment, surfaces, borders, controls, gradients, shadows, transparency, and interaction states. Existing tokens must be reused where they represent those roles. New tokens should only be introduced when an existing role cannot express a verified homepage role; adding one is an unresolved implementation decision until the affected components are mapped and approved.
 
 | Semantic role | Purpose and usage | Existing token or source basis | Status / unresolved decision |
 |---|---|---|---|
@@ -100,7 +125,7 @@ A semantic role may have different light and dark values. Consistency means that
 
 ## E. Platform Coverage
 
-The following coverage statements describe the expected standard and current audit state. “Partial” or “unverified” does not mean the area is broken; it means the source review does not prove complete visual coverage.
+The following coverage statements describe the expected standard and current audit state. Every area must follow the live homepage's approved visual language through the centralized tokens. “Partial” or “unverified” does not mean the area is broken; it means the source review does not prove complete visual coverage. Layout-specific requirements may differ, but page-specific dark identities are not permitted.
 
 | Area | Expected behavior | Current findings and required verification |
 |---|---|---|
@@ -181,8 +206,12 @@ Theme changes should not cause unwanted layout movement, lingering transitions, 
 
 ### Source-code checks
 
+- [ ] The live homepage reference has been inspected and its verified visual roles are recorded with evidence.
 - [ ] All major pages use semantic theme roles instead of raw colors for ordinary surfaces.
 - [ ] No new page-level dark palette or duplicate theme provider is introduced.
+- [ ] The homepage, public navigation, products, resources, pricing, Help Center, About, library, authentication, teacher dashboard, administration dashboard, lesson studio, educational tools, shared UI, desktop, and mobile all consume the same approved semantic visual system.
+- [ ] Equivalent components use equivalent colors and interaction states across all areas; any functional exception is documented and remains consistent with the homepage design language.
+- [ ] Brand and gold accents follow the homepage's verified treatment, with no unexplained white or light surfaces in dark mode.
 - [ ] Shared UI components use the central tokens and do not depend on page-specific colors.
 - [ ] Every raw hexadecimal color and fixed light background has an intentional classification: semantic token candidate, documented brand exception, or decorative asset/gradient.
 - [ ] Light-mode classes remain present and correct after dark-mode changes.
