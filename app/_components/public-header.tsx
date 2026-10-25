@@ -26,13 +26,14 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
   }, []);
 
   const isActive = (href: string) => {
-    if (href === homeHref) return isHome && (hash === "" || hash === "#top");
+    if (href === homeHref && homeHref !== ROUTES.home && homeHref !== "#top") return false;
+    if (href === homeHref || href === ROUTES.home || href === "#top") return isHome && (hash === "" || hash === "#top");
     if (href.startsWith("#")) return isHome && hash === href;
     if (href.startsWith(`${ROUTES.home}#`)) return isHome && hash === href.slice(ROUTES.home.length);
     return pathname === href;
   };
   const linkClass = (href: string) =>
-    isActive(href) ? `${href === homeHref ? "text-gold-700 " : ""}dark:text-gold-300` : undefined;
+    isActive(href) ? "text-gold-700 dark:text-gold-300" : undefined;
 
   return (
     <header className="mx-auto flex max-w-[1400px] items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:py-5">
