@@ -15,7 +15,7 @@ real complexity stays inside the system.*
 |---|---|
 | [architecture.md](./architecture.md) | System overview, request lifecycle, repository layout, coding conventions |
 | [tech-stack.md](./tech-stack.md) | Every library and service used, and why |
-| [frontend.md](./frontend.md) | Route map, component library, styling, i18n/RTL, form and data-flow patterns |
+| [frontend.md](./frontend.md) | Route map, component library, styling, the official locale/RTL/LTR standard, form and data-flow patterns |
 | [api-reference.md](./api-reference.md) | **The service catalogue.** Every Server Action and HTTP route: inputs, outputs, auth, side effects |
 | [data-model.md](./data-model.md) | Database schema: every table, column, relation, and enum |
 | [ai-pipeline.md](./ai-pipeline.md) | Lesson generation end to end, source ingestion, templates, billing, integrations |

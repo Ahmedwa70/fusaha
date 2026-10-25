@@ -204,16 +204,108 @@ Switching locale: `actions/locale.ts#setLocale` writes the cookie, then the clie
 (`actions` / `status` / `dataTable`), `auth`, `validation`, `admin`, `unauthorized`,
 `sharedLesson`, `sidebar`, `dashboard`.
 
-### RTL
+### Official language and writing-direction standard
 
-- `<html dir>` is set server-side from `localeDirections`
-- Base UI's `DirectionProvider` wraps the tree; `useDirection()` drives runtime decisions
-  such as `<Sidebar side={dir === "rtl" ? "right" : "left"}>`, dropdown side, and sheet side
-- **Use logical CSS properties everywhere**: `ms-auto`, `ps-9`, `pe-3`, `text-start`,
-  `text-end`, `inset-s-3`, `inset-e-4`, `border-s`. Physical `left`/`right` utilities will
-  break Arabic
-- `IBM_Plex_Sans_Arabic` (subset `arabic`) is the only font, used for body, headings, and
-  forced onto `.prose` code blocks
+This section is the normative reference for all new pages and components. It describes
+what the current implementation guarantees and what new work must follow; it does not
+claim that every existing screen already conforms.
+
+#### Single source of truth
+
+- Add or change a locale only in `i18n/config.ts`. `locales`, `defaultLocale`, and
+  `localeDirections` are the authoritative locale and direction registry.
+- Resolve the active locale through `next-intl` (`getLocale` / `useLocale`), not by
+  inspecting the cookie directly in UI code. The cookie is an implementation detail of
+  `i18n/request.ts` and `actions/locale.ts`.
+- The root `app/layout.tsx` is responsible for the document contract: `<html lang>` and
+  `<html dir>` must always be derived from the registry. `DirectionProvider` is the
+  runtime direction context for Base UI components.
+
+#### RTL policy: Arabic
+
+- Arabic is the only currently configured RTL locale: `ar` → `rtl`.
+- Document flow, primary reading order, navigation, form labels, and lists follow RTL.
+  Use `text-start` / `text-end` for text alignment rather than hard-coding right/left.
+- Use logical spacing and placement (`ms` / `me`, `ps` / `pe`, `inset-s` / `inset-e`,
+  `border-s` / `border-e`) so the same component can render in both directions.
+- Menus, sheets, sidebars, and popovers may change their physical side based on
+  `useDirection()`. Do not duplicate a whole component tree for Arabic.
+- Do not mirror every icon. Mirror only directional icons whose meaning changes with
+  reading direction (for example a back/forward arrow); keep object, media, brand, and
+  status icons in their original orientation.
+- Arabic text must use the project font stack and preserve shaping. Avoid forcing a
+  monospace font for prose or generated lesson text; the existing `.prose` override is
+  intentional.
+
+#### LTR policy: English and Chinese
+
+- English and Chinese are currently LTR: `en` and `zh` → `ltr`.
+- Headings, paragraphs, lists, forms, and navigation start at the physical left through
+  logical `text-start` and flow properties. Do not use a permanent `text-right` on shared
+  components; if a design exception is required, scope it to the specific component.
+- Chinese is LTR even though its glyphs may be vertically or ideographically balanced;
+  do not infer direction from the script. Allow normal wrapping and avoid fixed widths
+  that assume Latin word lengths.
+- The current app loads `IBM_Plex_Sans_Arabic` with only the `arabic` subset. This is
+  sufficient for Arabic but is a known gap for Chinese coverage; any Chinese-facing
+  typography change must provide a verified CJK-capable fallback before treating it as
+  production-ready.
+
+#### Shared rules for mixed content and UI
+
+- Prefer logical CSS and flow layout. Physical `left` / `right`, `ml-*` / `mr-*`,
+  `pl-*` / `pr-*`, and absolute placement are exceptions that require a documented
+  component-level reason.
+- Use `dir="auto"` for user-entered or generated free text whose direction is unknown;
+  use `<bdi>` for an inline value embedded in surrounding translated UI (names, titles,
+  identifiers, and mixed-script labels).
+- Keep numbers, URLs, email addresses, code, and identifiers stable with `dir="ltr"`
+  or an appropriate `bdi` boundary when their visual order would otherwise be unclear.
+- Icons and arrows are semantic, not decorative CSS. Use `data-icon="inline-start"` /
+  `data-icon="inline-end"` and the shared component behavior; add an explicit RTL flip
+  only when the icon represents direction.
+- Translation keys and message namespaces must remain parallel across `ar`, `en`, and
+  `zh`. Do not place user-visible copy directly in a new shared component.
+- Preserve justified design exceptions, but keep them local, name the reason in code when
+  it is non-obvious, and verify the exception in both RTL and LTR.
+
+#### Rules for new pages and shared components
+
+1. Read the active `Locale` and direction contract before choosing alignment or ordering.
+2. Start with logical utilities and semantic flow; add a physical-direction override only
+   when the design meaning truly depends on a side.
+3. Test the page in `ar`, `en`, and `zh` at narrow and wide viewports, including long
+   translated strings and mixed Arabic/Latin values.
+4. Verify navigation, menus, forms, validation errors, tables, pagination, dialogs, and
+   directional icons—not only the static landing state.
+5. Add message keys to every locale file and keep the namespace shape consistent.
+
+#### Acceptance checklist for a new locale
+
+- [ ] Locale is registered in `i18n/config.ts` with an explicit `ltr` or `rtl` direction.
+- [ ] `messages/<locale>.json` has the same required namespace/key shape as existing locales.
+- [ ] `<html lang>` / `<html dir>` and `DirectionProvider` resolve correctly after switching.
+- [ ] Navigation, sidebars, dropdowns, sheets, dialogs, forms, tables, and pagination are usable.
+- [ ] Text wraps without clipping at mobile and desktop widths; long strings are tested.
+- [ ] Mixed-script, numeric, URL, email, and generated text boundaries are checked with
+  `dir="auto"`, `dir="ltr"`, or `<bdi>` where appropriate.
+- [ ] Directional arrows are semantically correct; non-directional icons are not mirrored.
+- [ ] Typography has verified glyph coverage, including CJK when the locale needs it.
+- [ ] Light/dark contrast and keyboard/focus behavior are checked in every direction.
+- [ ] The implementation and this section agree; any known exception is recorded here.
+
+#### Current implementation versus standard
+
+Implemented and verified in source: the three-locale registry; cookie-based `next-intl`
+resolution; server-derived `lang` / `dir`; `DirectionProvider`; direction-aware Base UI
+patterns; localized message files; and logical utilities in many shared primitives.
+
+Known gaps and conflicts: several public pages still hard-code `dir="rtl"`, `text-right`,
+`right-*`, or `pr-*`, so English and Chinese are not uniformly direction-safe. The
+current font declaration requests only the Arabic subset, so Chinese glyph coverage is
+not guaranteed. Some legacy page-level layouts choose physical sheet/sidebar sides
+explicitly; these must be audited before reuse. These are documented gaps, not fixes made
+in this phase.
 
 ---
 
