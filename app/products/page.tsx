@@ -34,7 +34,7 @@ export default function ProductsPage() {
       <PublicHeader homeHref={ROUTES.home} />
 
       <main>
-        <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.14),transparent_28%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-6 py-16 dark:border-border dark:bg-[radial-gradient(circle_at_15%_20%,rgba(184,145,77,0.12),transparent_28%),linear-gradient(120deg,#111b28,#182231_55%,#101923)] sm:px-10 lg:py-24">
+        <section className="border-y border-border bg-background px-6 py-16 sm:px-10 lg:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">منتجات فُصحاء</p>
             <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">أدوات عربية تصنع فرقًا في التعليم</h1>

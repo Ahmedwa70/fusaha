@@ -25,7 +25,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
       </nav>
       <div className="flex items-center gap-2">
         <div className="hidden items-center gap-2 sm:flex"><ThemeToggle /><LanguageSwitcher /></div>
-        <Link href={ROUTES.login} className="hidden rounded-lg border border-brand-300 px-4 py-2 text-sm font-semibold hover:bg-brand-50 sm:block">تسجيل الدخول</Link>
+        <Link href={ROUTES.login} className="hidden rounded-lg border border-input px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground sm:block">تسجيل الدخول</Link>
         <Button size="sm" nativeButton={false} render={<Link href={ROUTES.dashboardCreate} />}>ابدأ الآن</Button>
         <MobileNavigation homeHref={homeHref} />
       </div>

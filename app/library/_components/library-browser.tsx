@@ -11,7 +11,7 @@ import { getLibraryBook, libraryBooks, libraryCategories, libraryLevels, type Li
 function BookCard({ book }: { book: LibraryBook }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-gold-200 bg-card shadow-sm transition-transform hover:-translate-y-1 hover:shadow-lg dark:border-border">
-      <div className="relative flex h-44 items-center justify-center overflow-hidden bg-brand-50 dark:bg-secondary">
+      <div className="relative flex h-44 items-center justify-center overflow-hidden bg-secondary">
         {book.cover ? <Image src={book.cover} alt={`غلاف ${book.title}`} fill className="object-cover transition-transform duration-500 group-hover:scale-105" sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" /> : <BookOpenIcon className="size-14 text-gold-600" aria-hidden="true" />}
         <Badge className="absolute right-4 top-4 bg-card/95 text-brand-900 shadow-sm dark:text-card-foreground">{book.level}</Badge>
       </div>
@@ -22,7 +22,7 @@ function BookCard({ book }: { book: LibraryBook }) {
         </div>
         <p className="mt-2 text-sm text-muted-foreground">{book.author}</p>
         <div className="mt-4 flex flex-wrap gap-2 text-xs"><Badge variant="secondary">{book.category}</Badge><Badge variant="outline">{book.audience}</Badge></div>
-        <p className="mt-4 line-clamp-3 flex-1 text-sm leading-7 text-brand-800 dark:text-brand-100/70">{book.description}</p>
+        <p className="mt-4 line-clamp-3 flex-1 text-sm leading-7 text-muted-foreground">{book.description}</p>
         <Link href={`/library/${book.slug}`} className="mt-5 inline-flex w-fit items-center rounded-lg bg-brand-800 px-4 py-2.5 text-sm font-bold text-white transition-colors hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 dark:bg-gold-500 dark:text-brand-950">عرض تفاصيل الكتاب</Link>
       </div>
     </article>

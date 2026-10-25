@@ -18,12 +18,12 @@ export default function ResourcesPage() {
     <div dir="rtl" className="min-h-full overflow-hidden bg-background text-foreground">
       <PublicHeader homeHref={ROUTES.home} />
       <main>
-        <section className="border-y border-gold-100 bg-[radial-gradient(circle_at_85%_18%,rgba(184,145,77,0.16),transparent_26%),linear-gradient(120deg,#f6f1e4,#fbfaf5_55%,#f4efe1)] px-5 py-16 dark:border-border dark:bg-[radial-gradient(circle_at_85%_18%,rgba(184,145,77,0.12),transparent_26%),linear-gradient(120deg,#111b28,#182231_55%,#101923)] sm:px-8 lg:py-24">
+        <section className="border-y border-border bg-background px-5 py-16 sm:px-8 lg:py-24">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-sm font-bold text-gold-700 dark:text-gold-300">موارد فُصحاء</p>
             <h1 className="mt-3 font-heading text-4xl font-extrabold leading-tight text-brand-950 dark:text-brand-50 sm:text-5xl">أدوات وموارد تساعدك على تعليم العربية</h1>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-8 text-brand-900/75 dark:text-slate-300">اكتشف الأدوات المتاحة من فُصحاء، وتابع هذه المساحة للموارد التعليمية التي ستتوفر مع نمو المنصة.</p>
-            <Link href={ROUTES.dashboardCreate} className="mt-7 inline-flex items-center gap-2 rounded-lg bg-brand-800 px-5 py-3 text-sm font-bold text-white transition-colors hover:bg-brand-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 dark:bg-gold-500 dark:text-brand-950 dark:hover:bg-gold-400">ابدأ بإنشاء درس <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" /></Link>
+            <Link href={ROUTES.dashboardCreate} className="mt-7 inline-flex items-center gap-2 rounded-lg bg-primary px-5 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">ابدأ بإنشاء درس <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" /></Link>
           </div>
         </section>
 
@@ -47,7 +47,7 @@ export default function ResourcesPage() {
           </div>
         </section>
 
-        <section className="px-5 py-14 sm:px-8 lg:py-20"><div className="mx-auto flex max-w-4xl flex-col items-center rounded-3xl bg-brand-900 px-6 py-12 text-center text-brand-50 shadow-xl sm:px-10"><PenLineIcon className="size-9 text-gold-300" aria-hidden="true" /><h2 className="mt-4 font-heading text-3xl font-bold">ابدأ بأدوات فُصحاء المتاحة اليوم</h2><p className="mt-3 max-w-xl leading-7 text-brand-100/80">أنشئ درسًا تفاعليًا أو افتح استوديو الكتابة العربية من الوجهات الفعلية في المنصة.</p><Link href={ROUTES.lessonStudio} className="mt-7 inline-flex items-center gap-2 rounded-lg bg-white px-5 py-3 text-sm font-bold text-brand-900 transition-colors hover:bg-gold-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-300 focus-visible:ring-offset-2">افتح استوديو الكتابة <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" /></Link></div></section>
+        <section className="px-5 py-14 sm:px-8 lg:py-20"><div className="mx-auto flex max-w-4xl flex-col items-center rounded-3xl bg-brand-900 px-6 py-12 text-center text-brand-50 shadow-xl sm:px-10"><PenLineIcon className="size-9 text-gold-300" aria-hidden="true" /><h2 className="mt-4 font-heading text-3xl font-bold">ابدأ بأدوات فُصحاء المتاحة اليوم</h2><p className="mt-3 max-w-xl leading-7 text-brand-100/80">أنشئ درسًا تفاعليًا أو افتح استوديو الكتابة العربية من الوجهات الفعلية في المنصة.</p><Link href={ROUTES.lessonStudio} className="mt-7 inline-flex items-center gap-2 rounded-lg bg-secondary px-5 py-3 text-sm font-bold text-secondary-foreground transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">افتح استوديو الكتابة <ArrowLeftIcon data-icon="inline-end" aria-hidden="true" /></Link></div></section>
       </main>
     </div>
   );
