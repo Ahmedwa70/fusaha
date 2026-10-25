@@ -36,7 +36,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
     isActive(href) ? "text-gold-700 dark:text-gold-300" : undefined;
 
   return (
-    <header className="mx-auto flex max-w-[1400px] items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:py-5">
+    <header className="mx-auto flex max-w-[1400px] items-center justify-between gap-5 px-5 py-4 sm:px-8 lg:py-3">
       <Link href={homeHref} aria-label="فصحاء"><Image src="/book-transparent.png" alt="فصحاء" width={112} height={60} className="h-12 w-auto object-contain" priority /></Link>
       <nav className="hidden items-center gap-7 text-sm font-semibold text-brand-900 dark:text-foreground lg:flex" aria-label="التنقل الرئيسي">
         <Link href={homeHref} className={linkClass(homeHref)}>الرئيسية</Link>
