@@ -17,6 +17,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
       <nav className="hidden items-center gap-7 text-sm font-semibold text-brand-900 dark:text-foreground lg:flex" aria-label="التنقل الرئيسي">
         <Link href={homeHref} className={homeHref === "#top" ? "text-gold-700" : undefined}>الرئيسية</Link>
         <Link href={ROUTES.products}>المنتجات</Link>
+        <Link href={ROUTES.library}>المكتبة</Link>
         <Link href={ROUTES.resources}>الموارد</Link>
         <Link href={sectionHref("pricing")}>الأسعار</Link>
         <Link href={ROUTES.help}>مركز المساعدة</Link>
