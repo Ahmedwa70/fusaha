@@ -24,7 +24,6 @@ function closeMobileMenu(event: React.MouseEvent<HTMLElement>) {
 
 export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
   const t = useTranslations("public");
-  const appT = useTranslations("app");
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -46,11 +45,21 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
         <button type="button" aria-label={t("closeMenu")} onClick={closeMobileMenu} className="fixed inset-0 z-40 cursor-default bg-black/45 lg:hidden" />
       )}
       <div className="fixed top-20 z-[60] rtl:end-2 ltr:start-2 box-border flex w-[min(18rem,calc(100vw-1rem))] max-w-[calc(100vw-1rem)] flex-col overflow-y-auto rounded-2xl border border-brand-200/70 bg-background/95 p-3 text-start text-popover-foreground shadow-[0_14px_36px_-18px_rgba(6,35,45,0.65)] backdrop-blur-sm max-h-[calc(100dvh-5rem)] motion-safe:animate-in motion-safe:fade-in-0 motion-safe:zoom-in-95">
-        <div className="flex items-center justify-between border-b border-gold-100 px-2 pb-2">
+        <div className="flex items-center justify-between gap-3 border-b border-gold-100 px-2 pb-2">
           <span className="font-heading font-bold text-brand-950">{t("navigationTitle")}</span>
-          <button type="button" aria-label={t("closeMenu")} onClick={closeMobileMenu} className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-brand-700 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
-            <XIcon aria-hidden="true" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <LanguageSwitcher
+              menuSide="top"
+              onLocaleChange={() => {
+                setIsOpen(false);
+                document.querySelector("details")?.removeAttribute("open");
+              }}
+              className="h-8 gap-1 px-2 text-xs text-brand-900 hover:bg-gold-50"
+            />
+            <button type="button" aria-label={t("closeMenu")} onClick={closeMobileMenu} className="flex size-8 cursor-pointer items-center justify-center rounded-lg text-brand-700 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500">
+              <XIcon aria-hidden="true" />
+            </button>
+          </div>
         </div>
         <nav className="flex flex-col gap-1 pt-2" aria-label={t("mobileNavigation")}>
           {navigationLinks.map(([label, href]) => {
@@ -65,17 +74,6 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
             {t("login")}
           </Link>
         </nav>
-        <div className="mt-3 border-t border-gold-100 pt-3">
-          <p className="px-3 pb-2 text-xs font-semibold text-muted-foreground">{appT("language")}</p>
-          <LanguageSwitcher
-            menuSide="top"
-            onLocaleChange={() => {
-              setIsOpen(false);
-              document.querySelector("details")?.removeAttribute("open");
-            }}
-            className="w-full justify-between border-gold-200/70 text-sm text-brand-900 hover:bg-gold-50"
-          />
-        </div>
       </div>
     </details>
   );
