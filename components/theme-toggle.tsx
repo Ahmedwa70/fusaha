@@ -11,7 +11,7 @@ const subscribeNoop = () => () => {};
 // Thin next-themes wiring for AnimatedThemeToggler: `resolvedTheme` (not
 // `theme`) so a defaultTheme="system" value still reports light/dark, and
 // `setTheme` always writes an explicit choice (never "system") on toggle.
-export function ThemeToggle({ className }: { className?: string }) {
+export function ThemeToggle({ className, "aria-label": ariaLabel, title }: { className?: string; "aria-label"?: string; title?: string }) {
   const { resolvedTheme, setTheme } = useTheme();
   // Mount detection via useSyncExternalStore (server snapshot false, client
   // snapshot true) — avoids the setState-in-effect render cascade a
@@ -35,6 +35,8 @@ export function ThemeToggle({ className }: { className?: string }) {
     <AnimatedThemeToggler
       theme={resolvedTheme as "light" | "dark"}
       onThemeChange={setTheme}
+      aria-label={ariaLabel}
+      title={title}
       className={cn(buttonVariants({ variant: "outline", size: "icon-sm" }), className)}
     />
   );

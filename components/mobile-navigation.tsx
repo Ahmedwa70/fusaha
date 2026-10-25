@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { usePathname } from "next/navigation";
 import { LanguageSwitcher } from "@/components/language-switcher";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { ROUTES } from "@/constants/routes";
 
 const links = [
@@ -48,6 +49,7 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
         <div className="flex items-center justify-between gap-3 border-b border-gold-100 px-2 pb-2">
           <span className="font-heading font-bold text-brand-950">{t("navigationTitle")}</span>
           <div className="flex items-center gap-1.5">
+            <ThemeToggle aria-label={t("themeToggle")} title={t("themeToggle")} className="h-8 w-8 border-gold-200/70 text-brand-900 hover:bg-gold-50" />
             <LanguageSwitcher
               menuSide="top"
               onLocaleChange={() => {
