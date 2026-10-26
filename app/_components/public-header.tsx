@@ -47,7 +47,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
         <Link href={ROUTES.resources} className={linkClass(ROUTES.resources)}>{t("resources")}</Link>
         <Link href={sectionHref("pricing")} className={linkClass(sectionHref("pricing"))}>{t("pricing")}</Link>
         <Link href={ROUTES.help} className={linkClass(ROUTES.help)}>{t("help")}</Link>
-        <Link href={sectionHref("footer")} className={linkClass(sectionHref("footer"))}>{t("about")}</Link>
+        <Link href={ROUTES.about} className={linkClass(ROUTES.about)}>{t("about")}</Link>
       </nav>
       <div className="flex items-center gap-2 lg:justify-self-end">
         <div className="hidden items-center gap-2 sm:flex"><ThemeToggle /><LanguageSwitcher /></div>

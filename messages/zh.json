@@ -671,7 +671,7 @@
       "createDialogTitle": "添加新模板",
       "createDialogDescription": "上传模板 ZIP 文件（index.html、blueprint.js、validation.js），并设置名称和预览图。",
       "editDialogTitle": "编辑模板",
-      "editDialogDescription": "更新模板的名称、预览图、启用状���，或替换其 ZIP 文件。",
+      "editDialogDescription": "更新模板的名称、预览图、启用状����，或替换其 ZIP 文件。",
       "viewDialogTitle": "模板��息",
       "actionEdit": "编辑",
       "cancel": "取消",
@@ -821,7 +821,7 @@
       "passwordUpdateSuccess": "密码已成功更新。",
       "errors": {
         "invalidData": "数据无效。",
-        "updatePasswordFailed": "无法更新密码，请重试。"
+        "updatePasswordFailed": "无法更新密码，请重试��"
       }
     },
     "home": {
@@ -916,7 +916,7 @@
         "admin_adjustment": "管理员调整",
         "generation": "课程生成"
       },
-      "purchaseProcessing": "正在确认支付……积分将很快添加到您的账户。",
+      "purchaseProcessing": "正在确认支付……积分将很快添加到���的账户。",
       "purchaseSuccess": "支付成功，积分已添加到您的账户。",
       "purchaseDelayed": "支付成��，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
       "purchaseCancelled": "支付已取消，未产生任何扣款。",
@@ -1107,7 +1107,7 @@
   "libraryPage": {
     "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "没有匹配的书籍", "emptyDescription": "请尝试更改搜索词或筛选选项。",
     "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
-    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学者阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
   },
   "resourcesPage": {
     "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
@@ -1117,5 +1117,45 @@
     "metaTitle": "帮助中心 | Fusaha", "metaDescription": "帮助您使用 Fusaha 工具并解决常见问题的简明答案和指南。", "title": "我们能如何帮助您？", "description": "搜索问题、故障或使用指南。", "searchLabel": "搜索帮助中心", "searchPlaceholder": "在这里输入您的问题...", "categoriesLabel": "帮助中心分区", "verifiedEyebrow": "经过平台体验验证的信息", "faqTitle": "常见问题", "resultsCount": "{count} 个结果", "relatedLink": "探索相关入口", "emptyTitle": "没有匹配的结果", "emptyDescription": "请尝试其他关键词或选择其他分区。", "contactTitle": "联系我们", "contactDescription": "项目目前尚未公布官方联系渠道。确定联系渠道后，我们会补充此部分。",
     "categories": {"guides": {"title": "使用指南", "description": "了解如何使用 Fusaha 工具。"}, "faq": {"title": "常见问题", "description": "常见问题的快速答案。"}, "troubleshooting": {"title": "故障排查", "description": "解决问题的实用步骤。"}, "contact": {"title": "联系我们", "description": "联系渠道确定后公布官方信息。"}},
     "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未记录的步骤或设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录页面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
+  },
+ "about": {
+    "metaTitle": "关于Fusaha｜让阿拉伯语学习更清晰、更有目的",
+    "metaDescription": "了解Fusaha：一个帮助教师和学习者构建更有条理、更有目标的阿拉伯语学习体验的平台。",
+    "heroEyebrow": "关于Fusaha",
+    "heroTitle": "让阿拉伯语学习更清晰、更有目的",
+    "heroDescription": "Fusaha致力于把阿拉伯语内容转化为有结构、有目标、便于使用的学习体验，帮助教师更好地组织教学，也让学习者从理解走向实践的路径更加清晰。",
+    "heroPrimary": "探索Fusaha产品",
+    "heroSecondary": "浏览学习资源",
+    "heroBadge": "学习始于明确的目标",
+    "heroCardTitle": "从一个想法到完整的学习体验",
+    "heroCard": { "objectives": "明确目标", "planning": "连贯规划", "practice": "有效练习", "assessment": "恰当评价" },
+    "whyEyebrow": "我们为什么存在",
+    "whyTitle": "因为内容本身并不等于学习",
+    "whyBody1": "优质的教学材料只是起点。有效学习首先要明确学习者应达成什么，再把这一意图转化为课程、步骤和活动，帮助学习者不断前进。",
+    "whyBody2": "因此，Fusaha把学习目标、课程规划、活动设计、课堂实施和学习评价视为彼此相连的整体，而不是互相割裂的环节。",
+    "visionEyebrow": "我们的愿景",
+    "visionTitle": "以更清晰的目标教授阿拉伯语",
+    "visionBody": "我们希望阿拉伯语教学与学习变得更有条理、更易获得、更有效。教师应当获得构建优质学习体验的实用支持，学习者则应拥有一条把知识与使用联系起来的清晰路径。",
+    "approachEyebrow": "我们的教育理念",
+    "approachTitle": "指导我们思考的原则",
+    "approachDescription": "以下教育原则和方向塑造着Fusaha。这并不意味着每一项原则都已经作为独立的平台功能实现。",
+    "principles": {
+      "objectives": { "title": "先明确目标，再设计活动", "body": "先确定学习者应达成什么，再选择真正服务于这一目标的内容和活动。" },
+      "structure": { "title": "建立连贯的教学结构", "body": "把内容、步骤和活动连接起来，而不是把它们当作彼此孤立的材料。" },
+      "purpose": { "title": "让活动服务于学习", "body": "每项活动都应在理解、练习或应用中承担清晰的作用。" },
+      "progression": { "title": "符合学习者的进阶", "body": "关注学习者的水平、需求和学习情境，让进步成为可行且有意义的过程。" },
+      "assessment": { "title": "评价与学习目标一致", "body": "评价应延续预期的学习成果，而不是成为与课程脱节的最后一步。" },
+      "support": { "title": "为教师提供实用支持", "body": "通过工具和思路，帮助教师把教育意图落实为课堂实践。" }
+    },
+    "audienceEyebrow": "我们服务的对象",
+    "audienceTitle": "Fusaha与每一位推动阿拉伯语教育的人同行",
+    "audiences": { "teachers": { "title": "阿拉伯语教师", "body": "为正在规划课程、希望获得备课支持的教师而设。" }, "learners": { "title": "阿拉伯语学习者", "body": "为希望获得更清晰体验、并将活动与所学内容联系起来的学习者而设。" }, "institutions": { "title": "教育机构与资源创作者", "body": "为开发阿拉伯语学习资源、需要更连贯方法的团队而设。" } },
+    "principlesTitle": "我们珍视什么",
+    "principlesDescription": "我们重视教育价值、清晰体验、易用性，尊重教师与学习者的经验和需求，并通过持续学习不断改进。",
+    "values": { "value": "教育价值", "clarity": "清晰", "respect": "尊重", "improvement": "持续改进" },
+    "closingTitle": "从了解Fusaha开始",
+    "closingDescription": "探索现有的产品和资源，了解Fusaha如何支持您的阿拉伯语教学或学习之旅。",
+    "closingPrimary": "探索产品",
+    "closingSecondary": "访问帮助中心"
   }
 }

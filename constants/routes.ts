@@ -4,6 +4,7 @@ export const ROUTES = {
   resources: "/resources",
   library: "/library",
   help: "/help",
+  about: "/about",
   lessonStudio: "/lesson-studio",
   login: "/auth/login",
   signup: "/auth/signup",
