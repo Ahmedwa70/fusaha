@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans_Arabic } from "next/font/google";
+import localFont from "next/font/local";
+import { IBM_Plex_Sans_Arabic, Noto_Sans_SC } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { preload } from "react-dom";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { DirectionProvider } from "@/components/ui/direction";
@@ -9,10 +11,26 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { localeDirections, type Locale } from "@/i18n/config";
 import "./globals.css";
 
-const fontSans = IBM_Plex_Sans_Arabic({
-  variable: "--font-sans",
-  subsets: ["arabic"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
+const fontArabic = localFont({
+  src: "../public/fonts/noto-naskh-arabic/NotoNaskhArabic-VariableFont_wght.ttf",
+  variable: "--font-arabic",
+  weight: "400 700",
+  style: "normal",
+  display: "swap",
+});
+
+const fontEnglish = IBM_Plex_Sans_Arabic({
+  variable: "--font-english",
+  subsets: ["latin", "arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "block",
+});
+
+const fontCjk = Noto_Sans_SC({
+  variable: "--font-cjk",
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: false,
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -28,11 +46,19 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const messages = await getMessages();
   const direction = localeDirections[locale];
 
+  if (locale === "zh") {
+    preload("/fonts/noto-sans-sc/NotoSansSC-ui-subset.woff2", {
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    });
+  }
+
   return (
     <html
       lang={locale}
       dir={direction}
-      className={`${fontSans.variable} h-full antialiased`}
+      className={`${fontArabic.variable} ${fontEnglish.variable} ${fontCjk.variable} h-full antialiased`}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">

@@ -31,23 +31,26 @@ function resolveRedirectOrigin(request: Request, requestOrigin: string) {
 }
 
 export async function GET(request: Request) {
-  const { searchParams, origin } = new URL(request.url);
+  const { searchParams, origin, host, pathname } = new URL(request.url);
   const code = searchParams.get("code");
   const next = searchParams.get("next");
   const redirectOrigin = resolveRedirectOrigin(request, origin);
 
+  console.log("[oauth-diagnostic]", {
+    event: "oauth_callback",
+    host,
+    pathname,
+    stage: "received",
+  });
+
   if (!code) {
-    // Supabase forwards provider-side failures (e.g. access_denied) as
-    // error/error_description params with no code. Log which failure
-    // occurred — never session-bound values like tokens or verifier state.
-    const providerError = searchParams.get("error");
-    const providerErrorDescription = searchParams.get("error_description");
-    console.error(
-      "[auth/callback] OAuth redirect arrived without a code:",
-      providerError
-        ? `provider_error=${providerError} ${providerErrorDescription ?? ""}`.trim()
-        : "(no provider error details — possible direct visit or stale redirect)",
-    );
+    console.error("[oauth-diagnostic]", {
+      event: "oauth_callback",
+      host,
+      pathname,
+      stage: "missing_code",
+      errorCode: "oauth_callback_failed",
+    });
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=oauth_callback_failed`);
   }
 
@@ -55,9 +58,13 @@ export async function GET(request: Request) {
   const { error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    // Diagnose the real exchange failure (e.g. missing PKCE verifier). The
-    // auth code itself must never be logged.
-    console.error("[auth/callback] exchangeCodeForSession failed:", error.message);
+    console.error("[oauth-diagnostic]", {
+      event: "oauth_callback",
+      host,
+      pathname,
+      stage: "exchange_failed",
+      errorCode: "oauth_exchange_failed",
+    });
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=oauth_exchange_failed`);
   }
 
@@ -67,6 +74,13 @@ export async function GET(request: Request) {
   // the session is already established, and resetting a password shouldn't
   // depend on the account being active or provisioned as a teacher.
   if (next === ROUTES.resetPassword) {
+    console.log("[oauth-diagnostic]", {
+      event: "oauth_callback",
+      host,
+      pathname,
+      stage: "success",
+      target: ROUTES.resetPassword,
+    });
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.resetPassword}`);
   }
 
@@ -75,9 +89,13 @@ export async function GET(request: Request) {
   } = await supabase.auth.getUser();
 
   if (!authUser) {
-    // A successful exchange with no retrievable identity should not happen
-    // — surface it instead of falling through to account_inactive.
-    console.error("[auth/callback] session exchanged but getUser() returned no user");
+    console.error("[oauth-diagnostic]", {
+      event: "oauth_callback",
+      host,
+      pathname,
+      stage: "identity_missing",
+      errorCode: "provisioning_failed",
+    });
     return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=provisioning_failed`);
   }
 
@@ -128,23 +146,49 @@ export async function GET(request: Request) {
       // the insert — in both cases sign out and report a specific cause.
       await supabase.auth.signOut();
       if (decision.action === "reject") {
-        console.error("[auth/callback] new-user provisioning rejected:", decision.reason);
         const param =
           decision.reason === "email_registered_to_other_identity"
             ? "account_link_required"
             : "provisioning_failed";
+        console.error("[oauth-diagnostic]", {
+          event: "oauth_callback",
+          host,
+          pathname,
+          stage: "provisioning_rejected",
+          errorCode: param,
+        });
         return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=${param}`);
       }
-      console.error("[auth/callback] users row still missing after provisioning insert");
+      console.error("[oauth-diagnostic]", {
+        event: "oauth_callback",
+        host,
+        pathname,
+        stage: "provisioning_failed",
+        errorCode: "provisioning_failed",
+      });
       return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=provisioning_failed`);
     }
   }
 
   if (profile.active) {
     const target = profile.roleName === "admin" ? ROUTES.admin : ROUTES.dashboard;
+    console.log("[oauth-diagnostic]", {
+      event: "oauth_callback",
+      host,
+      pathname,
+      stage: "success",
+      target,
+    });
     return NextResponse.redirect(`${redirectOrigin}${target}`);
   }
 
+  console.error("[oauth-diagnostic]", {
+    event: "oauth_callback",
+    host,
+    pathname,
+    stage: "account_inactive",
+    errorCode: "account_inactive",
+  });
   await supabase.auth.signOut();
   return NextResponse.redirect(`${redirectOrigin}${ROUTES.login}?error=account_inactive`);
 }

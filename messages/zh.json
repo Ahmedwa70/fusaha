@@ -8,7 +8,45 @@
     "darkMode": "深色模式",
     "language": "语言"
   },
+  "public": {
+    "brandAlt": "Fusaha",
+    "mainNavigation": "主导航",
+    "mobileNavigation": "移动端导航",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "themeToggle": "切换主题",
+    "navigationTitle": "导航",
+    "home": "首页",
+    "products": "产品",
+    "library": "图书馆",
+    "resources": "资源",
+    "pricing": "价格",
+    "help": "帮助中心",
+    "about": "关于 Fusaha",
+    "policy": "平台政策",
+    "login": "登录",
+    "startNow": "立即开始",
+    "tools": "工具",
+    "writingEngine": "写作引擎",
+    "educationalLibrary": "学习资料库",
+    "howItWorks": "平台如何运作",
+    "description": "帮助打造更好学习体验的阿拉伯语平台。",
+    "copyright": "版权所有 © {year} Fusaha。保留所有权利。"
+  },
   "landing": {
+    "heroEyebrow": "Fusaha 教育工具",
+    "heroTitleLine1": "从内容",
+    "heroTitleLine2": "到互动学习",
+    "heroTitleLine3": "体验",
+    "heroDescription": "使用专业工具设计阿拉伯语课程、制作教学材料，将内容转化为更具吸引力和专业性的学习体验。",
+    "heroPrimary": "创建课程", "heroSecondary": "探索 Fusaha 工具", "heroImageAlt": "多设备上的 Fusaha",
+    "toolsTitle": "Fusaha 工具体系", "toolsDescription": "在一个地方完成阿拉伯语学习内容的制作。", "tool1Title": "互动课程生成器", "tool1Body": "将任意文本或主题转换为包含活动和评估的完整课程。", "tool1Action": "立即试用", "tool2Title": "阿拉伯语写作工作室", "tool2Body": "支持阿拉伯语写作与组织的专业环境。", "tool2Action": "使用工作室", "tool3Title": "学习资料库", "tool3Body": "访问可直接使用的书籍和学习资源。", "tool3Action": "浏览资料库",
+    "heroDevicesAlt": "多设备上的 Fusaha", "writingImageAlt": "阿拉伯语写作引擎预览", "writingToolAlt": "专业阿拉伯语工具", "writingAudienceAlt": "为教师和学习者设计",     "writingTime": "节省时间和精力", "featureTitle": "从想法到课堂只需几分钟", "featureBody": "专业且可编辑的内容", "featureLevel": "适合不同水平", "writingLetter": "ض", "writingTitle": "阿拉伯语写作引擎", "writingDescription": "将字母和单词转换为专业图形和可直接用于课程的教学视频。", "writingBullet1": "输入阿拉伯字母或单词并选择视觉风格。", "writingBullet2": "可自定义并导出的视觉输出。", "writingBullet3": "适合互动活动和演示。", "writingCta": "试用写作引擎", "writingVideo": "视频", "writingBadge": "将文字转换为视频", "writingStyle": "教学风格", "writingPlay": "播放预览",
+    "stepsTitle": "从想法到课程的四个步骤", "stepsDescription": "通过简单流程制作完整的学习内容。", "step1Title": "输入内容", "step1Body": "输入文字或上传文件", "step2Title": "自定义设置", "step2Body": "选择级别和活动", "step3Title": "创建课程", "step3Body": "获得可直接使用的课程", "step4Title": "用于课堂", "step4Body": "分享并开始学习",
+    "libraryTitle": "学习资料库", "libraryDescription": "精选资源支持您的学习之旅，涵盖书籍、故事、活动和文化材料。", "libraryCta": "浏览资源", "resourcesPending": "学习资源即将上线", "resourcesDescription": "探索当前可用的工具，我们将在资源准备好后添加已发布内容。", "resourcesCta": "打开资源页面",
+    "audienceTitle": "为推动阿拉伯语教育的人而设计", "audienceDescription": "Fusaha 支持不同场景下的教师和学习者。", "audienceTeachers": "教师", "audienceTeachersBody": "轻松制作专业内容", "audienceInstitutions": "教育机构", "audienceInstitutionsBody": "专业资源和工具", "audienceLearners": "学习者", "audienceLearnersBody": "互动活动和资源", "audienceDevelopers": "开发者", "audienceDevelopersBody": "创新内容的理想环境",
+    "closingTitle": "今天开始您的 Fusaha 之旅", "closingDescription": "加入创造更好阿拉伯语学习体验的教师社区。", "closingPrimary": "创建账户", "closingSecondary": "探索工具",
+
     "hero": {
       "headline": "把课程素材变成互动课程",
       "subheadline": "上传一张图片或一段文字，系统自动生成完整互动课程。你只需审阅并确认，无需处理文件或代码。",
@@ -72,7 +110,7 @@
       "cta": "注册教师账号"
     },
     "footer": {
-      "rights": "版权所有"
+      "rights": "版权所�����"
     }
   },
   "common": {
@@ -120,7 +158,7 @@
       "emailLabel": "电子邮箱",
       "submit": "发送重置链接",
       "submitting": "正在发送...",
-      "successMessage": "如果该邮箱已注册，几分钟内会收到一封重置密码的邮件。",
+      "successMessage": "如果该邮箱已注册，几分钟内会收到一封重置密码的���件。",
       "backToLogin": "返回登录"
     },
     "resetPassword": {
@@ -162,7 +200,7 @@
       "roleNotFound": "无法创建账户，请稍后重试。",
       "resetLinkExpired": "密码重置链接已过期，请重新申请。",
       "resetPasswordFailed": "无法更新密码，请重试。",
-      "serverNotConfigured": "服务器未配置账户创建服务，请联系支持人员。",
+      "serverNotConfigured": "服务器���配置账户创建服务，请联系支持人员。",
       "unexpectedError": "出现意外错误，请重试。",
       "profileMissing": "登录信息正确，但该账户没有对应的用户档案，请联系管理员。",
       "accountLinkRequired": "该邮箱已属于另一个账户，请使用最初创建账户的方式登录。",
@@ -234,13 +272,13 @@
     "generation": {
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
-      "noDiacritics": "答案字段不应包含阿拉伯语变音符号。",
-      "pageTitleMissingSeparator": "页面标题必须包含分隔符 \"|\"。",
+      "noDiacritics": "答案字段不应包含阿拉���语���音���号。",
+      "pageTitleMissingSeparator": "页面标题必须包���分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
       "vocabCount": "词汇项数量必须在 15 到 35 之间。",
-      "dialogueCount": "对话行数必须在 6 到 12 之间。",
-      "invalidGradient": "渐变色值无效。",
+      "dialogueCount": "对话行��必须在 6 到 12 之间。",
+      "invalidGradient": "渐变色值无��。",
       "explainCount": "讲解要点数量必须在 4 到 6 之间。",
       "conjugationItemsCount": "变位项数量不能少于 6 个。",
       "mcqCount": "必须正好有 3 道选择题。",
@@ -274,12 +312,14 @@
       "logout": "退出登录",
       "lessons": "课程",
       "creditPackages": "积分套餐",
+      "library": "图书馆",
       "auditLogs": "审计日志",
       "generationEvents": "生成监控",
       "templates": "模板",
       "schema": "课程生成 Schema",
       "settings": "系统设置"
     },
+    "library": {"sectionTitle":"图书馆管理","sectionDescription":"审核并准备公共图书馆的书籍记录。","newBook":"新建书籍","newTitle":"添加图书馆书籍","editTitle":"编辑图书馆书籍","formDescription":"填写元数据和本地化内容。保存功能将在后续阶段启用。","bibliographic":"书目资料","originalTitle":"原始标题","authors":"作者","publisher":"出版社","publicationYear":"出版年份或版本","originalLanguage":"原始语言","isbn":"ISBN 或目录标识符","slug":"网址别名","classification":"教育分类","category":"类别","audience":"目标读者","level":"熟练程度","skills":"技能或主题领域","skillsPlaceholder":"例如：阅读、语法","localizedContent":"本地化显示内容","displayTitle":"显示标题","description":"简短描述","longDescription":"详细描述（可选）","accessNotes":"访问说明（可选）","sourceAccess":"来源与访问","sourceName":"来源名称","sourceUrl":"来源网址","destinationType":"目标类型","publisherDestination":"出版社","authorDestination":"作者","institutionDestination":"机构","libraryDestination":"图书馆","otherDestination":"其他","accessStatus":"访问状态","accessUnknown":"未知","accessFree":"免费阅读","accessPreview":"预览","accessPurchase":"购买","accessInstitutional":"机构访问","cover":"封面图片","coverUrl":"外部图片网址","coverDescription":"仅支持 HTTP/HTTPS 图片网址。不启用文件上传。","coverAlt":"封面替代文本（可选）","workflowTitle":"审核流程","workflowDescription":"新记录为草稿，不会发布。发布需要通过审核验证。","saved":"书籍已成功保存。","saving":"保存中...","publish":"发布","unpublish":"取消发布","archive":"归档","delete":"删除","confirmPublish":"要发布这本书吗？","confirmUnpublish":"要取消发布这本书吗？","confirmArchive":"要归档这本书吗？","confirmDelete":"要永久删除这本已归档的书吗？","draftLabel":"草稿预览","saveDraft":"验证草稿","validationReady":"表单有效。本阶段未保存任何数据。","validationErrors":"请修复 {count} 个验证问题。","searchPlaceholder":"搜索书籍（后续阶段提供）","allStatuses":"所有状态","bookTitle":"书籍","status":"状态","reviewStatus":"审核","updated":"更新时间","emptyTitle":"暂无图书馆记录","emptyDescription":"从数据库读取图书馆数据将在后续阶段实现。现有静态记录不会作为已验证的管理记录显示。","createFirst":"准备第一本书","previewTitle":"公共卡片预览","previewUntitled":"无标题书籍","previewDescription":"简短描述将在此显示。","previewLevel":"级别","previewCategory":"类别","previewBy":"作者","previewAuthor":"未提供作者","previewSource":"打开来源","errors":{"invalidData":"请检查标记的字段。","notFound":"未找到书籍。","duplicateSlug":"该网址别名已被使用。","cannotPublish":"这本书不符合发布要求。","cannotArchive":"当前状态无法归档这本书。","cannotUnpublish":"这本书当前未发布。","cannotDelete":"只有已归档的书籍才能永久删除。","unexpected":"无法完成操作，请稍后重试。"}},
     "teachers": {
       "pageTitle": "管理员控制台",
       "pageDescription": "教师、课程与平台活动概览",
@@ -303,7 +343,7 @@
       "actionEdit": "编辑",
       "actionDelete": "删除",
       "emptyTitle": "暂无教师",
-      "emptyDescription": "目前还没有教师注册账户",
+      "emptyDescription": "目前还没有教师注���账户",
       "editDialogTitle": "编辑教师信息",
       "editDialogDescription": "更新姓名、余额与账户状态。",
       "viewDialogTitle": "教师信息",
@@ -403,9 +443,9 @@
       "deleting": "正在删除...",
       "delete": "删除",
       "errors": {
-        "invalidData": "数据无效。",
+        "invalidData": "数��无效。",
         "nameTaken": "已存在相同标识符的角色。",
-        "notFound": "所选角色不存在。",
+        "notFound": "��选角色不存在。",
         "cannotEditSystem": "无法编辑系统角色。",
         "cannotDeleteSystem": "无法删除系统角色。"
       }
@@ -423,7 +463,7 @@
       "rolesList": "查看角色列表",
       "rolesCreate": "添加角色",
       "rolesUpdate": "编辑角色",
-      "rolesDelete": "删除角色",
+      "rolesDelete": "删��角色",
       "lessonsList": "查看课程列表",
       "lessonsRestore": "恢复课程",
       "lessonsDelete": "永久删除课程",
@@ -457,7 +497,7 @@
     "profile": {
       "pageTitle": "个人资料",
       "pageDescription": "管理您的姓名和账户密码",
-      "nameCardTitle": "个人信息",
+      "nameCardTitle": "个人���息",
       "nameCardDescription": "更新您的显示姓名。电子邮箱无法更改。",
       "passwordCardTitle": "修改密码",
       "passwordCardDescription": "为您的账户设置新密码。",
@@ -512,7 +552,7 @@
       "cancel": "取消",
       "errors": {
         "notFound": "未找到该课程。",
-        "notDeleted": "该课程未被删除。"
+        "notDeleted": "该课程未被删除���"
       }
     },
     "creditPackages": {
@@ -536,7 +576,7 @@
       "emptyTitle": "暂无套餐",
       "emptyDescription": "开始为教师添加第一个积分套餐",
       "createDialogTitle": "添加新套餐",
-      "createDialogDescription": "设置套餐名称、积分数量、价格，以及在积分页面上的展示内容。",
+      "createDialogDescription": "设置套餐名称、积分数量、价格，���及在积分页面上的展示内容。",
       "editDialogTitle": "编辑套餐",
       "editDialogDescription": "更新套餐名称、积分数量、价格、启用状态，以及在积分页面上的展示内容。",
       "viewDialogTitle": "套餐信息",
@@ -549,7 +589,7 @@
       "fieldActive": "套餐已启用",
       "fieldCreatedAt": "创建日期",
       "fieldBadgeLabel": "顶部标签文字",
-      "fieldBadgeLabelDescription": "以横幅形式显示在卡片上方，例如“性价比之选”。留空则不显示任何标签（自动出现的“最超值”标签除外）。",
+      "fieldBadgeLabelDescription": "��横幅形式显示在卡片上方，例如“性价比之选”。留空则不显示任何标签（自动出现的“最超值”标签除外）。",
       "fieldSubtitle": "名称下方的副标题",
       "fieldSubtitleDescription": "显示在套餐名称下方的简短说明，例如“适合高强度、持续使用”。",
       "fieldFooterText": "卡片底部文字",
@@ -560,15 +600,15 @@
       "removeFeature": "删除该功能",
       "featurePlaceholder": "例如：优先支持",
       "featureNumber": "功能 {number}",
-      "noFeatures": "尚未添加任何功能。",
+      "noFeatures": "尚未添加任何功���。",
       "fieldColorDark": "套餐颜色",
-      "fieldColorDescription": "格式为 #RRGGBB 的颜色代码，用于卡片边框、图标、标签和购买按钮。卡片上所有浅色背景色调都会根据这一种颜色自动生成。留空则使用默认样式。",
+      "fieldColorDescription": "格式为 #RRGGBB 的颜色代码，用于卡片边框、图标、标签和购买按钮。卡片上所有浅色背景色调都会根据这一种颜色自动生成。���空则使用默���样式。",
       "submitCreate": "添加",
       "submitUpdate": "保存更改",
       "cancel": "取消",
       "close": "关闭",
       "deleteDialogTitle": "删除该套餐？",
-      "deleteDialogDescription": "此操作无法撤销，将永久删除套餐“{name}”。",
+      "deleteDialogDescription": "此操��无法撤销，将永久删除套餐“{name}”。",
       "deleting": "正在删除...",
       "delete": "删除",
       "errors": {
@@ -634,8 +674,8 @@
       "createDialogTitle": "添加新模板",
       "createDialogDescription": "上传模板 ZIP 文件（index.html、blueprint.js、validation.js），并设置名称和预览图。",
       "editDialogTitle": "编辑模板",
-      "editDialogDescription": "更新模板的名称、预览图、启用状态，或替换其 ZIP 文件。",
-      "viewDialogTitle": "模板信息",
+      "editDialogDescription": "更新模板的��称、预览图、启用状������，或替换其 ZIP 文件。",
+      "viewDialogTitle": "模板��息",
       "actionEdit": "编辑",
       "cancel": "取消",
       "searchPlaceholder": "按模板名称搜索...",
@@ -644,7 +684,7 @@
       "columnCreatedAt": "创建日期",
       "emptyTitle": "暂无模板",
       "emptyDescription": "添加第一个用于课程呈现与生成的模板",
-      "fieldName": "模板名称",
+      "fieldName": "��板名称",
       "fieldHtmlPlayer": "HTML 播放器",
       "fieldBlueprint": "完整示例（Blueprint）",
       "fieldValidationScript": "校验脚本",
@@ -726,7 +766,7 @@
       "generationCostCardDescription": "教师每生成一节课时从其余额中扣除的积分数量。",
       "fieldGenerationCost": "每次生成所需积分",
       "paymentCardTitle": "支付设置",
-      "paymentCardDescription": "控制是否启用 Paddle 自动支付，关闭后购买流程将改为通过 WhatsApp 联系。",
+      "paymentCardDescription": "控制���否启用 Paddle 自动支付，关闭后购买流程将改为通过 WhatsApp 联系。",
       "fieldAutoPaymentEnabled": "启用自动支付（Paddle）",
       "fieldAutoPaymentEnabledDescription": "关闭后，教师将看到 WhatsApp 联系按钮，而不是自动购买按钮。",
       "fieldWhatsappContactNumber": "WhatsApp 联系号码",
@@ -784,11 +824,11 @@
       "passwordUpdateSuccess": "密码已成功更新。",
       "errors": {
         "invalidData": "数据无效。",
-        "updatePasswordFailed": "无法更新密码，请重试。"
+        "updatePasswordFailed": "无法更新密码，请������"
       }
     },
     "home": {
-      "greeting": "你好，{name}",
+      "greeting": "你��，{name}",
       "waveAlt": "挥手致意",
       "subtitle": "准备好为学生创建精彩的互动课程了吗",
       "statShared": "已共享课程",
@@ -803,7 +843,7 @@
       "pageDescription": "按级别或主题整理你的课程",
       "newFolder": "新建文件夹",
       "emptyTitle": "暂无文件夹",
-      "emptyDescription": "创建一个文件夹，按级别或主题整理课程",
+      "emptyDescription": "创建一个��件夹，按级别或主题整理课程",
       "lessonCount": "{count} 节课",
       "createDialogTitle": "新建文件夹",
       "createDialogDescription": "创建一个新文件夹来整理你的课程。",
@@ -879,9 +919,9 @@
         "admin_adjustment": "管理员调整",
         "generation": "课程生成"
       },
-      "purchaseProcessing": "正在确认支付……积分将很快添加到您的账户。",
+      "purchaseProcessing": "正在确认支付……积分将���快添���到���的账户。",
       "purchaseSuccess": "支付成功，积分已添加到您的账户。",
-      "purchaseDelayed": "支付成功，但余额更新时间比预期长。请在一分钟后刷新页面，如果问题持续存在，请联系管理员。",
+      "purchaseDelayed": "支付成��，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
       "purchaseCancelled": "支付已取消，未产生任何扣款。",
       "errors": {
         "packageNotFound": "所选套餐不可用。",
@@ -892,7 +932,7 @@
       "pageTitle": "创建新课程",
       "pageDescription": "按照以下步骤创建一节互动课程",
       "insufficientCreditsTitle": "积分不足，无法创建课程",
-      "insufficientCreditsDescription": "您当前的积分余额为 {balance}，而创建课程至少需要 {cost} 积分。请充值后继续。",
+      "insufficientCreditsDescription": "您当前的积分余额为 {balance}，而创建课��至少需要 {cost} 积分。请充值后继续。",
       "insufficientCreditsCta": "充值积分"
     },
     "lessonDetail": {
@@ -902,7 +942,7 @@
       "share": "分享",
       "approve": "批准",
       "contentTitle": "课程内容",
-      "approvedContentLockedTitle": "该版本已批准",
+      "approvedContentLockedTitle": "该版本已批��",
       "approvedContentLockedDescription": "已批准的内容已被锁定，因为它正是「运行课程」和任何分享链接当前使用的内容。请在下方的版本历史中使用「恢复」来创建可编辑的草稿。",
       "generatingTitle": "正在生成课程…",
       "generatingDescription": "生成可能需要一些时间。你可以放心离开此页面 —— 我们会在后台继续处理，回来时课程就会准备好。",
@@ -948,8 +988,8 @@
         "addItem": "添加项目",
         "removeItem": "删除项目",
         "back": "返回",
-        "cancel": "取消",
-        "addItemDone": "完成",
+        "cancel": "取���",
+        "addItemDone": "完���",
         "deleteItemTitle": "删除此项？",
         "deleteItemDescription": "此操作无法撤销。",
         "deleteItemConfirm": "删除",
@@ -1044,6 +1084,129 @@
         "generationFailed": "课程内容生成失败。积分已被扣除，你可以在课程页面重试。",
         "unexpectedError": "发生了意外错误，请重试。"
       }
+    }
+  },
+  "products": {
+    "eyebrow": "Fusaha 产品",
+    "title": "为教育带来改变的阿拉伯语工具",
+    "description": "探索当前可用的产品，清楚了解现在可以使用的功能以及可供体验的内容。",
+    "interactiveTitle": "互动课程生成器",
+    "interactiveDescription": "将课程来源转换为完整的互动课程，并在工作区中进行审核和确认。",
+    "interactiveAction": "创建课程",
+    "writingTitle": "阿拉伯语写作工作室",
+    "writingDescription": "了解如何将内容转化为更具吸引力的学习体验。",
+    "writingAction": "探索工作室",
+    "available": "可用",
+    "informational": "产品介绍",
+    "developmentTitle": "正在开发",
+    "developmentDescription": "我们正在认真开发这些产品，准备就绪后将公布可用详情。",
+    "inDevelopment": "正在开发",
+    "engineTitle": "阿拉伯字母绘制引擎",
+    "engineDescription": "用于练习阿拉伯字母形态并跟随书写步骤的教育工具。",
+    "productImageAlt": "{title} 预览",
+    "engineLightAlt": "浅色模式下的阿拉伯字母绘制引擎预览",
+    "engineDarkAlt": "深色模式下的阿拉伯字母绘制引擎预览"
+  },
+  "libraryPage": {
+    "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "尚未发布经过核实的书籍", "emptyDescription": "当前目录条目正在审核，完成审核前不会公开。未核实的书籍和访问链接不会显示。", "reset": "重置筛选", "backToLibrary": "返回图书馆", "notFoundTitle": "未找到图书 | Fusaha", "by": "作者", "publisher": "出版商", "audience": "读者", "level": "级别", "source": "来源", "accessTitle": "访问信息", "accessAction": "打开原始来源", "access": {"free_reading": "已确认可免费阅读。", "preview": "原始来源提供预览。", "purchase": "可从原始来源购买。", "institutional_access": "可通过教育机构访问。", "unknown": "访问详情尚未核实。"},
+    "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
+    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短���，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+  },
+  "resourcesPage": {
+    "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
+    "items": {"interactive-lesson-generator": {"title": "互动课程生成器", "description": "将课程来源转换为可审核并可用于课堂的互动体验。", "action": "创建课程", "imageAlt": "Fusaha 互动课程创建器预览"}, "arabic-writing-studio": {"title": "阿拉伯语写作工作室", "description": "用于整理阿拉伯语内容并将其转���为学习材料的专用环境。", "action": "打开工作室", "imageAlt": "Fusaha 阿拉伯语写作工作室预览"}}
+  },
+  "helpPage": {
+    "metaTitle": "帮助中心 | Fusaha", "metaDescription": "帮助您使用 Fusaha 工具并解决常见问题的简明答案和指南。", "title": "我们能如何帮助您？", "description": "搜索问题、故障或使用指南。", "searchLabel": "搜索帮助中心", "searchPlaceholder": "在这里输入您的问题...", "categoriesLabel": "帮助中心分区", "verifiedEyebrow": "经过平台体验验证的信息", "faqTitle": "常见问题", "resultsCount": "{count} 个结果", "relatedLink": "探索相关入口", "emptyTitle": "没有匹配的结果", "emptyDescription": "请尝试其他关键词或选择其他分区。", "contactTitle": "联系我们", "contactDescription": "项目目前尚未公布官方联系渠道。确定联系渠道后，我们会补充此部分。",
+    "categories": {"guides": {"title": "使用指南", "description": "了解如何使用 Fusaha 工具。"}, "faq": {"title": "常见问题", "description": "常见问题的快速答案。"}, "troubleshooting": {"title": "故障排查", "description": "解决问题的实用步骤。"}, "contact": {"title": "联系我们", "description": "联系渠道确定后公布官方信息。"}},
+    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未��录的步骤��设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录���面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
+  },
+ "about": {
+    "metaTitle": "关于Fusaha｜让阿拉伯语学习更清晰、更有目的",
+    "metaDescription": "了解Fusaha：一个帮助教师和学习者构建更有条理、更有目标的阿拉伯语学习体验的平台。",
+    "heroEyebrow": "关于Fusaha",
+    "heroTitle": "让阿拉伯语学习更清晰、更有目的",
+    "heroDescription": "Fusaha致力于把阿拉伯语内容转化为有结构、有目标、便于使用的学习体验，帮助教师更好地组织教学，也让学习者从理解走向实践的路径更加清晰。",
+    "heroPrimary": "探索Fusaha产品",
+    "heroSecondary": "浏览学习资源",
+    "heroBadge": "学习始于明确的目标",
+    "heroCardTitle": "从一个想法到完整的学习体验",
+    "heroCard": { "objectives": "明确目标", "planning": "连贯规划", "practice": "有效练习", "assessment": "恰当评价" },
+    "whyEyebrow": "我们为什么存在",
+    "whyTitle": "因为内容本身并不等于学习",
+    "whyBody1": "优质的教学材料只是起点。有效学习首先要明确学习者应达成什么，再把这一意图转化为课程、步骤和活动，帮助学习者不断前进。",
+    "whyBody2": "因此，Fusaha把学习目标、课程规划、活动设计、课堂实施和学习评价视为彼此相连的整体，而不是互相割裂的环节。",
+    "visionEyebrow": "我们的愿景",
+    "visionTitle": "以更清晰的目标教授阿拉伯语",
+    "visionBody": "我们希望阿拉伯语教学与学习变得更有条理、更易获得、更有效。教师应当获得构建优质学习体验的实用支持，学习者则应拥有一条把知识与使用联系起来的清晰路径。",
+    "approachEyebrow": "我们的教育理念",
+    "approachTitle": "指导我们思考的原则",
+    "approachDescription": "以下教育原则和方向塑造着Fusaha。这并不意味着每一项原则都已经作为独立的平台功能实现。",
+    "principles": {
+      "objectives": { "title": "先明确目标，再设计活动", "body": "先确定学习者应达成什么，再选择真正服务于这一目标的内容和活动。" },
+      "structure": { "title": "建立连贯的教学结构", "body": "把内容、步骤和活动连接起来，而不是把它们当作彼此孤立的材料。" },
+      "purpose": { "title": "让活动服务于学习", "body": "每项活动都应在理解、练习或应用中承担清晰的作用。" },
+      "progression": { "title": "符合学习者的进阶", "body": "关注学习者的水平、需求和学习情境，让进步成为可行且有意义的过程。" },
+      "assessment": { "title": "评价与学习目标一致", "body": "���价应延续预���的学习成果，而不是成为与课程脱节的最后一步。" },
+      "support": { "title": "为教师提供实用支持", "body": "通过工具和思路，帮助教师把教育意图落实为课堂实践。" }
+    },
+    "audienceEyebrow": "我们服务的对象",
+    "audienceTitle": "Fusaha与每一位推动阿拉伯语教育的人同行",
+    "audiences": { "teachers": { "title": "阿拉伯语教师", "body": "为正在规划课程、希望获得备课支持的教师而设。" }, "learners": { "title": "阿拉伯语学习者", "body": "为希望获得更清晰体验、并将活动与所学内容联系起来的学习者而设。" }, "institutions": { "title": "教育机构与资源创作者", "body": "为开发阿拉伯语学习资源、需要更连贯方法的团队而设。" } },
+    "principlesTitle": "我们珍视什么",
+    "principlesDescription": "我们重视教育价值、清晰体验、易用性，尊重教师与学习者的经验和需求，并通过持续学习不断改进。",
+    "values": { "value": "教育价值", "clarity": "清晰", "respect": "尊重", "improvement": "持续改进" },
+    "closingTitle": "从了解Fusaha开始",
+    "closingDescription": "探索现有的产品和资源，了解Fusaha如何支持您的阿拉伯语教学或学习之旅。",
+    "closingPrimary": "探索产品",
+    "closingSecondary": "访问帮助中心"
+  },
+  "pricingPage": {
+    "metaTitle": "价格｜Fusaha",
+    "metaDescription": "了解Fusaha的教育价值，探索目前可用的产品与资源。价格详情正在准备中。",
+    "heroEyebrow": "Fusaha价格信息",
+    "heroTitle": "从您的需求出发，发现教育价值",
+    "heroDescription": "Fusaha帮助您把阿拉伯语想法和内容转化为更有条理、更有效的学习体验。",
+    "heroCta": "探索产品",
+    "heroBadge": "围绕学习体验构建",
+    "heroCardTitle": "从学习目标到实践，路���更清晰",
+    "heroCard": { "objectives": "明确目标", "planning": "连贯规划", "practice": "有效练习", "assessment": "恰当评价" },
+    "discoverEyebrow": "探索当前可用内容",
+    "discoverTitle": "了解Fusaha现在能做什么",
+    "discoverDescription": "访问Fusaha目前开放的内容，了解平台如何支持阿拉伯语教育。",
+    "discovery": { "products": { "title": "产品", "body": "查看Fusaha目前提供的产品和学习体验。", "link": "查看产品" }, "resources": { "title": "资源", "body": "浏览阿拉伯语学习所需的教育资源和实用材料。", "link": "浏览资源" }, "help": { "title": "帮助中心", "body": "查��使用平台时需要的答案和指导。", "link": "访问帮助中心" } },
+    "statusEyebrow": "透明说明",
+    "statusTitle": "价格详情正在准备中",
+    "statusDescription": "我们正在准备清晰的说明，帮助您在做出决定前了解使用选项及其费用。",
+    "statusNote": "价格和使用条款将在确认后清晰公布。",
+    "faqEyebrow": "常见问题",
+    "faqTitle": "常见问题解答",
+    "faq": { "products": { "question": "在哪里可以了解Fusaha现有的产品？", "answer": "访问产品页面，即可查看目前提供的产品和学习体验。" }, "pricing": { "question": "价格详情将在哪里公布？", "answer": "价格详情和使用条款确认后，会在本页面清晰公布。" }, "help": { "question": "在哪里可以找到平台使用帮助？", "answer": "帮助中心提供使用Fusaha时所需的指导和答案。" } },
+    "closingTitle": "按自己的节奏探索Fusaha",
+    "closingDescription": "探索现有产品和资源，价格详情准备好后也可以再次回到这里查看。",
+    "closingProducts": "探索产品",
+    "closingHelp": "访问帮助中心"
+  },
+  "policyPage": {
+    "metaTitle": "平台政策｜Fusaha",
+    "metaDescription": "Fusaha关于平台使用、教育资源、图书目录、知识产权和权利人报告的政策。",
+    "eyebrow": "平台政策",
+    "title": "一份清晰的教育平台政策",
+    "intro": "本政策说明Fusaha如何处理平台使用、教育资源、图书目录、知识产权、外部链接以及与权利相关的报告。",
+    "contents": "本页内容",
+    "contentsLabel": "政策章节",
+    "notice": "Fusaha是支持阿拉伯语教学与学习的教育平台。本政策旨在清晰说明我们的做法，并不代表法律认证，也不能替代针对具体情况的专业建议。",
+    "backHome": "返回Fusaha",
+    "helpLink": "访问帮助中心",
+    "sections": {
+      "purpose": { "title": "目的与适用范围", "paragraphs": ["Fusaha通过其公共页面、服务、教育资源和图书馆（在适用情况下）支持阿拉伯语教学与学习。", "本政策说明使用这些平台内容时应遵循的原则，以及我们处理教育材料和目录信息的方式。"] },
+      "use": { "title": "可接受的使用方式", "paragraphs": ["用户应以合法、尊重他人的方式使用Fusaha，并避免干扰平台运行或他人访问平台。", "不得以侵犯第三方权利、滥用平台材料、扰乱平台运行或违反适用法律的方式使用平台。本政策并非列出所有禁止行为，也不承诺特定的处理结果。"] },
+      "property": { "title": "知识产权", "paragraphs": ["Fusaha的品牌、原创内容、界面元素及其他平台材料，均受其适用的知识产权保护。书籍、图片、文字和其他外部材料则受相应权利人的权利保护。", "图书目录中的条目并不表示Fusaha拥有该书、出版该书、代表其作者或出版商，或获得其认可。教育目的本身不会自动授权复制、托管或再分发受保护作品；在复制前可能需要获得许可、适用的授权或其他有效法律依据。"] },
+      "library": { "title": "教育图书馆与图书目录", "paragraphs": ["图书馆帮助教师和学习者发现教育类书籍、阿拉伯语学习材料以及教师专业发展资源。目录在适当且信息可用时，可能包括书名、作者、出版商、语言、目标读者或水平、相关技能或教育主题、简短说明、经过适当授权的封面或缩略图，以及原始来源或其他合法来源的链接。", "我们优先将访问者引导至原出版商、作者、机构图书馆或其他合法来源，而不是在Fusaha托管图书文件。资源可能免费阅读、提供有限预览、需要购买，或通过教育机构访问；任何访问标签都应准确反映从来源核实的信息。在互联网上找到PDF本身，并不代表该书可以合法获取。"] },
+      "materials": { "title": "书籍封面、说明与外部链接", "paragraphs": ["使用书籍封面、摘录、图片和说明材料时，应尊重适用的权利、许可和来源条款。在可能的情况下，Fusaha会链接至官方或其他合法来源。", "外部网站可能改变其内容���访问要求、可用性或价格，Fusaha不一定能够控制这些变化。仅仅链接到某个页面并不能解决所有潜在的权利问题；如有可信理由认为链接指向未经授权的材料，应对其进行审查。"] },
+      "reports": { "title": "权利人报告与移除请求", "paragraphs": ["作者、出版商及其他权利人可以请求Fusaha审查图书目录中的条目。报告在可能的情况下应包括书籍或材料的标题、相关Fusaha目录网址、被质疑材料或其原始来源、简要说明，以及合理用于核实请求人身份或权利的信息。", "Fusaha会审查报告，并可能在适当情况下更正元数据、��换或停用链接、限制条目，或移除目录条目或材料。教育意图并非在所有情况下都构成法律抗辩，收到报告后的移除也不会自动解决此前可能存在的问题。本政策不承诺具体的响应时间或法律结果。", "目前平台实现中没有专门的权利报告联系方式。用户可以访问帮助中心了解当前可用的指引；没有专门表单或地址，并不表示可以使用受保护材料。"] },
+      "external": { "title": "外部网站与第三方材料", "paragraphs": ["提供外部链接是为了帮助用户访问相关资源。外部网站可能拥有自己的条款、隐私政策、访问条件和内容，Fusaha不一定控制或认可每一个外部资源。", "这并不免除Fusaha在发现可信问题时审查和维护自身目录及平台行为的责任。"] },
+      "updates": { "title": "准确性、更新与政策变更", "paragraphs": ["随着平台发展，Fusaha可能更正过时的元数据、更新链接、���查目录并修订本政策，同时遵守适用要求。", "我们不保证每个目录条目或外部链接都会保持不变或持续可用。请返回本页面查看当前版本的政策。"] }
     }
   }
 }

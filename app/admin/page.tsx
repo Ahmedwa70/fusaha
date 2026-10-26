@@ -21,7 +21,7 @@ export default async function AdminPage() {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <StatCard icon={UsersIcon} value={totalTeachers} label={t("statTeachers")} tint="bg-blue-50 text-blue-600" />
+        <StatCard icon={UsersIcon} value={totalTeachers} label={t("statTeachers")} tint="bg-info text-info-foreground" />
         <StatCard
           icon={BookOpenIcon}
           value={totalLessons}
@@ -32,13 +32,13 @@ export default async function AdminPage() {
           icon={Loader2Icon}
           value={pendingJobs}
           label={t("statPendingJobs")}
-          tint="bg-amber-50 text-amber-600"
+          tint="bg-warning text-warning-foreground"
         />
         <StatCard
           icon={WalletIcon}
           value={revenueThisMonth}
           label={t("statRevenue")}
-          tint="bg-green-50 text-green-600"
+          tint="bg-success text-success-foreground"
           suffix=" ج.م"
         />
       </div>

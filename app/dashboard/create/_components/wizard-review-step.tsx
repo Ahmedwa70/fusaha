@@ -44,7 +44,7 @@ export function WizardReviewStep({
   if (submitted) {
     return (
       <div className="flex flex-col items-center gap-3 py-8 text-center">
-        <div className="flex size-14 items-center justify-center rounded-full bg-green-100 text-green-700">
+        <div className="flex size-14 items-center justify-center rounded-full bg-success text-success-foreground">
           <CheckIcon className="size-7" />
         </div>
         <h2 className="text-lg font-semibold">{t("successTitle")}</h2>
@@ -81,7 +81,7 @@ export function WizardReviewStep({
         />
       </div>
 
-      <div className="flex items-start gap-2 rounded-lg bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="flex items-start gap-2 rounded-lg bg-warning p-4 text-sm text-warning-foreground">
         <InfoIcon className="mt-0.5 size-4 shrink-0" />
         <p>{t.rich("creditsWarning", { cost: generationCost, strong: (chunks) => <strong>{chunks}</strong> })}</p>
       </div>

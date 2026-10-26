@@ -40,7 +40,7 @@ export function PurchaseBalancePoller({ creditsBalance }: { creditsBalance: numb
 
   if (credited) {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-green-200 bg-green-50 p-4 text-sm text-green-800">
+      <div className="flex items-center gap-2 rounded-lg border border-success/30 bg-success p-4 text-sm text-success-foreground">
         <CheckCircle2Icon className="size-4 shrink-0" />
         {t("purchaseSuccess")}
       </div>
@@ -49,7 +49,7 @@ export function PurchaseBalancePoller({ creditsBalance }: { creditsBalance: numb
 
   if (exhausted) {
     return (
-      <div className="flex items-center gap-2 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <div className="flex items-center gap-2 rounded-lg border border-warning/30 bg-warning p-4 text-sm text-warning-foreground">
         <ClockAlertIcon className="size-4 shrink-0" />
         {t("purchaseDelayed")}
       </div>
@@ -57,7 +57,7 @@ export function PurchaseBalancePoller({ creditsBalance }: { creditsBalance: numb
   }
 
   return (
-    <div className="flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+    <div className="flex items-center gap-2 rounded-lg border border-info/30 bg-info p-4 text-sm text-info-foreground">
       <Loader2Icon className="size-4 shrink-0 animate-spin" />
       {t("purchaseProcessing")}
     </div>

@@ -81,6 +81,7 @@ export function AdminSidebar({
       icon: CoinsIcon,
       permission: Permissions.creditPackagesList,
     },
+    { title: tAdmin("library"), url: ROUTES.adminLibrary, icon: BookOpenIcon, permission: Permissions.libraryList },
     {
       title: tAdmin("templates"),
       url: ROUTES.adminTemplates,
@@ -95,7 +96,7 @@ export function AdminSidebar({
   return (
     <Sidebar side={direction === "rtl" ? "right" : "left"} {...props}>
       <SidebarHeader className="items-center border-b border-sidebar-border py-6 text-center">
-        <Image src="/logo.png" alt={tApp("name")} width={64} height={64} className="rounded-full" />
+        <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} className="h-10 w-auto object-contain" />
       </SidebarHeader>
 
       <SidebarContent>

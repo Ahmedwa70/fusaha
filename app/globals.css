@@ -5,11 +5,32 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+  font-family: "Noto Sans SC UI";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("/fonts/noto-sans-sc/NotoSansSC-ui-subset.woff2") format("woff2");
+  unicode-range: U+20-7e, U+a9, U+b7, U+636, U+2014, U+2018-2019, U+201c-201d, U+2026, U+2460, U+3001-3002, U+300a-300d, U+3010-3011, U+4e00, U+4e0a-4e0b, U+4e0d-4e0e, U+4e13-4e14, U+4e1a, U+4e22, U+4e24, U+4e2a, U+4e2d, U+4e30, U+4e3a-4e3b, U+4e45, U+4e48-4e49, U+4e4b, U+4e4e, U+4e5f-4e60, U+4e66, U+4e70, U+4e86, U+4e8b, U+4e8e, U+4e92, U+4e9b, U+4ea4, U+4ea7, U+4eab, U+4eba, U+4ec5, U+4eca-4ecb, U+4ecd-4ece, U+4ed6, U+4ed8, U+4ee3, U+4ee5, U+4eec, U+4ef6-4ef7, U+4efb, U+4efd, U+4f18, U+4f1a, U+4f20, U+4f2f-4f30, U+4f46, U+4f4d-4f4e, U+4f53, U+4f55, U+4f59, U+4f5c, U+4f60, U+4f7f, U+4f8b, U+4f9b, U+4f9d, U+4fbf, U+4fdd, U+4fe1, U+4fee, U+5021, U+503c, U+5047, U+505a, U+505c, U+50a8, U+5141, U+5143, U+5145, U+5148, U+5165, U+5168, U+516c-516d, U+5171, U+5173, U+5176-5177, U+5185, U+518c-518d, U+5199, U+51b3, U+51c6, U+51e0, U+51fa-51fb, U+5206-5207, U+5217, U+5219, U+521b, U+521d, U+5220, U+5224, U+5229, U+522b, U+5230, U+5236-5237, U+524d, U+526f, U+529b, U+529e-52a1, U+52a8-52a9, U+52fe, U+5305, U+5316, U+5339-533a, U+5355, U+5357, U+5360-5361, U+5373, U+5386, U+538b, U+539f, U+53bb, U+53c2, U+53ca, U+53cd, U+53d1, U+53d6-53d8, U+53e3, U+53e5-53e6, U+53ea, U+53ef-53f0, U+53f2-53f3, U+53f7, U+5408, U+540c-540e, U+5411, U+5417, U+5426, U+542b, U+542f, U+5438, U+5448, U+5458, U+547d, U+548c, U+54c1, U+54cd, U+552f, U+5668, U+56db, U+56de, U+56e0, U+56e2, U+56fa, U+56fd-56fe, U+5708, U+5728, U+5730, U+573a, U+5740, U+574f, U+578b, U+57df, U+57fa, U+5802, U+586b, U+5883, U+589e, U+5904, U+5907, U+590d, U+5916, U+591a, U+5927, U+5929, U+5931, U+5934, U+5939, U+5957, U+597d, U+5982, U+59cb, U+59d3, U+5b50, U+5b57-5b58, U+5b66, U+5b83, U+5b8c, U+5b98, U+5b9a, U+5b9e, U+5ba1, U+5ba4, U+5bb6, U+5bb9, U+5bc6, U+5bcc, U+5bf9, U+5bfc, U+5c01, U+5c06, U+5c0f, U+5c11, U+5c1a, U+5c1d, U+5c31, U+5c4f, U+5c55, U+5c5e, U+5de5-5de6, U+5df1-5df2, U+5e03, U+5e08, U+5e26, U+5e2e, U+5e38, U+5e45, U+5e73, U+5e76, U+5e8f, U+5e93-5e95, U+5ea6, U+5efa, U+5f00, U+5f03, U+5f0f, U+5f15, U+5f20, U+5f3a, U+5f52-5f53, U+5f55, U+5f62, U+5f69, U+5f71, U+5f85, U+5f88, U+5f97, U+5faa, U+5fc3, U+5fc5, U+5fd7-5fd8, U+5feb, U+5ffd, U+6001, U+600e, U+601d, U+6027, U+603b, U+6062, U+606f, U+60a8, U+60c5, U+60f3, U+610f, U+6210-6211, U+6216, U+6218, U+622a, U+6237, U+6240, U+624b, U+6253, U+6263, U+6267, U+6269, U+6279, U+627e, U+6280, U+628a, U+6298, U+62a4, U+62c9, U+62d6, U+62e5, U+62e9, U+62fd, U+6301, U+6307, U+6309, U+6311, U+6325, U+635f, U+6362, U+636e, U+6388, U+638c, U+6392, U+63a2, U+63a5, U+63a7-63a8, U+63cf-63d0, U+63e1, U+641c, U+64a4, U+64ad, U+64cd-64ce, U+652f, U+6536, U+6539, U+653e, U+6545, U+6548, U+6559, U+6570, U+6574, U+6587, U+6599, U+65ad, U+65b0, U+65b9, U+65c5, U+65e0, U+65e5, U+65e7, U+65f6, U+660e, U+6613, U+662f, U+663e, U+666f-6670, U+667a, U+6682, U+66f4, U+66ff-6700, U+6708-6709, U+670d, U+671f, U+672a, U+672c, U+673a, U+6742-6743, U+6750, U+6761, U+6765, U+677e-677f, U+6784, U+6790, U+679c, U+67d0, U+67e5, U+6807, U+6821, U+6837-6839, U+683c, U+6846, U+6848, U+6863, U+68c0, U+695a, U+6982, U+6a21, U+6a2a, U+6b21, U+6b3e, U+6b62-6b65, U+6bb5, U+6bcd, U+6bcf, U+6bd4, U+6c34, U+6c38, U+6c42, U+6c47, U+6ca1, U+6cbf, U+6cd5, U+6ce8, U+6d3b, U+6d41, U+6d45, U+6d4f, U+6d88, U+6db5, U+6df1, U+6dfb, U+6e05, U+6e10, U+6e20, U+6e90, U+6f14, U+6fc0, U+70b9, U+7136, U+7167, U+7247-7248, U+72b6, U+72ec, U+73af-73b0, U+7406, U+751f, U+7528, U+7531, U+7533, U+7535, U+7545, U+754c, U+7559, U+7565, U+75d5, U+767b, U+7684, U+76d1, U+76d6, U+76ee, U+76f4, U+76f8, U+7701, U+770b, U+771f, U+7740, U+77e5, U+77ed, U+7801, U+7840, U+786e, U+793a, U+793e, U+79bb, U+79cd, U+79d2, U+79ef-79f0, U+79fb, U+7a0b, U+7a0d, U+7a3f, U+7a7a, U+7a7f, U+7a97, U+7acb, U+7ad9, U+7aef, U+7b26, U+7b2c, U+7b54, U+7b5b, U+7b7e, U+7b80, U+7ba1, U+7bb1, U+7c4d, U+7c7b, U+7c98, U+7cbe, U+7cfb, U+7d20, U+7d22, U+7d2f, U+7ea6-7ea7, U+7ebf, U+7ec3-7ec4, U+7ec7, U+7ecd, U+7ecf, U+7ed3, U+7ed8-7ed9, U+7edf, U+7ee7, U+7eea, U+7eed, U+7f16, U+7f29, U+7f6e, U+7f8e, U+8001, U+8003, U+8005, U+800c, U+8017, U+8054, U+80b2, U+80cc, U+80fd, U+811a, U+817e, U+81ea, U+81f3-81f4, U+822a, U+8272, U+8282, U+82e5, U+82f1, U+8349, U+83b7, U+83dc, U+8425, U+843d, U+85cf, U+865a, U+884c, U+8865, U+8868, U+88ab, U+8981, U+89c1, U+89c6, U+89c8-89c9, U+89d2, U+89e3, U+8a00, U+8ba1, U+8ba4, U+8bae, U+8bb0, U+8bb2, U+8bb8, U+8bbe-8bbf, U+8bc1, U+8bc4, U+8bc6, U+8bcd, U+8bd5, U+8bdd, U+8be5-8be6, U+8bed, U+8bef, U+8bf4, U+8bf7, U+8bfb, U+8bfe, U+8c03, U+8d1f, U+8d25-8d26, U+8d2d, U+8d2f, U+8d34, U+8d39, U+8d44, U+8d85, U+8db3, U+8ddf, U+8f6c, U+8f7b, U+8f7d, U+8f91, U+8f93, U+8fb9, U+8fbe, U+8fc7, U+8fd0-8fd1, U+8fd4, U+8fd8-8fd9, U+8fdb, U+8fde, U+8ff0, U+9000-9002, U+9009, U+901a, U+901f-9020, U+9047, U+9053, U+90ae, U+90e8, U+90fd, U+914d, U+9192, U+91cc-91cd, U+91cf, U+91d1, U+949f, U+94a5, U+94ae, U+94fe, U+9500-9501, U+9519, U+952e, U+957f, U+95ed-95ee, U+95f4, U+9605, U+961f, U+963f, U+9644-9645, U+9650, U+9664, U+968f-9690, U+9694, U+969c, U+96c6, U+96f6, U+9700, U+9762, U+97f3, U+9875-9876, U+9879, U+987b, U+9884, U+9891, U+9898, U+989c-989d, U+98ce, U+9910, U+9986, U+9988, U+9996, U+9a8c, U+9aa4, U+9ad8, U+9ed8, U+ff01, U+ff08-ff09, U+ff0c, U+ff1a-ff1b, U+ff1f, U+fffd;
+}
+
+:root {
+  --font-locale: var(--font-english), Arial, Helvetica, sans-serif;
+}
+
+html[lang="ar"] {
+  --font-locale: var(--font-arabic), Arial, sans-serif;
+}
+
+html[lang="zh"] {
+  --font-locale: "Noto Sans SC UI", var(--font-cjk), "Noto Sans SC", Arial, sans-serif;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-heading: var(--font-sans);
+  --font-sans: var(--font-locale);
+  --font-heading: var(--font-locale);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -28,6 +49,12 @@
   --color-border: var(--border);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -87,11 +114,11 @@
   --popover-foreground: oklch(0.22 0.035 240);
 
   /* Brand Navy */
-  --primary: oklch(0.34 0.065 225);
+  --primary: oklch(0.34 0.075 155);
   --primary-foreground: oklch(0.985 0.004 90);
 
   /* Soft Navy Surface */
-  --secondary: oklch(0.94 0.018 225);
+  --secondary: oklch(0.94 0.025 155);
   --secondary-foreground: oklch(0.3 0.06 225);
 
   /* Neutral */
@@ -105,6 +132,12 @@
   /* States */
   --destructive: oklch(0.58 0.22 27);
   --destructive-foreground: oklch(0.98 0.01 20);
+  --success: oklch(0.92 0.06 145);
+  --success-foreground: oklch(0.32 0.1 145);
+  --warning: oklch(0.93 0.08 85);
+  --warning-foreground: oklch(0.36 0.09 70);
+  --info: oklch(0.92 0.05 230);
+  --info-foreground: oklch(0.32 0.09 230);
 
   /* Borders */
   --border: oklch(0.91 0.01 240);
@@ -131,19 +164,19 @@
   --sidebar-ring: var(--brand-400);
 
   /* =========================
-     BRAND NAVY
+     DEEP GREEN BRAND
   ========================= */
-  --brand-50: oklch(0.97 0.01 225);
-  --brand-100: oklch(0.93 0.02 225);
-  --brand-200: oklch(0.86 0.035 225);
-  --brand-300: oklch(0.75 0.05 225);
-  --brand-400: oklch(0.62 0.065 225);
-  --brand-500: oklch(0.5 0.07 225);
-  --brand-600: oklch(0.42 0.075 225);
-  --brand-700: oklch(0.34 0.065 225);
-  --brand-800: oklch(0.28 0.055 225);
-  --brand-900: oklch(0.22 0.04 225);
-  --brand-950: oklch(0.15 0.03 225);
+  --brand-50: oklch(0.97 0.018 155);
+  --brand-100: oklch(0.93 0.035 155);
+  --brand-200: oklch(0.86 0.055 155);
+  --brand-300: oklch(0.75 0.075 155);
+  --brand-400: oklch(0.62 0.09 155);
+  --brand-500: oklch(0.5 0.095 155);
+  --brand-600: oklch(0.42 0.09 155);
+  --brand-700: oklch(0.34 0.075 155);
+  --brand-800: oklch(0.28 0.06 155);
+  --brand-900: oklch(0.22 0.05 155);
+  --brand-950: oklch(0.15 0.035 155);
 
   /* =========================
      BRAND GOLD
@@ -161,47 +194,79 @@
 }
 
 .dark {
-  --background: oklch(0.17 0.02 240);
-  --foreground: oklch(0.96 0.008 90);
+  --background: lab(4.43965% -1.75043 -5.15133);
+  --foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --card: oklch(0.21 0.025 235);
-  --card-foreground: oklch(0.96 0.008 90);
-  --popover: oklch(0.21 0.025 235);
-  --popover-foreground: oklch(0.96 0.008 90);
+  --card: lab(8.39645% -3.98012 -7.53505);
+  --card-foreground: lab(95.4012% -0.0117719 3.05686);
+  --popover: lab(8.39645% -3.98012 -7.53505);
+  --popover-foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --primary: var(--gold-500);
-  --primary-foreground: var(--brand-950);
+  --primary: lab(65.1506% 13.7743 46.2724);
+  --primary-foreground: lab(3.10187% -2.88614 -5.23812);
 
-  --secondary: var(--brand-800);
-  --secondary-foreground: oklch(0.94 0.01 225);
+  --secondary: lab(16.6665% -10.8145 -14.1479);
+  --secondary-foreground: lab(95.4012% -0.0117719 3.05686);
 
-  --muted: oklch(0.25 0.02 240);
-  --muted-foreground: oklch(0.66 0.02 240);
+  --muted: lab(13.0129% -2.89283 -6.43002);
+  --muted-foreground: lab(60.5861% -3.16283 -6.54073);
 
-  --accent: var(--gold-700);
-  --accent-foreground: oklch(0.97 0.02 85);
+  --accent: lab(44.2024% 12.091 32.4918);
+  --accent-foreground: lab(96.5967% 0.633419 7.66813);
 
   --destructive: oklch(0.63 0.22 27);
   --destructive-foreground: oklch(0.98 0.01 20);
+  --success: oklch(0.3 0.08 145);
+  --success-foreground: oklch(0.9 0.08 145);
+  --warning: oklch(0.34 0.08 75);
+  --warning-foreground: oklch(0.94 0.1 85);
+  --info: oklch(0.3 0.08 230);
+  --info-foreground: oklch(0.9 0.06 230);
 
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: var(--brand-400);
+  --border: lab(100% 0 0 / 0.12);
+  --input: lab(100% 0 0 / 0.16);
+  --ring: lab(56.1949% -14.0995 -17.0568);
 
-  --chart-1: var(--brand-400);
-  --chart-2: oklch(0.68 0.12 80);
+  --chart-1: lab(65.1506% 13.7743 46.2724);
+  --chart-2: lab(56.1949% -14.0995 -17.0568);
   --chart-3: oklch(0.55 0.09 190);
   --chart-4: oklch(0.72 0.1 145);
   --chart-5: oklch(0.6 0.16 35);
 
-  --sidebar: var(--brand-950);
-  --sidebar-foreground: oklch(0.96 0.008 90);
-  --sidebar-primary: var(--brand-600);
-  --sidebar-primary-foreground: oklch(0.98 0.005 90);
-  --sidebar-accent: var(--brand-800);
-  --sidebar-accent-foreground: oklch(0.96 0.008 90);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: var(--brand-400);
+  --sidebar: lab(4.43965% -1.75043 -5.15133);
+  --sidebar-foreground: lab(95.4012% -0.0117719 3.05686);
+  --sidebar-primary: lab(65.1506% 13.7743 46.2724);
+  --sidebar-primary-foreground: lab(3.10187% -2.88614 -5.23812);
+  --sidebar-accent: lab(16.6665% -10.8145 -14.1479);
+  --sidebar-accent-foreground: lab(95.4012% -0.0117719 3.05686);
+  --sidebar-border: lab(100% 0 0 / 0.12);
+  --sidebar-ring: lab(56.1949% -14.0995 -17.0568);
+}
+
+.writing-section a.bg-primary {
+  background-color: var(--foreground);
+  color: var(--background);
+}
+
+/* Directional icons follow the language direction across the English platform UI. */
+[dir="ltr"] svg.lucide-arrow-left,
+[dir="ltr"] svg.lucide-arrow-right,
+[dir="ltr"] svg.lucide-chevron-left,
+[dir="ltr"] svg.lucide-chevron-right {
+  transform: scaleX(-1);
+}
+
+.writing-section a.bg-primary:hover {
+  background-color: color-mix(in oklab, var(--foreground) 90%, transparent);
+}
+
+.dark .writing-section a.bg-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.dark .writing-section a.bg-primary:hover {
+  background-color: color-mix(in oklab, var(--primary) 80%, transparent);
 }
 
 @layer base {
@@ -213,6 +278,47 @@
   }
   html {
     @apply font-sans;
+  }
+}
+
+/* Experimental Arabic optical calibration (Noto Naskh Arabic reads smaller than
+   the previous Arabic face at the same font-size). Opt-in per subtree through
+   data-ar-type="calibrated"; applies to lang="ar" only and never to paragraphs.
+   It rescales Tailwind's --text-* tokens on the target element itself, so the
+   existing text-* utilities (and their proportional line-heights) are scaled once
+   — no transform and no second, local scale. */
+html[lang="ar"] {
+  --ar-heading-scale: 1.08;
+  --ar-control-scale: 1.07;
+}
+
+html[lang="ar"] [data-ar-type="calibrated"] :is(h1, h2, h3, h4) {
+  --text-xs: calc(0.75rem * var(--ar-heading-scale));
+  --text-sm: calc(0.875rem * var(--ar-heading-scale));
+  --text-base: calc(1rem * var(--ar-heading-scale));
+  --text-lg: calc(1.125rem * var(--ar-heading-scale));
+  --text-xl: calc(1.25rem * var(--ar-heading-scale));
+  --text-2xl: calc(1.5rem * var(--ar-heading-scale));
+  --text-3xl: calc(1.875rem * var(--ar-heading-scale));
+  --text-4xl: calc(2.25rem * var(--ar-heading-scale));
+  --text-5xl: calc(3rem * var(--ar-heading-scale));
+  --text-6xl: calc(3.75rem * var(--ar-heading-scale));
+}
+
+html[lang="ar"]
+  [data-ar-type="calibrated"]
+  :is([data-slot="button"], [data-ar-control], header nav a) {
+  --text-xs: calc(0.75rem * var(--ar-control-scale));
+  --text-sm: calc(0.875rem * var(--ar-control-scale));
+  --text-base: calc(1rem * var(--ar-control-scale));
+  --text-lg: calc(1.125rem * var(--ar-control-scale));
+}
+
+/* Headings without a text-* utility inherit their size (preflight); scale them
+   in the base layer so any utility on the element still wins and is not doubled. */
+@layer base {
+  html[lang="ar"] [data-ar-type="calibrated"] :is(h1, h2, h3, h4) {
+    font-size: calc(1em * var(--ar-heading-scale));
   }
 }
 

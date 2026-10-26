@@ -15,12 +15,16 @@ real complexity stays inside the system.*
 |---|---|
 | [architecture.md](./architecture.md) | System overview, request lifecycle, repository layout, coding conventions |
 | [tech-stack.md](./tech-stack.md) | Every library and service used, and why |
-| [frontend.md](./frontend.md) | Route map, component library, styling, i18n/RTL, form and data-flow patterns |
+| [frontend.md](./frontend.md) | Route map, component library, styling, the official locale/RTL/LTR standard, form and data-flow patterns |
 | [api-reference.md](./api-reference.md) | **The service catalogue.** Every Server Action and HTTP route: inputs, outputs, auth, side effects |
 | [data-model.md](./data-model.md) | Database schema: every table, column, relation, and enum |
 | [ai-pipeline.md](./ai-pipeline.md) | Lesson generation end to end, source ingestion, templates, billing, integrations |
 | [development.md](./development.md) | Local setup, environment variables, migrations, deployment, known issues |
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
+| [product/VISION.md](./product/VISION.md) | Strategic vision and product principles |
+| [product/BOOK_LIBRARY_SPECIFICATION.md](./product/BOOK_LIBRARY_SPECIFICATION.md) | Organizational standard for adding, classifying, and linking books and references (not an implemented feature) |
+| [architecture/REPOSITORY_TREE.md](./architecture/REPOSITORY_TREE.md) | Verified repository directory tree and major code groups |
+| [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
 
 ## Read this first
 

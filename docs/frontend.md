@@ -13,7 +13,7 @@ and fall through to the Next.js built-in 404.
 
 | Path | Type | Notes |
 |---|---|---|
-| `app/layout.tsx` | Server | Resolves the locale server-side, sets `<html lang dir>`, loads `IBM_Plex_Sans_Arabic`. Provider stack: `NextTopLoader` → `ThemeProvider` → `NextIntlClientProvider` → `DirectionProvider` → `TooltipProvider`. `generateMetadata()` pulls title and description from the `app` message namespace |
+| `app/layout.tsx` | Server | Resolves the locale server-side, sets `<html lang dir>`, and loads the locale-aware local Arabic font, preserved English stack, and CJK font. Provider stack: `NextTopLoader` → `ThemeProvider` → `NextIntlClientProvider` → `DirectionProvider` → `TooltipProvider`. `generateMetadata()` pulls title and description from the `app` message namespace |
 | `/` | Server | Public marketing landing page — hero, before/after, six-step explainer, levels, features, CTA, footer. Swaps the arrow icon by direction |
 | `/unauthorized` | Server | Permission-denied screen; `requirePermission()` redirects here |
 
@@ -204,16 +204,180 @@ Switching locale: `actions/locale.ts#setLocale` writes the cookie, then the clie
 (`actions` / `status` / `dataTable`), `auth`, `validation`, `admin`, `unauthorized`,
 `sharedLesson`, `sidebar`, `dashboard`.
 
-### RTL
+### Official language and writing-direction standard
 
-- `<html dir>` is set server-side from `localeDirections`
-- Base UI's `DirectionProvider` wraps the tree; `useDirection()` drives runtime decisions
-  such as `<Sidebar side={dir === "rtl" ? "right" : "left"}>`, dropdown side, and sheet side
-- **Use logical CSS properties everywhere**: `ms-auto`, `ps-9`, `pe-3`, `text-start`,
-  `text-end`, `inset-s-3`, `inset-e-4`, `border-s`. Physical `left`/`right` utilities will
-  break Arabic
-- `IBM_Plex_Sans_Arabic` (subset `arabic`) is the only font, used for body, headings, and
-  forced onto `.prose` code blocks
+This section is the normative reference for all new pages and components. It describes
+what the current implementation guarantees and what new work must follow; it does not
+claim that every existing screen already conforms.
+
+#### Single source of truth
+
+- Add or change a locale only in `i18n/config.ts`. `locales`, `defaultLocale`, and
+  `localeDirections` are the authoritative locale and direction registry.
+- Resolve the active locale through `next-intl` (`getLocale` / `useLocale`), not by
+  inspecting the cookie directly in UI code. The cookie is an implementation detail of
+  `i18n/request.ts` and `actions/locale.ts`.
+- The root `app/layout.tsx` is responsible for the document contract: `<html lang>` and
+  `<html dir>` must always be derived from the registry. `DirectionProvider` is the
+  runtime direction context for Base UI components.
+
+#### RTL policy: Arabic
+
+- Arabic is the only currently configured RTL locale: `ar` → `rtl`.
+- Document flow, primary reading order, navigation, form labels, and lists follow RTL.
+  Use `text-start` / `text-end` for text alignment rather than hard-coding right/left.
+- Use logical spacing and placement (`ms` / `me`, `ps` / `pe`, `inset-s` / `inset-e`,
+  `border-s` / `border-e`) so the same component can render in both directions.
+- Menus, sheets, sidebars, and popovers may change their physical side based on
+  `useDirection()`. Do not duplicate a whole component tree for Arabic.
+- Do not mirror every icon. Mirror only directional icons whose meaning changes with
+  reading direction (for example a back/forward arrow); keep object, media, brand, and
+  status icons in their original orientation.
+- Arabic text must use the project font stack and preserve shaping. Avoid forcing a
+  monospace font for prose or generated lesson text; the existing `.prose` override is
+  intentional.
+
+#### LTR policy: English and Chinese
+
+- English and Chinese are currently LTR: `en` and `zh` → `ltr`.
+- Headings, paragraphs, lists, forms, and navigation start at the physical left through
+  logical `text-start` and flow properties. Do not use a permanent `text-right` on shared
+  components; if a design exception is required, scope it to the specific component.
+- Chinese is LTR even though its glyphs may be vertically or ideographically balanced;
+  do not infer direction from the script. Allow normal wrapping and avoid fixed widths
+  that assume Latin word lengths.
+## Official Typography and Local Font Asset Standard
+
+- Arabic uses the centrally loaded local `Noto Naskh Arabic` variable font from
+  `public/fonts/noto-naskh-arabic/NotoNaskhArabic-VariableFont_wght.ttf`. The file name
+  must not contain `[` or `]`: `next/font` emits the preload hint with `%5B`/`%5D` but the
+  `@font-face` URL with literal brackets, so the browser treats them as different URLs and
+  downloads the font twice. It is the official Arabic
+  font for headings, body text, navigation, forms, dialogs, tables, dashboard, studio,
+  and shared UI.
+- The bundled font is sourced from the Google Fonts repository's `ofl/notonaskharabic`
+  directory and records the upstream Noto source commit, archive metadata, and SIL Open
+  Font License 1.1 in `public/fonts/noto-naskh-arabic/METADATA.pb` and `OFL.txt`.
+  The checked-in file is the official variable TTF, version metadata points to Noto
+  Naskh Arabic v2.021, and its supported `wght` axis is 400–700.
+- `next/font/local` defines the local asset as `--font-arabic`; Arabic does not use
+  `next/font/google`, a Google Fonts CSS import, or a runtime external font request.
+- English preserves its existing IBM Plex Sans Arabic/Latin-compatible stack through
+  `--font-english`; Chinese preserves `Noto Sans SC` through `--font-cjk`. The central
+  `--font-locale` variable selects `--font-arabic` for `lang="ar"`, `--font-cjk` for
+  `lang="zh"`, and `--font-english` for English and other LTR locales.
+- `lang` and `dir` remain controlled by the existing i18n registry. Font selection must
+  follow the actual `lang`, not a component-local direction guess.
+- New components must use `font-sans` / `font-heading` and must not add a local Arabic
+  font override. A new weight requires verifying the variable axis, updating this record,
+  and checking rendered Arabic at narrow and wide widths.
+- The local font's supported `wght` range is 400–700. Arabic headings that previously used
+  `font-extrabold` (800) now use `font-bold` (700), the nearest supported weight. This
+  applies to the homepage, products, library, library detail, resources, and help headings.
+  Body and UI weights already within 400–700 remain unchanged. The font definition was not
+  widened, and no synthetic or unsupported weight is requested.
+- The weight-mapping phase does not change letter spacing, spacing, layout, colors,
+  breakpoints, English typography, or Chinese typography.
+- Optical calibration (experimental, Phase 3 pilot): Noto Naskh reads smaller than the
+  previous Arabic face at the same `font-size`. `globals.css` defines
+  `--ar-heading-scale: 1.08` and `--ar-control-scale: 1.07`, active only for
+  `html[lang="ar"]` inside a `data-ar-type="calibrated"` subtree (currently the `(public)`
+  layout). Headings (h1–h4) rescale the Tailwind `--text-*` tokens, so existing `text-*`
+  utilities and their proportional line-heights scale once; headings without a utility
+  scale through a base-layer `font-size`. Buttons (`data-slot="button"`), elements marked
+  `data-ar-control`, and header nav links use the control scale. Paragraphs/body text are
+  not scaled. No transform or second local scale is used; remove the attribute to
+  disable the pilot. English and Chinese are unaffected.
+- Phase 4 calibration target: the values above are total multipliers from the
+  uncalibrated Arabic baseline, not additive changes over Phase 3. Paragraphs remain at
+  1.00 because the Phase 3 evidence did not justify increasing body text. The homepage,
+  products, library, resources, help, and studio routes must be checked at 390/1032/1440
+  before treating this pilot as final. One reviewed exception at 1032px on `/help`: the
+  FAQ section heading `أسئلة يطرحها المستخدمون كثيرًا` changes from one line at 24px to
+  two lines at 25.92px; the 390px visible FAQ card headings remain single-line and the
+  page has no overflow. This is a deliberate, reviewed wrap rather than an untracked
+  layout regression. `/studio` is outside the public layout and therefore does not receive
+  this public Arabic calibration.
+- Verify local inclusion by checking the generated build assets and confirming no Arabic
+  font request targets Google Fonts or another external origin. Verify Arabic glyphs,
+  shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.
+- Chinese UI font: `html[lang="zh"]` puts a local `Noto Sans SC UI` face first in
+  `--font-locale`. It is a single static woff2 (`public/fonts/noto-sans-sc/NotoSansSC-ui-subset.woff2`,
+  about 200 KB, wght 400-700) covering the characters used in `messages/zh.json` plus common
+  punctuation, with the `unicode-range` taken from Google Fonts. The file is preloaded only
+  when `locale === "zh"` (`preload()` in `app/layout.tsx`). Any character outside the subset
+  falls through to the existing `--font-cjk` Noto Sans SC slices, so new Chinese copy still
+  renders; to keep it on the preloaded file, regenerate the subset when `zh.json` changes.
+  Known limit: on `/help`, a cold load can still show about 90-120 ms of fallback glyphs when
+  the font finishes just after first paint.
+- Keep `Noto Sans SC` and the English stack unchanged unless a separate typography decision
+  is approved. Any exception must be documented next to the component and reviewed in all
+  three locales.
+
+### Typography evidence and maintenance
+
+- Source URL: `https://github.com/google/fonts/tree/main/ofl/notonaskharabic`.
+- Upstream archive metadata: Noto Naskh Arabic v2.021; source commit is recorded in
+  `METADATA.pb`. Keep `OFL.txt` beside the font when redistributing it.
+- When updating the font, replace the TTF and metadata/license together, recheck the axis
+  range and coverage, run TypeScript and production build checks, inspect generated assets,
+  and compare Arabic/English/Chinese pages before merging.
+
+#### Shared rules for mixed content and UI
+
+- Prefer logical CSS and flow layout. Physical `left` / `right`, `ml-*` / `mr-*`,
+  `pl-*` / `pr-*`, and absolute placement are exceptions that require a documented
+  component-level reason.
+- Use `dir="auto"` for user-entered or generated free text whose direction is unknown;
+  use `<bdi>` for an inline value embedded in surrounding translated UI (names, titles,
+  identifiers, and mixed-script labels).
+- Keep numbers, URLs, email addresses, code, and identifiers stable with `dir="ltr"`
+  or an appropriate `bdi` boundary when their visual order would otherwise be unclear.
+- Icons and arrows are semantic, not decorative CSS. Use `data-icon="inline-start"` /
+  `data-icon="inline-end"` and the shared component behavior; add an explicit RTL flip
+  only when the icon represents direction.
+- Translation keys and message namespaces must remain parallel across `ar`, `en`, and
+  `zh`. Do not place user-visible copy directly in a new shared component.
+- Preserve justified design exceptions, but keep them local, name the reason in code when
+  it is non-obvious, and verify the exception in both RTL and LTR.
+
+#### Rules for new pages and shared components
+
+1. Read the active `Locale` and direction contract before choosing alignment or ordering.
+2. Start with logical utilities and semantic flow; add a physical-direction override only
+   when the design meaning truly depends on a side.
+3. Test the page in `ar`, `en`, and `zh` at narrow and wide viewports, including long
+   translated strings and mixed Arabic/Latin values.
+4. Verify navigation, menus, forms, validation errors, tables, pagination, dialogs, and
+   directional icons—not only the static landing state.
+5. Add message keys to every locale file and keep the namespace shape consistent.
+
+#### Acceptance checklist for a new locale
+
+- [ ] Locale is registered in `i18n/config.ts` with an explicit `ltr` or `rtl` direction.
+- [ ] `messages/<locale>.json` has the same required namespace/key shape as existing locales.
+- [ ] `<html lang>` / `<html dir>` and `DirectionProvider` resolve correctly after switching.
+- [ ] Navigation, sidebars, dropdowns, sheets, dialogs, forms, tables, and pagination are usable.
+- [ ] Text wraps without clipping at mobile and desktop widths; long strings are tested.
+- [ ] Mixed-script, numeric, URL, email, and generated text boundaries are checked with
+  `dir="auto"`, `dir="ltr"`, or `<bdi>` where appropriate.
+- [ ] Directional arrows are semantically correct; non-directional icons are not mirrored.
+- [ ] Typography has verified glyph coverage, including CJK when the locale needs it.
+- [ ] Light/dark contrast and keyboard/focus behavior are checked in every direction.
+- [ ] The implementation and this section agree; any known exception is recorded here.
+
+#### Current implementation versus standard
+
+Implemented and verified in source: the three-locale registry; cookie-based `next-intl`
+resolution; server-derived `lang` / `dir`; `DirectionProvider`; direction-aware Base UI
+patterns; localized message files; and logical utilities in many shared primitives.
+
+Known gaps and conflicts: several public pages still hard-code `dir="rtl"`, `text-right`,
+`right-*`, or `pr-*`, so English and Chinese are not uniformly direction-safe. The
+current font declaration requests only the Arabic subset, so Chinese glyph coverage is
+not guaranteed. Some legacy page-level layouts choose physical sheet/sidebar sides
+explicitly; these must be audited before reuse. These are documented gaps, not fixes made
+in this phase.
 
 ---
 

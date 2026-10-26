@@ -11,6 +11,7 @@ export * from "./roles";
 export * from "./permissions";
 export * from "./role-permissions";
 export * from "./credit-packages";
+export * from "./library-books";
 export * from "./purchases";
 export * from "./credits-ledger-entries";
 export * from "./audit-logs";

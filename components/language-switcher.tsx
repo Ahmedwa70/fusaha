@@ -15,7 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
-export function LanguageSwitcher({ className }: { className?: string }) {
+export function LanguageSwitcher({ className, onLocaleChange, menuSide = "bottom" }: { className?: string; onLocaleChange?: () => void; menuSide?: "top" | "bottom" }) {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
@@ -24,6 +24,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
     if (next === locale) return;
     startTransition(async () => {
       await setLocale(next);
+      onLocaleChange?.();
       router.refresh();
     });
   }
@@ -44,7 +45,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         <GlobeIcon data-icon="inline-start" />
         {localeLabels[locale]}
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="end" side={menuSide}>
         {locales.map((loc) => (
           <DropdownMenuItem key={loc} onClick={() => handleSelect(loc)}>
             {localeLabels[loc]}
