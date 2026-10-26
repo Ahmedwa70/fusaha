@@ -272,7 +272,7 @@
     "generation": {
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
-      "noDiacritics": "答案字段不应包含阿拉伯语���音���号。",
+      "noDiacritics": "答案字段不应包含阿拉���语���音���号。",
       "pageTitleMissingSeparator": "页面标题必须包���分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
@@ -319,7 +319,7 @@
       "schema": "课程生成 Schema",
       "settings": "系统设置"
     },
-    "library": {"sectionTitle":"图书馆管理","sectionDescription":"审核并准备公共图书馆的书籍记录。","newBook":"新建书籍","newTitle":"添加图书馆书籍","editTitle":"编辑图书馆书籍","formDescription":"填写元数据和本地化内容。保存功能将在后续阶段启用。","bibliographic":"书目资料","originalTitle":"原始标题","authors":"作者","publisher":"出版社","publicationYear":"出版年份或版本","originalLanguage":"原始语言","isbn":"ISBN 或目录标识符","slug":"网址别名","classification":"教育分类","category":"类别","audience":"目标读者","level":"熟练程度","skills":"技能或主题领域","skillsPlaceholder":"例如：阅读、语法","localizedContent":"本地化显示内容","displayTitle":"显示标题","description":"简短描述","longDescription":"详细描述（可选）","accessNotes":"访问说明（可选）","sourceAccess":"来源与访问","sourceName":"来源名称","sourceUrl":"来源网址","destinationType":"目标类型","publisherDestination":"出版社","authorDestination":"作者","institutionDestination":"机构","libraryDestination":"图书馆","otherDestination":"其他","accessStatus":"访问状态","accessUnknown":"未知","accessFree":"免费阅读","accessPreview":"预览","accessPurchase":"购买","accessInstitutional":"机构访问","cover":"封面图片","coverUrl":"外部图片网址","coverDescription":"仅支持 HTTP/HTTPS 图片网址。不启用文件上传。","coverAlt":"封面替代文本（可选）","workflowTitle":"审核流程","workflowDescription":"新记录为草稿，不会发布。发布和数据库持久化将在后续阶段实现。","draftLabel":"草稿预览","saveDraft":"验证草稿","validationReady":"表单有效。本阶段未保存任何数据。","validationErrors":"请修复 {count} 个验证问题。","searchPlaceholder":"搜索书籍（后续阶段提供）","allStatuses":"所有状态","emptyTitle":"暂无图书馆记录","emptyDescription":"从数据库读取图书馆数据将在后续阶段实现。现有静态记录不会作为已验证的管理记录显示。","createFirst":"准备第一本书","previewTitle":"公共卡片预览","previewUntitled":"无标题书籍","previewDescription":"简短描述将在此显示。","previewLevel":"级别","previewCategory":"类别","previewBy":"作者","previewAuthor":"未提供作者","previewSource":"打开来源"},
+    "library": {"sectionTitle":"图书馆管理","sectionDescription":"审核并准备公共图书馆的书籍记录。","newBook":"新建书籍","newTitle":"添加图书馆书籍","editTitle":"编辑图书馆书籍","formDescription":"填写元数据和本地化内容。保存功能将在后续阶段启用。","bibliographic":"书目资料","originalTitle":"原始标题","authors":"作者","publisher":"出版社","publicationYear":"出版年份或版本","originalLanguage":"原始语言","isbn":"ISBN 或目录标识符","slug":"网址别名","classification":"教育分类","category":"类别","audience":"目标读者","level":"熟练程度","skills":"技能或主题领域","skillsPlaceholder":"例如：阅读、语法","localizedContent":"本地化显示内容","displayTitle":"显示标题","description":"简短描述","longDescription":"详细描述（可选）","accessNotes":"访问说明（可选）","sourceAccess":"来源与访问","sourceName":"来源名称","sourceUrl":"来源网址","destinationType":"目标类型","publisherDestination":"出版社","authorDestination":"作者","institutionDestination":"机构","libraryDestination":"图书馆","otherDestination":"其他","accessStatus":"访问状态","accessUnknown":"未知","accessFree":"免费阅读","accessPreview":"预览","accessPurchase":"购买","accessInstitutional":"机构访问","cover":"封面图片","coverUrl":"外部图片网址","coverDescription":"仅支持 HTTP/HTTPS 图片网址。不启用文件上传。","coverAlt":"封面替代文本（可选）","workflowTitle":"审核流程","workflowDescription":"新记录为草稿，不会发布。发布需要通过审核验证。","saved":"书籍已成功保存。","saving":"保存中...","publish":"发布","unpublish":"取消发布","archive":"归档","delete":"删除","confirmPublish":"要发布这本书吗？","confirmUnpublish":"要取消发布这本书吗？","confirmArchive":"要归档这本书吗？","confirmDelete":"要永久删除这本已归档的书吗？","draftLabel":"草稿预览","saveDraft":"验证草稿","validationReady":"表单有效。本阶段未保存任何数据。","validationErrors":"请修复 {count} 个验证问题。","searchPlaceholder":"搜索书籍（后续阶段提供）","allStatuses":"所有状态","bookTitle":"书籍","status":"状态","reviewStatus":"审核","updated":"更新时间","emptyTitle":"暂无图书馆记录","emptyDescription":"从数据库读取图书馆数据将在后续阶段实现。现有静态记录不会作为已验证的管理记录显示。","createFirst":"准备第一本书","previewTitle":"公共卡片预览","previewUntitled":"无标题书籍","previewDescription":"简短描述将在此显示。","previewLevel":"级别","previewCategory":"类别","previewBy":"作者","previewAuthor":"未提供作者","previewSource":"打开来源","errors":{"invalidData":"请检查标记的字段。","notFound":"未找到书籍。","duplicateSlug":"该网址别名已被使用。","cannotPublish":"这本书不符合发布要求。","cannotArchive":"当前状态无法归档这本书。","cannotUnpublish":"这本书当前未发布。","cannotDelete":"只有已归档的书籍才能永久删除。","unexpected":"无法完成操作，请稍后重试。"}},
     "teachers": {
       "pageTitle": "管理员控制台",
       "pageDescription": "教师、课程与平台活动概览",
@@ -552,7 +552,7 @@
       "cancel": "取消",
       "errors": {
         "notFound": "未找到该课程。",
-        "notDeleted": "该课程未被删除。"
+        "notDeleted": "该课程未被删除���"
       }
     },
     "creditPackages": {
@@ -608,7 +608,7 @@
       "cancel": "取消",
       "close": "关闭",
       "deleteDialogTitle": "删除该套餐？",
-      "deleteDialogDescription": "此操作无法撤销，将永久删除套餐“{name}”。",
+      "deleteDialogDescription": "此操��无法撤销，将永久删除套餐“{name}”。",
       "deleting": "正在删除...",
       "delete": "删除",
       "errors": {
@@ -766,7 +766,7 @@
       "generationCostCardDescription": "教师每生成一节课时从其余额中扣除的积分数量。",
       "fieldGenerationCost": "每次生成所需积分",
       "paymentCardTitle": "支付设置",
-      "paymentCardDescription": "控制是否启用 Paddle 自动支付，关闭后购买流程将改为通过 WhatsApp 联系。",
+      "paymentCardDescription": "控制���否启用 Paddle 自动支付，关闭后购买流程将改为通过 WhatsApp 联系。",
       "fieldAutoPaymentEnabled": "启用自动支付（Paddle）",
       "fieldAutoPaymentEnabledDescription": "关闭后，教师将看到 WhatsApp 联系按钮，而不是自动购买按钮。",
       "fieldWhatsappContactNumber": "WhatsApp 联系号码",
@@ -932,7 +932,7 @@
       "pageTitle": "创建新课程",
       "pageDescription": "按照以下步骤创建一节互动课程",
       "insufficientCreditsTitle": "积分不足，无法创建课程",
-      "insufficientCreditsDescription": "您当前的积分余额为 {balance}，而创建课程至少需要 {cost} 积分。请充值后继续。",
+      "insufficientCreditsDescription": "您当前的积分余额为 {balance}，而创建课��至少需要 {cost} 积分。请充值后继续。",
       "insufficientCreditsCta": "充值积分"
     },
     "lessonDetail": {
@@ -1119,7 +1119,7 @@
   "helpPage": {
     "metaTitle": "帮助中心 | Fusaha", "metaDescription": "帮助您使用 Fusaha 工具并解决常见问题的简明答案和指南。", "title": "我们能如何帮助您？", "description": "搜索问题、故障或使用指南。", "searchLabel": "搜索帮助中心", "searchPlaceholder": "在这里输入您的问题...", "categoriesLabel": "帮助中心分区", "verifiedEyebrow": "经过平台体验验证的信息", "faqTitle": "常见问题", "resultsCount": "{count} 个结果", "relatedLink": "探索相关入口", "emptyTitle": "没有匹配的结果", "emptyDescription": "请尝试其他关键词或选择其他分区。", "contactTitle": "联系我们", "contactDescription": "项目目前尚未公布官方联系渠道。确定联系渠道后，我们会补充此部分。",
     "categories": {"guides": {"title": "使用指南", "description": "了解如何使用 Fusaha 工具。"}, "faq": {"title": "常见问题", "description": "常见问题的快速答案。"}, "troubleshooting": {"title": "故障排查", "description": "解决问题的实用步骤。"}, "contact": {"title": "联系我们", "description": "联系渠道确定后公布官方信息。"}},
-    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未��录的步骤��设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录页面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
+    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未��录的步骤��设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录���面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
   },
  "about": {
     "metaTitle": "关于Fusaha｜让阿拉伯语学习更清晰、更有目的",
@@ -1206,7 +1206,7 @@
       "materials": { "title": "书籍封面、说明与外部链接", "paragraphs": ["使用书籍封面、摘录、图片和说明材料时，应尊重适用的权利、许可和来源条款。在可能的情况下，Fusaha会链接至官方或其他合法来源。", "外部网站可能改变其内容���访问要求、可用性或价格，Fusaha不一定能够控制这些变化。仅仅链接到某个页面并不能解决所有潜在的权利问题；如有可信理由认为链接指向未经授权的材料，应对其进行审查。"] },
       "reports": { "title": "权利人报告与移除请求", "paragraphs": ["作者、出版商及其他权利人可以请求Fusaha审查图书目录中的条目。报告在可能的情况下应包括书籍或材料的标题、相关Fusaha目录网址、被质疑材料或其原始来源、简要说明，以及合理用于核实请求人身份或权利的信息。", "Fusaha会审查报告，并可能在适当情况下更正元数据、��换或停用链接、限制条目，或移除目录条目或材料。教育意图并非在所有情况下都构成法律抗辩，收到报告后的移除也不会自动解决此前可能存在的问题。本政策不承诺具体的响应时间或法律结果。", "目前平台实现中没有专门的权利报告联系方式。用户可以访问帮助中心了解当前可用的指引；没有专门表单或地址，并不表示可以使用受保护材料。"] },
       "external": { "title": "外部网站与第三方材料", "paragraphs": ["提供外部链接是为了帮助用户访问相关资源。外部网站可能拥有自己的条款、隐私政策、访问条件和内容，Fusaha不一定控制或认可每一个外部资源。", "这并不免除Fusaha在发现可信问题时审查和维护自身目录及平台行为的责任。"] },
-      "updates": { "title": "准确性、更新与政策变更", "paragraphs": ["随着平台发展，Fusaha可能更正过时的元数据、更新链接、审查目录并修订本政策，同时遵守适用要求。", "我们不保证每个目录条目或外部链接都会保持不变或持续可用。请返回本页面查看当前版本的政策。"] }
+      "updates": { "title": "准确性、更新与政策变更", "paragraphs": ["随着平台发展，Fusaha可能更正过时的元数据、更新链接、���查目录并修订本政策，同时遵守适用要求。", "我们不保证每个目录条目或外部链接都会保持不变或持续可用。请返回本页面查看当前版本的政策。"] }
     }
   }
 }

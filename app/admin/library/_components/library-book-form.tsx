@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { createLibraryBook, updateLibraryBook } from "@/actions/library";
 import { useForm, type FieldErrors, type Path, type UseFormRegister } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -22,16 +24,28 @@ function LocalizedFields({ name, label, multiline, register, errors }: { name: "
   return <div className="grid gap-3 rounded-xl border p-4"><div><h3 className="font-medium">{label}</h3><p className="text-xs text-muted-foreground">{locales.map((locale) => localeLabels[locale]).join(" · ")}</p></div>{locales.map((locale) => <Field key={locale} data-invalid={!!errorMap?.[locale]}><FieldLabel htmlFor={`${name}-${locale}`}>{localeLabels[locale]}</FieldLabel>{multiline ? <Textarea id={`${name}-${locale}`} dir="auto" rows={3} {...register(`${name}.${locale}` as Path<CreateLibraryBookValues>)} /> : <Input id={`${name}-${locale}`} dir="auto" {...register(`${name}.${locale}` as Path<CreateLibraryBookValues>)} />}<FieldError errors={[errorMap?.[locale]]} /></Field>)}</div>;
 }
 
-export function LibraryBookForm({ mode }: { mode: "create" | "edit" }) {
+export function LibraryBookForm({ mode, id, initialValues }: { mode: "create" | "edit"; id?: string; initialValues?: CreateLibraryBookValues }) {
   const t = useTranslations("admin.library");
+  const router = useRouter();
   const [submitted, setSubmitted] = useState(false);
-  const methods = useForm<CreateLibraryBookValues>({ resolver: zodResolver(createLibraryBookSchema) as never, defaultValues: defaults, mode: "onBlur" });
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+  const methods = useForm<CreateLibraryBookValues>({ resolver: zodResolver(createLibraryBookSchema) as never, defaultValues: initialValues ?? defaults, mode: "onBlur" });
   const { register, handleSubmit, watch, formState: { errors } } = methods;
   const values = watch();
   const errorCount = useMemo(() => Object.keys(errors).length, [errors]);
-  return <form onSubmit={handleSubmit(() => setSubmitted(true))} className="space-y-6">
-    <div className="flex flex-wrap items-center justify-between gap-3"><div><h1 className="text-2xl font-bold">{mode === "create" ? t("newTitle") : t("editTitle")}</h1><p className="text-muted-foreground">{t("formDescription")}</p></div><div className="flex gap-2"><Badge variant="outline">{t("draftLabel")}</Badge><Button type="submit">{t("saveDraft")}</Button></div></div>
-    {submitted && <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm">{t("validationReady")}</div>}
+  const onSubmit = (data: CreateLibraryBookValues) => {
+    setServerError(null);
+    startTransition(async () => {
+      const result = mode === "create" ? await createLibraryBook(data) : await updateLibraryBook(id!, data);
+      if ("error" in result) setServerError(result.error);
+      else { setSubmitted(true); if (mode === "create" && result.id) router.push(`/admin/library/${result.id}`); }
+    });
+  };
+  return <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+    <div className="flex flex-wrap items-center justify-between gap-3"><div><h1 className="text-2xl font-bold">{mode === "create" ? t("newTitle") : t("editTitle")}</h1><p className="text-muted-foreground">{t("formDescription")}</p></div><div className="flex gap-2"><Badge variant="outline">{t("draftLabel")}</Badge><Button type="submit" disabled={pending}>{pending ? t("saving") : t("saveDraft")}</Button></div></div>
+    {submitted && <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm">{t("saved")}</div>}
+    {serverError && <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">{serverError}</div>}
     {errorCount > 0 && <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">{t("validationErrors", { count: errorCount })}</div>}
     <div className="grid gap-6 xl:grid-cols-[1.2fr_.8fr]"><div className="space-y-6">
       <Card><CardHeader><CardTitle>{t("bibliographic")}</CardTitle></CardHeader><CardContent><FieldGroup><Field><FieldLabel>{t("originalTitle")}</FieldLabel><Input {...register("originalTitle")} /><FieldError errors={[errors.originalTitle]} /></Field><Field><FieldLabel>{t("authors")}</FieldLabel><Input {...register("authors")} /><FieldError errors={[errors.authors]} /></Field><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel>{t("publisher")}</FieldLabel><Input {...register("publisher")} /></Field><Field><FieldLabel>{t("publicationYear")}</FieldLabel><Input type="number" {...register("publicationYear")} /></Field><Field><FieldLabel>{t("originalLanguage")}</FieldLabel><Input dir="ltr" {...register("originalLanguage")} /></Field><Field><FieldLabel>{t("isbn")}</FieldLabel><Input dir="ltr" {...register("isbn")} /></Field></div><Field><FieldLabel>{t("slug")}</FieldLabel><Input dir="ltr" placeholder="arabic-book-title" {...register("slug")} /><FieldError errors={[errors.slug]} /></Field></FieldGroup></CardContent></Card>
