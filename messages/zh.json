@@ -110,7 +110,7 @@
       "cta": "注册教师账号"
     },
     "footer": {
-      "rights": "版权所有"
+      "rights": "版权所���"
     }
   },
   "common": {
@@ -272,12 +272,12 @@
     "generation": {
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
-      "noDiacritics": "答案字段不应包含阿拉伯语变音符号。",
+      "noDiacritics": "答案字段不应包含阿拉伯语变音���号。",
       "pageTitleMissingSeparator": "页面标题必须包���分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
       "vocabCount": "词汇项数量必须在 15 到 35 之间。",
-      "dialogueCount": "对话行数必须在 6 到 12 之间。",
+      "dialogueCount": "对话行��必须在 6 到 12 之间。",
       "invalidGradient": "渐变色值无��。",
       "explainCount": "讲解要点数量必须在 4 到 6 之间。",
       "conjugationItemsCount": "变位项数量不能少于 6 个。",
@@ -441,7 +441,7 @@
       "deleting": "正在删除...",
       "delete": "删除",
       "errors": {
-        "invalidData": "数据无效。",
+        "invalidData": "数��无效。",
         "nameTaken": "已存在相同标识符的角色。",
         "notFound": "��选角色不存在。",
         "cannotEditSystem": "无法编辑系统角色。",
@@ -600,7 +600,7 @@
       "featureNumber": "功能 {number}",
       "noFeatures": "尚未添加任何功���。",
       "fieldColorDark": "套餐颜色",
-      "fieldColorDescription": "格式为 #RRGGBB 的颜色代码，用于卡片边框、图标、标签和购买按钮。卡片上所有浅色背景色调都会根据这一种颜色自动生成。留空则使用默认样式。",
+      "fieldColorDescription": "格式为 #RRGGBB 的颜色代码，用于卡片边框、图标、标签和购买按钮。卡片上所有浅色背景色调都会根据这一种颜色自动生成。留空则使用默���样式。",
       "submitCreate": "添加",
       "submitUpdate": "保存更改",
       "cancel": "取消",
@@ -672,7 +672,7 @@
       "createDialogTitle": "添加新模板",
       "createDialogDescription": "上传模板 ZIP 文件（index.html、blueprint.js、validation.js），并设置名称和预览图。",
       "editDialogTitle": "编辑模板",
-      "editDialogDescription": "更新模板的名称、预览图、启用状������，或替换其 ZIP 文件。",
+      "editDialogDescription": "更新模板的��称、预览图、启用状������，或替换其 ZIP 文件。",
       "viewDialogTitle": "模板��息",
       "actionEdit": "编辑",
       "cancel": "取消",
@@ -1106,9 +1106,9 @@
     "engineDarkAlt": "深色模式下的阿拉伯字母绘制引擎预览"
   },
   "libraryPage": {
-    "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "没有匹配的书籍", "emptyDescription": "请尝试更改搜索词或筛选选项。",
+    "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "尚未发布经过核实的书籍", "emptyDescription": "当前目录条目正在审核，完成审核前不会公开。未核实的书籍和访问链接不会显示。", "reset": "重置筛选", "backToLibrary": "返回图书馆", "notFoundTitle": "未找到图书 | Fusaha", "by": "作者", "publisher": "出版商", "audience": "读者", "level": "级别", "source": "来源", "accessTitle": "访问信息", "accessAction": "打开原始来源", "access": {"free_reading": "已确认可免费阅读。", "preview": "原始来源提供预览。", "purchase": "可从原始来源购买。", "institutional_access": "可通过教育机构访问。", "unknown": "访问详情尚未核实。"},
     "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
-    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短文，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短���，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
   },
   "resourcesPage": {
     "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
@@ -1202,7 +1202,7 @@
       "property": { "title": "知识产权", "paragraphs": ["Fusaha的品牌、原创内容、界面元素及其他平台材料，均受其适用的知识产权保护。书籍、图片、文字和其他外部材料则受相应权利人的权利保护。", "图书目录中的条目并不表示Fusaha拥有该书、出版该书、代表其作者或出版商，或获得其认可。教育目的本身不会自动授权复制、托管或再分发受保护作品；在复制前可能需要获得许可、适用的授权或其他有效法律依据。"] },
       "library": { "title": "教育图书馆与图书目录", "paragraphs": ["图书馆帮助教师和学习者发现教育类书籍、阿拉伯语学习材料以及教师专业发展资源。目录在适当且信息可用时，可能包括书名、作者、出版商、语言、目标读者或水平、相关技能或教育主题、简短说明、经过适当授权的封面或缩略图，以及原始来源或其他合法来源的链接。", "我们优先将访问者引导至原出版商、作者、机构图书馆或其他合法来源，而不是在Fusaha托管图书文件。资源可能免费阅读、提供有限预览、需要购买，或通过教育机构访问；任何访问标签都应准确反映从来源核实的信息。在互联网上找到PDF本身，并不代表该书可以合法获取。"] },
       "materials": { "title": "书籍封面、说明与外部链接", "paragraphs": ["使用书籍封面、摘录、图片和说明材料时，应尊重适用的权利、许可和来源条款。在可能的情况下，Fusaha会链接至官方或其他合法来源。", "外部网站可能改变其内容、访问要求、可用性或价格，Fusaha不一定能够控制这些变化。仅仅链接到某个页面并不能解决所有潜在的权利问题；如有可信理由认为链接指向未经授权的材料，应对其进行审查。"] },
-      "reports": { "title": "权利人报告与移除请求", "paragraphs": ["作者、出版商及其他权利人可以请求Fusaha审查图书目录中的条目。报告在可能的情况下应包括书籍或材料的标题、相关Fusaha目录网址、被质疑材料或其原始来源、简要说明，以及合理用于核实请求人身份或权利的信息。", "Fusaha会审查报告，并可能在适当情况下更正元数据、更换或停用链接、限制条目，或移除目录条目或材料。教育意图并非在所有情况下都构成法律抗辩，收到报告后的移除也不会自动解决此前可能存在的问题。本政策不承诺具体的响应时间或法律结果。", "目前平台实现中没有专门的权利报告联系方式。用户可以访问帮助中心了解当前可用的指引；没有专门表单或地址，并不表示可以使用受保护材料。"] },
+      "reports": { "title": "权利人报告与移除请求", "paragraphs": ["作者、出版商及其他权利人可以请求Fusaha审查图书目录中的条目。报告在可能的情况下应包括书籍或材料的标题、相关Fusaha目录网址、被质疑材料或其原始来源、简要说明，以及合理用于核实请求人身份或权利的信息。", "Fusaha会审查报告，并可能在适当情况下更正元数据、��换或停用链接、限制条目，或移除目录条目或材料。教育意图并非在所有情况下都构成法律抗辩，收到报告后的移除也不会自动解决此前可能存在的问题。本政策不承诺具体的响应时间或法律结果。", "目前平台实现中没有专门的权利报告联系方式。用户可以访问帮助中心了解当前可用的指引；没有专门表单或地址，并不表示可以使用受保护材料。"] },
       "external": { "title": "外部网站与第三方材料", "paragraphs": ["提供外部链接是为了帮助用户访问相关资源。外部网站可能拥有自己的条款、隐私政策、访问条件和内容，Fusaha不一定控制或认可每一个外部资源。", "这并不免除Fusaha在发现可信问题时审查和维护自身目录及平台行为的责任。"] },
       "updates": { "title": "准确性、更新与政策变更", "paragraphs": ["随着平台发展，Fusaha可能更正过时的元数据、更新链接、审查目录并修订本政策，同时遵守适用要求。", "我们不保证每个目录条目或外部链接都会保持不变或持续可用。请返回本页面查看当前版本的政策。"] }
     }
