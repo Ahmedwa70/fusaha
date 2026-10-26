@@ -26,6 +26,8 @@ export const ROUTES = {
   adminRoles: "/admin/roles",
   adminLessons: "/admin/lessons",
   adminCreditPackages: "/admin/credit-packages",
+  adminLibrary: "/admin/library",
+  adminLibraryNew: "/admin/library/new",
   adminAuditLogs: "/admin/audit-logs",
   adminGenerationEvents: "/admin/generation-events",
   adminTemplates: "/admin/templates",

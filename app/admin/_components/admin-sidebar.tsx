@@ -81,6 +81,7 @@ export function AdminSidebar({
       icon: CoinsIcon,
       permission: Permissions.creditPackagesList,
     },
+    { title: tAdmin("library"), url: ROUTES.adminLibrary, icon: BookOpenIcon, permission: Permissions.libraryList },
     {
       title: tAdmin("templates"),
       url: ROUTES.adminTemplates,
