@@ -11,7 +11,7 @@ import { localeDirections, type Locale } from "@/i18n/config";
 import "./globals.css";
 
 const fontArabic = localFont({
-  src: "../public/fonts/noto-naskh-arabic/NotoNaskhArabic[wght].ttf",
+  src: "../public/fonts/noto-naskh-arabic/NotoNaskhArabic-VariableFont_wght.ttf",
   variable: "--font-arabic",
   weight: "400 700",
   style: "normal",

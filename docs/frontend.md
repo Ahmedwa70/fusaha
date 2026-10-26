@@ -249,7 +249,10 @@ claim that every existing screen already conforms.
 ## Official Typography and Local Font Asset Standard
 
 - Arabic uses the centrally loaded local `Noto Naskh Arabic` variable font from
-  `public/fonts/noto-naskh-arabic/NotoNaskhArabic[wght].ttf`. It is the official Arabic
+  `public/fonts/noto-naskh-arabic/NotoNaskhArabic-VariableFont_wght.ttf`. The file name
+  must not contain `[` or `]`: `next/font` emits the preload hint with `%5B`/`%5D` but the
+  `@font-face` URL with literal brackets, so the browser treats them as different URLs and
+  downloads the font twice. It is the official Arabic
   font for headings, body text, navigation, forms, dialogs, tables, dashboard, studio,
   and shared UI.
 - The bundled font is sourced from the Google Fonts repository's `ofl/notonaskharabic`
