@@ -45,7 +45,7 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
         <Link href={ROUTES.products} className={linkClass(ROUTES.products)}>{t("products")}</Link>
         <Link href={ROUTES.library} className={linkClass(ROUTES.library)}>{t("library")}</Link>
         <Link href={ROUTES.resources} className={linkClass(ROUTES.resources)}>{t("resources")}</Link>
-        <Link href={sectionHref("pricing")} className={linkClass(sectionHref("pricing"))}>{t("pricing")}</Link>
+        <Link href={ROUTES.pricing} className={linkClass(ROUTES.pricing)}>{t("pricing")}</Link>
         <Link href={ROUTES.help} className={linkClass(ROUTES.help)}>{t("help")}</Link>
         <Link href={ROUTES.about} className={linkClass(ROUTES.about)}>{t("about")}</Link>
       </nav>

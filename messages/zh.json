@@ -671,7 +671,7 @@
       "createDialogTitle": "添加新模板",
       "createDialogDescription": "上传模板 ZIP 文件（index.html、blueprint.js、validation.js），并设置名称和预览图。",
       "editDialogTitle": "编辑模板",
-      "editDialogDescription": "更新模板的名称、预览图、启用状����，或替换其 ZIP 文件。",
+      "editDialogDescription": "更新模板的名称、预览图、启用状�����，或替换其 ZIP 文件。",
       "viewDialogTitle": "模板��息",
       "actionEdit": "编辑",
       "cancel": "取消",
@@ -821,7 +821,7 @@
       "passwordUpdateSuccess": "密码已成功更新。",
       "errors": {
         "invalidData": "数据无效。",
-        "updatePasswordFailed": "无法更新密码，请重试��"
+        "updatePasswordFailed": "无法更新密码，请重����"
       }
     },
     "home": {
@@ -840,7 +840,7 @@
       "pageDescription": "按级别或主题整理你的课程",
       "newFolder": "新建文件夹",
       "emptyTitle": "暂无文件夹",
-      "emptyDescription": "创建一个文件夹，按级别或主题整理课程",
+      "emptyDescription": "创建一个��件夹，按级别或主题整理课程",
       "lessonCount": "{count} 节课",
       "createDialogTitle": "新建文件夹",
       "createDialogDescription": "创建一个新文件夹来整理你的课程。",
@@ -916,7 +916,7 @@
         "admin_adjustment": "管理员调整",
         "generation": "课程生成"
       },
-      "purchaseProcessing": "正在确认支付……积分将很快添加到���的账户。",
+      "purchaseProcessing": "正在确认支付……积分将很快添���到���的账户。",
       "purchaseSuccess": "支付成功，积分已添加到您的账户。",
       "purchaseDelayed": "支付成��，但余额更新时间比预期长。请��一分钟后刷新页面，如果问题持续存在，请联系管理员。",
       "purchaseCancelled": "支付已取消，未产生任何扣款。",
@@ -1116,7 +1116,7 @@
   "helpPage": {
     "metaTitle": "帮助中心 | Fusaha", "metaDescription": "帮助您使用 Fusaha 工具并解决常见问题的简明答案和指南。", "title": "我们能如何帮助您？", "description": "搜索问题、故障或使用指南。", "searchLabel": "搜索帮助中心", "searchPlaceholder": "在这里输入您的问题...", "categoriesLabel": "帮助中心分区", "verifiedEyebrow": "经过平台体验验证的信息", "faqTitle": "常见问题", "resultsCount": "{count} 个结果", "relatedLink": "探索相关入口", "emptyTitle": "没有匹配的结果", "emptyDescription": "请尝试其他关键词或选择其他分区。", "contactTitle": "联系我们", "contactDescription": "项目目前尚未公布官方联系渠道。确定联系渠道后，我们会补充此部分。",
     "categories": {"guides": {"title": "使用指南", "description": "了解如何使用 Fusaha 工具。"}, "faq": {"title": "常见问题", "description": "常见问题的快速答案。"}, "troubleshooting": {"title": "故障排查", "description": "解决问题的实用步骤。"}, "contact": {"title": "联系我们", "description": "联系渠道确定后公布官方信息。"}},
-    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未记录的步骤或设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录页面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
+    "articles": {"getting-started": {"question": "如何开始使用 Fusaha？", "answer": "您可以先探索可用产品，然后从产品页面或开始按钮打开互动课程生成器。产品页面也提供阿拉伯语写作工作室，方便您了解当前体验。"}, "interactive-lessons": {"question": "如何使用互动课程生成器？", "answer": "从产品页面或开始按钮打开课程生成器，然后使用账户中可用的课程创建工作区。课程详情和审核会在工作区中进行。"}, "writing-studio": {"question": "如何使用阿拉伯语写作工作室？", "answer": "从产品页面打开阿拉伯语写作工作室。当前页面用于介绍体验，您可以进行探索，而无需假设未记录的步骤��设置。"}, "login-problem": {"question": "登录遇到问题时该怎么办？", "answer": "请确认使用了正确的账户信息，然后从登录页面尝试密码恢复流程。如果问题仍然存在，请使用 Fusaha 确定的官方联系渠道。"}, "page-error": {"question": "页面或工具无法打开时该怎么办？", "answer": "重新加载页面并检查链接，然后尝试从产品页面打开工具。如果错误信息持续出现，请保存错误文本，以便向 Fusaha 团队准确描述问题。"}, "account-required": {"question": "使用工具需要登录吗？", "answer": "部分工具入口连接到工作区，需要登录。您可以在未登录时探索产品和介绍页面，进入需要账户的入口后再登录。"}}
   },
  "about": {
     "metaTitle": "关于Fusaha｜让阿拉伯语学习更清晰、更有目的",
@@ -1144,7 +1144,7 @@
       "structure": { "title": "建立连贯的教学结构", "body": "把内容、步骤和活动连接起来，而不是把它们当作彼此孤立的材料。" },
       "purpose": { "title": "让活动服务于学习", "body": "每项活动都应在理解、练习或应用中承担清晰的作用。" },
       "progression": { "title": "符合学习者的进阶", "body": "关注学习者的水平、需求和学习情境，让进步成为可行且有意义的过程。" },
-      "assessment": { "title": "评价与学习目标一致", "body": "评价应延续预期的学习成果，而不是成为与课程脱节的最后一步。" },
+      "assessment": { "title": "评价与学习目标一致", "body": "评价应延续预���的学习成果，而不是成为与课程脱节的最后一步。" },
       "support": { "title": "为教师提供实用支持", "body": "通过工具和思路，帮助教师把教育意图落实为课堂实践。" }
     },
     "audienceEyebrow": "我们服务的对象",
@@ -1157,5 +1157,31 @@
     "closingDescription": "探索现有的产品和资源，了解Fusaha如何支持您的阿拉伯语教学或学习之旅。",
     "closingPrimary": "探索产品",
     "closingSecondary": "访问帮助中心"
+  },
+  "pricingPage": {
+    "metaTitle": "价格｜Fusaha",
+    "metaDescription": "了解Fusaha的教育价值，探索目前可用的产品与资源。价格详情正在准备中。",
+    "heroEyebrow": "Fusaha价格信息",
+    "heroTitle": "从您的需求出发，发现教育价值",
+    "heroDescription": "Fusaha帮助您把阿拉伯语想法和内容转化为更有条理、更有效的学习体验。",
+    "heroCta": "探索产品",
+    "heroBadge": "围绕学习体验构建",
+    "heroCardTitle": "从学习目标到实践，路径更清晰",
+    "heroCard": { "objectives": "明确目标", "planning": "连贯规划", "practice": "有效练习", "assessment": "恰当评价" },
+    "discoverEyebrow": "探索当前可用内容",
+    "discoverTitle": "了解Fusaha现在能做什么",
+    "discoverDescription": "访问Fusaha目前开放的内容，了解平台如何支持阿拉伯语教育。",
+    "discovery": { "products": { "title": "产品", "body": "查看Fusaha目前提供的产品和学习体验。", "link": "查看产品" }, "resources": { "title": "资源", "body": "浏览阿拉伯语学习所需的教育资源和实用材料。", "link": "浏览资源" }, "help": { "title": "帮助中心", "body": "查找使用平台时需要的答案和指导。", "link": "访问帮助中心" } },
+    "statusEyebrow": "透明说明",
+    "statusTitle": "价格详情正在准备中",
+    "statusDescription": "我们正在准备清晰的说明，帮助您在做出决定前了解使用选项及其费用。",
+    "statusNote": "价格和使用条款将在确认后清晰公布。",
+    "faqEyebrow": "常见问题",
+    "faqTitle": "常见问题解答",
+    "faq": { "products": { "question": "在哪里可以了解Fusaha现有的产品？", "answer": "访问产品页面，即可查看目前提供的产品和学习体验。" }, "pricing": { "question": "价格详情将在哪里公布？", "answer": "价格详情和使用条款确认后，会在本页面清晰公布。" }, "help": { "question": "在哪里可以找到平台使用帮助？", "answer": "帮助中心提供使用Fusaha时所需的指导和答案。" } },
+    "closingTitle": "按自己的节奏探索Fusaha",
+    "closingDescription": "探索现有产品和资源，价格详情准备好后也可以再次回到这里查看。",
+    "closingProducts": "探索产品",
+    "closingHelp": "访问帮助中心"
   }
 }

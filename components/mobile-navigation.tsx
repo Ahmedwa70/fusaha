@@ -14,9 +14,9 @@ const links = [
   ["products", ROUTES.products],
   ["library", ROUTES.library],
   ["resources", ROUTES.resources],
-  ["pricing", "#pricing"],
+  ["pricing", ROUTES.pricing],
   ["help", ROUTES.help],
-  ["about", "#footer"],
+  ["about", ROUTES.about],
 ] as const;
 
 function closeMobileMenu(event: React.MouseEvent<HTMLElement>) {

@@ -1164,5 +1164,31 @@
     "closingDescription": "Explore the available tools and resources, and see how Fusaha can support your Arabic teaching or learning journey.",
     "closingPrimary": "Explore products",
     "closingSecondary": "Visit the Help Center"
+  },
+  "pricingPage": {
+    "metaTitle": "Pricing | Fusaha",
+    "metaDescription": "Explore Fusaha's educational value and discover the products and resources available today. Pricing details are being prepared.",
+    "heroEyebrow": "Pricing at Fusaha",
+    "heroTitle": "Educational value that starts with your needs",
+    "heroDescription": "Fusaha helps turn Arabic ideas and content into more structured, effective learning experiences.",
+    "heroCta": "Explore products",
+    "heroBadge": "Built around learning",
+    "heroCardTitle": "A clearer path from intention to practice",
+    "heroCard": { "objectives": "Clear objectives", "planning": "Connected planning", "practice": "Meaningful practice", "assessment": "Relevant assessment" },
+    "discoverEyebrow": "Explore what is available",
+    "discoverTitle": "Discover Fusaha today",
+    "discoverDescription": "Visit the parts of Fusaha that are already available and learn more about how the platform supports Arabic education.",
+    "discovery": { "products": { "title": "Products", "body": "See the products and experiences currently available across Fusaha.", "link": "View products" }, "resources": { "title": "Resources", "body": "Browse educational resources and practical material for Arabic learning.", "link": "Browse resources" }, "help": { "title": "Help Center", "body": "Find answers and guidance for using the platform.", "link": "Visit Help Center" } },
+    "statusEyebrow": "A clear update",
+    "statusTitle": "Pricing details are being prepared",
+    "statusDescription": "We are preparing clear details so you can understand the available usage options and their costs before making a decision.",
+    "statusNote": "Prices and terms of use will be presented clearly once they are approved.",
+    "faqEyebrow": "Questions",
+    "faqTitle": "Frequently asked questions",
+    "faq": { "products": { "question": "Where can I explore Fusaha's existing products?", "answer": "Visit the Products page to see the products and experiences currently available." }, "pricing": { "question": "Where will pricing details be published?", "answer": "Pricing details and terms of use will be published clearly on this page once they are approved." }, "help": { "question": "Where can I find help using the platform?", "answer": "The Help Center is the best place to find guidance and answers about using Fusaha." } },
+    "closingTitle": "Explore Fusaha at your own pace",
+    "closingDescription": "Discover the available products and resources, and return here when pricing details are ready.",
+    "closingProducts": "Explore products",
+    "closingHelp": "Visit Help Center"
   }
 }
