@@ -6,6 +6,7 @@ export const ROUTES = {
   help: "/help",
   about: "/about",
   pricing: "/pricing",
+  policy: "/policy",
   lessonStudio: "/lesson-studio",
   login: "/auth/login",
   signup: "/auth/signup",

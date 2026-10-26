@@ -23,6 +23,7 @@
     "pricing": "Pricing",
     "help": "Help Center",
     "about": "About Fusaha",
+    "policy": "Platform Policy",
     "login": "Log in",
     "startNow": "Get started",
     "tools": "Tools",
@@ -1190,5 +1191,27 @@
     "closingDescription": "Discover the available products and resources, and return here when pricing details are ready.",
     "closingProducts": "Explore products",
     "closingHelp": "Visit Help Center"
+  },
+  "policyPage": {
+    "metaTitle": "Platform Policy | Fusaha",
+    "metaDescription": "Fusaha's platform policy for educational resources, library listings, intellectual property, and rights-holder reports.",
+    "eyebrow": "Platform policy",
+    "title": "A clear policy for a learning platform",
+    "intro": "This policy explains how Fusaha approaches platform use, educational resources, library listings, intellectual property, external links, and rights-related reports.",
+    "contents": "On this page",
+    "contentsLabel": "Policy sections",
+    "notice": "Fusaha is an educational platform supporting Arabic-language teaching and learning. This practical policy is intended to make our approach clear; it is not a statement of legal certification or a substitute for advice about a particular situation.",
+    "backHome": "Back to Fusaha",
+    "helpLink": "Visit Help Center",
+    "sections": {
+      "purpose": { "title": "Purpose and scope", "paragraphs": ["Fusaha supports Arabic-language teaching and learning through its public pages, services, educational resources, and library where applicable.", "This policy describes the principles that guide use of those parts of the platform and the way we approach educational materials and listings."] },
+      "use": { "title": "Acceptable use", "paragraphs": ["Users should use Fusaha lawfully, respectfully, and in a way that does not interfere with the platform or other people’s access to it.", "Use must not infringe third-party rights, misuse platform materials, disrupt operation, or violate applicable law. This policy does not create an exhaustive list of every prohibited act or promise a particular enforcement outcome."] },
+      "property": { "title": "Intellectual property", "paragraphs": ["Fusaha’s branding, original content, interface elements, and other platform materials remain subject to their applicable intellectual-property rights. Books, images, texts, and other external materials remain subject to the rights of their respective owners.", "A book listing does not mean that Fusaha owns the book, publishes it, represents its author or publisher, or has their endorsement. Educational purpose alone does not automatically authorize copying, hosting, or redistributing protected works; permission, an applicable license, or another valid legal basis may be required."] },
+      "library": { "title": "Educational library and book listings", "paragraphs": ["The library helps teachers and learners discover educational books, Arabic-language learning materials, and resources for teachers’ professional development. A listing may include a title, author, publisher, language, intended audience or level, relevant skill or subject, a short summary, a permitted cover or thumbnail, and a link to an original or legitimate source where available.", "Our preferred approach is to direct visitors to the original publisher, author, institutional library, or another legitimate source rather than host book files on Fusaha. A resource may be free to read, offer a limited preview, require purchase, or be available through an educational institution; any access label should reflect information verified from the source. A PDF found online is not, by itself, evidence that a book is legally available."] },
+      "materials": { "title": "Book covers, descriptions, and external links", "paragraphs": ["Book covers, excerpts, images, and descriptive material should be used in a way that respects applicable rights, licenses, and source terms. Where possible, Fusaha links to official or otherwise legitimate sources.", "External websites may change their content, access requirements, availability, or prices. Fusaha does not necessarily control those changes, and merely linking to a page does not resolve every possible rights concern. Links should be reviewed when there is a credible reason to believe they direct users to unauthorized material."] },
+      "reports": { "title": "Rights-holder reports and removal requests", "paragraphs": ["Authors, publishers, and other rights holders may ask Fusaha to review a library listing. A report should include, where possible, the title, the relevant Fusaha listing URL, the original source or material being challenged, a concise explanation of the concern, and information reasonably necessary to verify the requester’s authority or rights.", "Fusaha may review a report and, where appropriate, correct metadata, replace or disable a link, restrict an item, or remove a listing or material. Educational intent is not a universal legal defense, and action after a report does not automatically resolve any prior issue. No specific response time or legal outcome is promised here.", "No dedicated rights-reporting contact mechanism is currently defined in the platform implementation. Users can visit the Help Center for the currently available guidance; do not treat the absence of a dedicated form or address as authorization to use protected material."] },
+      "external": { "title": "External websites and third-party materials", "paragraphs": ["External links are provided to help users reach relevant resources. External sites may have their own terms, privacy policies, access conditions, and content, and Fusaha does not necessarily control or endorse every external resource.", "This does not remove Fusaha’s responsibility to review and maintain its own listings and platform actions when a credible concern is identified."] },
+      "updates": { "title": "Accuracy, updates, and policy changes", "paragraphs": ["Fusaha may correct outdated metadata, update links, review listings, and revise this policy as the platform evolves, subject to applicable requirements.", "We do not claim that every listing or external link will remain unchanged or available. Please return to this page for the current version of the policy."] }
+    }
   }
 }

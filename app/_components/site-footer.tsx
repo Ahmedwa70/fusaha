@@ -35,6 +35,7 @@ export function SiteFooter() {
             <h3 className="font-bold text-gold-300">{t("about")}</h3>
           <div className="mt-3 flex flex-col gap-2 text-sm text-background/70 dark:text-muted-foreground">
             <Link className={footerLinkClass} href={ROUTES.about}>{t("about")}</Link>
+            <Link className={footerLinkClass} href={ROUTES.policy}>{t("policy")}</Link>
             <Link className={footerLinkClass} href={ROUTES.help}>{t("help")}</Link>
             <Link className={footerLinkClass} href={ROUTES.login}>{t("login")}</Link>
           </div>
