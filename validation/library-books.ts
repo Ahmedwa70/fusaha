@@ -23,7 +23,7 @@ function requiredLocalizedText(message: string) {
 }
 
 function optionalLocalizedText() {
-  return localizedShape().optional();
+  return z.record(z.enum(locales), z.string().trim().min(1, "Must not be blank")).optional();
 }
 
 const sharedFields = {
@@ -52,10 +52,39 @@ const sharedFields = {
 
 export const createLibraryBookSchema = z.object(sharedFields);
 
+const publicationStatusSchema = z.enum(["draft", "pending_review", "published", "unpublished", "archived"]);
+const reviewStatusSchema = z.enum(["needs_review", "verified"]);
+
+const lifecycleSchema = z.object({
+  publicationStatus: publicationStatusSchema,
+  reviewStatus: reviewStatusSchema,
+}).superRefine((value, ctx) => {
+  if (value.publicationStatus === "published" && value.reviewStatus !== "verified") {
+    ctx.addIssue({
+      code: "custom",
+      path: ["reviewStatus"],
+      message: "Published books must be verified",
+    });
+  }
+});
+
 export const updateLibraryBookSchema = z.object({
   ...sharedFields,
-  publicationStatus: z.enum(["draft", "pending_review", "published", "unpublished", "archived"]),
-  reviewStatus: z.enum(["needs_review", "verified"]),
+  ...lifecycleSchema.shape,
+}).superRefine((value, ctx) => {
+  if (value.publicationStatus === "published" && value.reviewStatus !== "verified") {
+    ctx.addIssue({
+      code: "custom",
+      path: ["reviewStatus"],
+      message: "Published books must be verified",
+    });
+  }
+});
+
+export const publishLibraryBookSchema = z.object({
+  ...sharedFields,
+  publicationStatus: z.literal("published"),
+  reviewStatus: z.literal("verified"),
 });
 
 export type CreateLibraryBookValues = z.infer<typeof createLibraryBookSchema>;
