@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { IBM_Plex_Sans_Arabic, Noto_Sans_SC } from "next/font/google";
 import NextTopLoader from "nextjs-toploader";
+import { preload } from "react-dom";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { DirectionProvider } from "@/components/ui/direction";
@@ -44,6 +45,14 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
   const locale = (await getLocale()) as Locale;
   const messages = await getMessages();
   const direction = localeDirections[locale];
+
+  if (locale === "zh") {
+    preload("/fonts/noto-sans-sc/NotoSansSC-ui-subset.woff2", {
+      as: "font",
+      type: "font/woff2",
+      crossOrigin: "anonymous",
+    });
+  }
 
   return (
     <html

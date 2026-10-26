@@ -301,6 +301,15 @@ claim that every existing screen already conforms.
 - Verify local inclusion by checking the generated build assets and confirming no Arabic
   font request targets Google Fonts or another external origin. Verify Arabic glyphs,
   shaping, diacritics, Arabic-Indic and Latin digits, mixed-script text, and RTL layout.
+- Chinese UI font: `html[lang="zh"]` puts a local `Noto Sans SC UI` face first in
+  `--font-locale`. It is a single static woff2 (`public/fonts/noto-sans-sc/NotoSansSC-ui-subset.woff2`,
+  about 200 KB, wght 400-700) covering the characters used in `messages/zh.json` plus common
+  punctuation, with the `unicode-range` taken from Google Fonts. The file is preloaded only
+  when `locale === "zh"` (`preload()` in `app/layout.tsx`). Any character outside the subset
+  falls through to the existing `--font-cjk` Noto Sans SC slices, so new Chinese copy still
+  renders; to keep it on the preloaded file, regenerate the subset when `zh.json` changes.
+  Known limit: on `/help`, a cold load can still show about 90-120 ms of fallback glyphs when
+  the font finishes just after first paint.
 - Keep `Noto Sans SC` and the English stack unchanged unless a separate typography decision
   is approved. Any exception must be documented next to the component and reviewed in all
   three locales.
