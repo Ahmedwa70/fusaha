@@ -9,7 +9,7 @@
     "lint": "eslint",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "node database/seed.mjs",
-    "test": "node --test"
+    "test": "node --experimental-test-module-mocks --test"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^3.0.39",
