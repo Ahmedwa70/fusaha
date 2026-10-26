@@ -20,8 +20,9 @@ const fontArabic = localFont({
 
 const fontEnglish = IBM_Plex_Sans_Arabic({
   variable: "--font-english",
-  subsets: ["arabic"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  subsets: ["latin", "arabic"],
+  weight: ["400", "500", "600", "700"],
+  display: "block",
 });
 
 const fontCjk = Noto_Sans_SC({
