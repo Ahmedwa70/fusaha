@@ -23,7 +23,7 @@ function closeMobileMenu(event: React.MouseEvent<HTMLElement>) {
   event.currentTarget.closest("details")?.removeAttribute("open");
 }
 
-export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
+export function MobileNavigation({ homeHref = "#top", isAuthenticated = false }: { homeHref?: string; isAuthenticated?: boolean }) {
   const t = useTranslations("public");
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -72,8 +72,8 @@ export function MobileNavigation({ homeHref = "#top" }: { homeHref?: string }) {
               </a>
             );
           })}
-          <Link href={ROUTES.login} onClick={closeMobileMenu} className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 dark:text-foreground dark:hover:bg-gold-900/40 dark:focus-visible:ring-gold-300">
-            {t("login")}
+          <Link href={isAuthenticated ? ROUTES.dashboard : ROUTES.login} onClick={closeMobileMenu} className="rounded-lg border border-transparent px-3 py-2.5 text-sm font-semibold text-brand-900 transition-colors hover:bg-gold-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold-500 dark:text-foreground dark:hover:bg-gold-900/40 dark:focus-visible:ring-gold-300">
+            {isAuthenticated ? t("dashboard") : t("login")}
           </Link>
         </nav>
       </div>
