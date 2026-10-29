@@ -49,6 +49,7 @@ export function DashboardHeader({
 }) {
   const pathname = usePathname();
   const tApp = useTranslations("app");
+  const tPublic = useTranslations("public");
   const tSidebar = useTranslations("sidebar");
   const direction = useDirection();
   const [mobileNavOpen, setMobileNavOpen] = React.useState(false);
@@ -86,6 +87,7 @@ export function DashboardHeader({
           <Image src="/book-transparent.png" alt={tApp("name")} width={112} height={60} className="h-8 w-auto object-contain" />
           <span className="hidden font-semibold sm:inline">{tApp("name")}</span>
         </Link>
+        <Link href={ROUTES.home} className="hidden shrink-0 rounded-lg px-3 py-2 text-sm text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/60 hover:text-sidebar-foreground sm:inline-flex">{tPublic("mainSite")}</Link>
 
         <nav className="hidden min-w-0 flex-1 items-center gap-1 overflow-x-auto lg:flex">
           {navItems.map((item) => {

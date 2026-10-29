@@ -25,6 +25,8 @@
     "about": "关于 Fusaha",
     "policy": "平台政策",
     "login": "登录",
+    "dashboard": "控制台",
+    "mainSite": "主站",
     "startNow": "立即开始",
     "tools": "工具",
     "writingEngine": "写作引擎",
@@ -110,7 +112,7 @@
       "cta": "注册教师账号"
     },
     "footer": {
-      "rights": "版权所�����"
+      "rights": "版权所�������"
     }
   },
   "common": {
@@ -272,7 +274,7 @@
     "generation": {
       "untitledLesson": "无标题课程",
       "required": "生成的课程内容中此字段为必填项。",
-      "noDiacritics": "答案字段不应包含阿拉���语���音���号。",
+      "noDiacritics": "答案字段不应包含阿拉�����语���音���号。",
       "pageTitleMissingSeparator": "页面标题必须包���分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
       "thinkingCount": "思考项数量必须在 3 到 5 之间。",
@@ -1110,7 +1112,7 @@
   "libraryPage": {
     "metaTitle": "学习资料库 | Fusaha", "metaDescription": "精选阿拉伯语教育书籍和学习资源目录。", "eyebrow": "Fusaha 图书馆", "title": "支持阿拉伯语学习之旅的书籍和资源", "description": "浏览精选书籍和学习材料，了解每项资源的访问方式。", "catalog": "公共目录", "explore": "探索书籍", "filtersLabel": "搜索和筛选", "searchLabel": "搜索书籍", "searchPlaceholder": "按标题或作者搜索", "filter": "筛选", "categoryLabel": "分类", "levelLabel": "级别", "all": "全部", "viewDetails": "查看书籍详情", "publishedCount": "{count} 本已发布书籍", "emptyTitle": "尚未发布经过核实的书籍", "emptyDescription": "当前目录条目正在审核，完成审核前不会公开。未核实的书籍和访问链接不会显示。", "reset": "重置筛选", "backToLibrary": "返回图书馆", "notFoundTitle": "未找到图书 | Fusaha", "by": "作者", "publisher": "出版商", "audience": "读者", "level": "级别", "source": "来源", "accessTitle": "访问信息", "accessAction": "打开原始来源", "access": {"free_reading": "已确认可免费阅读。", "preview": "原始来源提供预览。", "purchase": "可从原始来源购买。", "institutional_access": "可通过教育机构访问。", "unknown": "访问详情尚未核实。"},
     "categories": {"قصص وقراءة": "故事与阅读", "أدلة تعليمية": "教学指南", "مهارات لغوية": "语言技能"}, "levels": {"مبتدئ": "初级", "متوسط": "中级", "متقدم": "高级"},
-    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短���，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封面"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
+    "books": {"arabic-stories-for-beginners": {"title": "初学者阿拉伯语故事", "author": "Fusaha 教育倡议", "category": "故事与阅读", "level": "初级", "audience": "学习者", "description": "一组使用清晰阿拉伯语写成的短���，帮助学习者积累词汇并享受阅读。", "coverAlt": "初学���阿拉伯语故事封���"}, "arabic-teaching-guide": {"title": "教师阿���伯语教学指南", "author": "Fusaha 教育团队", "category": "教学指南", "level": "中级", "audience": "教师", "description": "组织阿拉伯语课程、选择活动并为不同水平学习者设计学习体验的实用建议。", "coverAlt": "教师阿拉伯语教学指南封面"}, "arabic-language-skills": {"title": "循序渐进掌握阿拉伯语技能", "author": "阿拉伯开放学习中心", "category": "语言技能", "level": "高级", "audience": "学习者", "description": "用于练习阅读、写作和表达的参考材料，并提供适合自主学习的示例。", "coverAlt": "循序渐进掌握阿拉伯语技能封面"}}
   },
   "resourcesPage": {
     "metaTitle": "资源和工具 | Fusaha", "metaDescription": "Fusaha 为阿拉伯语教师提供的工具，集中在一个地方。", "eyebrow": "Fusaha 资源", "title": "帮助您教授阿拉伯语的工具和资源", "description": "探索 Fusaha 当前提供的工具，并关注这里随平台成长而推出的教育资源。", "heroAction": "创建课程", "availableEyebrow": "可立即使用", "toolsTitle": "Fusaha 工具", "educationalEyebrow": "内容准备后即将推出", "educationalTitle": "教育资源", "emptyTitle": "尚未发布教育资源", "emptyDescription": "准备好发布后，我们会在这里添加练习单、故事和指南。目前没有占位文件或虚假下载。", "ctaTitle": "从今天可用的 Fusaha 工具开始", "ctaDescription": "创建互动课程，或从平台的实际入口打开阿拉伯语写作工作室。", "ctaAction": "打开写作工作室", "availableNow": "立即可用",
@@ -1135,7 +1137,7 @@
     "whyEyebrow": "我们为什么存在",
     "whyTitle": "因为内容本身并不等于学习",
     "whyBody1": "优质的教学材料只是起点。有效学习首先要明确学习者应达成什么，再把这一意图转化为课程、步骤和活动，帮助学习者不断前进。",
-    "whyBody2": "因此，Fusaha把学习目标、课程规划、活动设计、课堂实施和学习评价视为彼此相连的整体，而不是互相割裂的环节。",
+    "whyBody2": "因此，Fusaha把学习目标、课程规划、活动设计、课堂实施和学习评价视为彼此相连的整体���而不是互相割裂的环节。",
     "visionEyebrow": "我们的愿景",
     "visionTitle": "以更清晰的目标教授阿拉伯语",
     "visionBody": "我们希望阿拉伯语教学与学习变得更有条理、更易获得、更有效。教师应当获得构建优质学习体验的实用支持，学习者则应拥有一条把知识与使用联系起来的清晰路径。",

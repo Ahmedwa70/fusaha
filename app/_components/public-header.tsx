@@ -11,9 +11,9 @@ import { MobileNavigation } from "@/components/mobile-navigation";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 
-type PublicHeaderProps = { homeHref?: string };
+type PublicHeaderProps = { homeHref?: string; isAuthenticated?: boolean };
 
-export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
+export function PublicHeader({ homeHref = "#top", isAuthenticated = false }: PublicHeaderProps) {
   const t = useTranslations("public");
   const pathname = usePathname();
   const [hash, setHash] = useState("");
@@ -51,9 +51,9 @@ export function PublicHeader({ homeHref = "#top" }: PublicHeaderProps) {
       </nav>
       <div className="flex items-center gap-2 lg:justify-self-end">
         <div className="hidden items-center gap-2 sm:flex"><ThemeToggle /><LanguageSwitcher /></div>
-        <Link href={ROUTES.login} data-ar-control className="hidden whitespace-nowrap rounded-lg border border-input px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground sm:block">{t("login")}</Link>
+        <Link href={isAuthenticated ? ROUTES.dashboard : ROUTES.login} data-ar-control className="hidden whitespace-nowrap rounded-lg border border-input px-4 py-2 text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground sm:block">{isAuthenticated ? t("dashboard") : t("login")}</Link>
         <Button className="bg-foreground text-background hover:bg-foreground/90 dark:bg-primary dark:text-primary-foreground dark:hover:bg-primary/90" size="sm" nativeButton={false} render={<Link href={ROUTES.dashboardCreate} />}>{t("startNow")}</Button>
-        <MobileNavigation homeHref={homeHref} />
+        <MobileNavigation homeHref={homeHref} isAuthenticated={isAuthenticated} />
       </div>
     </header>
   );
