@@ -25,6 +25,7 @@ real complexity stays inside the system.*
 | [product/BOOK_LIBRARY_SPECIFICATION.md](./product/BOOK_LIBRARY_SPECIFICATION.md) | Organizational standard for adding, classifying, and linking books and references (not an implemented feature) |
 | [architecture/REPOSITORY_TREE.md](./architecture/REPOSITORY_TREE.md) | Verified repository directory tree and major code groups |
 | [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
+| [architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md](./architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md) | Target architecture for immutable shared template runtimes, lesson-version references, lifecycle, security, and migration |
 
 ## Read this first
 
