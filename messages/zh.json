@@ -41,13 +41,13 @@
     "heroTitleLine2": "到互动学习",
     "heroTitleLine3": "体验",
     "heroDescription": "使用专业工具设计阿拉伯语课程、制作教学材料，将内容转化为更具吸引力和专业性的学习体验。",
-    "heroPrimary": "创建课程", "heroSecondary": "探索 Fusaha 工具", "heroImageAlt": "多设备上的 Fusaha",
+    "heroPrimary": "创建课程", "heroPrimaryAuthenticated": "创建新课程", "heroSecondary": "探索 Fusaha 工具", "heroImageAlt": "多设备上的 Fusaha",
     "toolsTitle": "Fusaha 工具体系", "toolsDescription": "在一个地方完成阿拉伯语学习内容的制作。", "tool1Title": "互动课程生成器", "tool1Body": "将任意文本或主题转换为包含活动和评估的完整课程。", "tool1Action": "立即试用", "tool2Title": "阿拉伯语写作工作室", "tool2Body": "支持阿拉伯语写作与组织的专业环境。", "tool2Action": "使用工作室", "tool3Title": "学习资料库", "tool3Body": "访问可直接使用的书籍和学习资源。", "tool3Action": "浏览资料库",
     "heroDevicesAlt": "多设备上的 Fusaha", "writingImageAlt": "阿拉伯语写作引擎预览", "writingToolAlt": "专业阿拉伯语工具", "writingAudienceAlt": "为教师和学习者设计",     "writingTime": "节省时间和精力", "featureTitle": "从想法到课堂只需几分钟", "featureBody": "专业且可编辑的内容", "featureLevel": "适合不同水平", "writingLetter": "ض", "writingTitle": "阿拉伯语写作引擎", "writingDescription": "将字母和单词转换为专业图形和可直接用于课程的教学视频。", "writingBullet1": "输入阿拉伯字母或单词并选择视觉风格。", "writingBullet2": "可自定义并导出的视觉输出。", "writingBullet3": "适合互动活动和演示。", "writingCta": "试用写作引擎", "writingVideo": "视频", "writingBadge": "将文字转换为视频", "writingStyle": "教学风格", "writingPlay": "播放预览",
     "stepsTitle": "从想法到课程的四个步骤", "stepsDescription": "通过简单流程制作完整的学习内容。", "step1Title": "输入内容", "step1Body": "输入文字或上传文件", "step2Title": "自定义设置", "step2Body": "选择级别和活动", "step3Title": "创建课程", "step3Body": "获得可直接使用的课程", "step4Title": "用于课堂", "step4Body": "分享并开始学习",
     "libraryTitle": "学习资料库", "libraryDescription": "精选资源支持您的学习之旅，涵盖书籍、故事、活动和文化材料。", "libraryCta": "浏览资源", "resourcesPending": "学习资源即将上线", "resourcesDescription": "探索当前可用的工具，我们将在资源准备好后添加已发布内容。", "resourcesCta": "打开资源页面",
     "audienceTitle": "为推动阿拉伯语教育的人而设计", "audienceDescription": "Fusaha 支持不同场景下的教师和学习者。", "audienceTeachers": "教师", "audienceTeachersBody": "轻松制作专业内容", "audienceInstitutions": "教育机构", "audienceInstitutionsBody": "专业资源和工具", "audienceLearners": "学习者", "audienceLearnersBody": "互动活动和资源", "audienceDevelopers": "开发者", "audienceDevelopersBody": "创新内容的理想环境",
-    "closingTitle": "今天开始您的 Fusaha 之旅", "closingDescription": "加入创造更好阿拉伯语学习体验的教师社区。", "closingPrimary": "创建账户", "closingSecondary": "探索工具",
+    "closingTitle": "今天开始您的 Fusaha 之旅", "closingDescription": "加入创造更好阿拉伯语学习体验的教师社区。", "closingPrimary": "创建账户", "closingPrimaryAuthenticated": "前往控制台", "closingSecondary": "探索工具",
 
     "hero": {
       "headline": "把课程素材变成互动课程",
@@ -273,7 +273,7 @@
     },
     "generation": {
       "untitledLesson": "无标题课程",
-      "required": "生成的课程内容中此字段为必填项。",
+      "required": "生成的课程内容中此字段为��填项。",
       "noDiacritics": "答案字段不应包含阿拉�����语���音���号。",
       "pageTitleMissingSeparator": "页面标题必须包���分���������符 \"|\"。",
       "invalidVocabType": "词汇项类型无效。",
@@ -599,7 +599,7 @@
       "fieldFeatures": "功能列表",
       "fieldFeaturesDescription": "将以对勾形式显示在套餐价格下方。每项功能都需要填写所有语言。",
       "addFeature": "添加功能",
-      "removeFeature": "删除该功能",
+      "removeFeature": "删除���功能",
       "featurePlaceholder": "例如：优先支持",
       "featureNumber": "功能 {number}",
       "noFeatures": "尚未添加任何功���。",
@@ -1106,7 +1106,7 @@
     "engineTitle": "阿拉伯字母绘制引擎",
     "engineDescription": "用于练习阿拉伯字母形态并跟随书写步骤的教育工具。",
     "productImageAlt": "{title} 预览",
-    "engineLightAlt": "浅色模式下的阿拉伯字母绘制引擎预览",
+    "engineLightAlt": "浅色模式���的阿拉伯字母绘制引擎预览",
     "engineDarkAlt": "深色模式下的阿拉伯字母绘制引擎预览"
   },
   "libraryPage": {
@@ -1137,7 +1137,7 @@
     "whyEyebrow": "我们为什么存在",
     "whyTitle": "因为内容本身并不等于学习",
     "whyBody1": "优质的教学材料只是起点。有效学习首先要明确学习者应达成什么，再把这一意图转化为课程、步骤和活动，帮助学习者不断前进。",
-    "whyBody2": "因此，Fusaha把学习目标、课程规划、活动设计、课堂实施和学习评价视为彼此相连的整体���而不是互相割裂的环节。",
+    "whyBody2": "因此，Fusaha把学习目标、课程规��、活动设计、课堂实施和学习评价视为彼此相连的整体���而不是互相割裂的环节。",
     "visionEyebrow": "我们的愿景",
     "visionTitle": "以更清晰的目标教授阿拉伯语",
     "visionBody": "我们希望阿拉伯语教学与学习变得更有条理、更易获得、更有效。教师应当获得构建优质学习体验的实用支持，学习者则应拥有一条把知识与使用联系起来的清晰路径。",
