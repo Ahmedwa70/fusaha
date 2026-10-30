@@ -68,6 +68,14 @@ const runtime = canvasAdapter.createPackage({
 
 A future adapter may support a different structure, but it must still return a validated `RuntimePackage` and remain isolated from application persistence.
 
+## Registry storage
+
+`RuntimePackageRegistry` is the Phase 2 storage boundary. Its default `InMemoryRuntimePackageStore` is intentionally local and process-scoped because this phase forbids database migrations, production writes, and new external infrastructure. The store interface is small enough to back with an approved persistent repository in a later phase without changing identity, validation, or retrieval semantics.
+
+Registration validates the package, calculates its identity, reuses an existing identical package, and stores a defensive clone. There is no update operation. A different package receives a different identity; a package stored under a mismatched identity is rejected on retrieval. `get` and `has` recalculate the full package identity before returning, so corrupted contents are detected.
+
+The package identity is independent of template IDs, schema IDs, lesson IDs, and user IDs. It covers canonical manifest metadata and every sorted package file. Asset integrity and declared UTF-8 byte sizes are checked before registration.
+
 ## Error handling
 
-`validateRuntimePackage` returns structured issues instead of throwing for expected contract violations. It reports invalid contract/version values, empty or missing entry points, unsupported capabilities, and manifest assets missing from the package. Callers decide whether a validation result is a warning or a publication blocker in a later phase.
+`validateRuntimePackage` returns structured issues instead of throwing for expected contract violations. It reports invalid contract/version values, empty or missing entry points, unsupported capabilities, and manifest assets missing from the package. `RuntimePackageRegistry` adds clear errors for invalid packages, missing identities, identity conflicts, and corrupted stored packages. Callers decide whether a validation result is a warning or a publication blocker in a later phase.

@@ -55,7 +55,9 @@ export type RuntimeValidationIssue = Readonly<{
     | "invalid-runtime-version"
     | "unsupported-capability"
     | "missing-asset"
-    | "asset-not-in-package";
+    | "asset-not-in-package"
+    | "asset-integrity-mismatch"
+    | "asset-size-mismatch";
   readonly message: string;
   readonly path: string;
 }>;
