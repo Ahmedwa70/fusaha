@@ -26,6 +26,7 @@ real complexity stays inside the system.*
 | [architecture/REPOSITORY_TREE.md](./architecture/REPOSITORY_TREE.md) | Verified repository directory tree and major code groups |
 | [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
 | [architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md](./architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md) | Target architecture for immutable shared template runtimes, lesson-version references, lifecycle, security, and migration |
+| [architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md](./architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md) | Phased, reversible implementation plan for validating and migrating to immutable shared template runtimes |
 
 ## Read this first
 
