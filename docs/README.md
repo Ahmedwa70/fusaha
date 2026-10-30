@@ -18,6 +18,7 @@ real complexity stays inside the system.*
 | [frontend.md](./frontend.md) | Route map, component library, styling, the official locale/RTL/LTR standard, form and data-flow patterns |
 | [api-reference.md](./api-reference.md) | **The service catalogue.** Every Server Action and HTTP route: inputs, outputs, auth, side effects |
 | [data-model.md](./data-model.md) | Database schema: every table, column, relation, and enum |
+| [architecture/TEMPLATE_RUNTIME_STAGING_READINESS.md](./architecture/TEMPLATE_RUNTIME_STAGING_READINESS.md) | Phase 4.1 readiness and setup specification for isolated runtime storage staging |
 | [ai-pipeline.md](./ai-pipeline.md) | Lesson generation end to end, source ingestion, templates, billing, integrations |
 | [development.md](./development.md) | Local setup, environment variables, migrations, deployment, known issues |
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
