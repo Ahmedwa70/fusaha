@@ -14,6 +14,8 @@ export type StoredRuntimePackage = Readonly<{
 export interface RuntimePackageStore {
   get(identity: RuntimeIdentity): RuntimePackage | undefined;
   put(identity: RuntimeIdentity, runtime: RuntimePackage): void;
+  /** Atomically stores only when the identity is absent and returns whether it won. */
+  putIfAbsent?(identity: RuntimeIdentity, runtime: RuntimePackage): boolean;
 }
 
 export class RuntimePackageError extends Error {
@@ -42,14 +44,18 @@ export class InMemoryRuntimePackageStore implements RuntimePackageStore {
   }
 
   put(identity: RuntimeIdentity, runtime: RuntimePackage): void {
-    if (this.packages.has(identity)) {
+    if (!this.putIfAbsent(identity, runtime)) {
       throw new RuntimePackageError(
         `Runtime identity is immutable and already registered: ${identity}`,
         "runtime-identity-conflict"
       );
     }
+  }
 
+  putIfAbsent(identity: RuntimeIdentity, runtime: RuntimePackage): boolean {
+    if (this.packages.has(identity)) return false;
     this.packages.set(identity, cloneRuntimePackage(runtime));
+    return true;
   }
 }
 
@@ -73,8 +79,14 @@ export class RuntimePackageRegistry {
       return { identity, package: existing };
     }
 
-    this.store.put(identity, runtime);
+    const stored = this.store.putIfAbsent
+      ? this.store.putIfAbsent(identity, runtime)
+      : (this.store.put(identity, runtime), true);
     const registered = this.store.get(identity);
+
+    if (!stored && !registered) {
+      throw new RuntimePackageError(`Runtime identity registration was lost: ${identity}`, "runtime-not-found");
+    }
     if (!registered) {
       throw new RuntimePackageError(`Runtime package was not available after registration: ${identity}`, "runtime-not-found");
     }

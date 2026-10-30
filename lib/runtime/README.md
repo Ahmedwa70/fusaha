@@ -96,7 +96,11 @@ Existing lesson versions are represented as `legacy-unbound` until future backfi
 
 Phase 3 uses `InMemoryLessonVersionRuntimeBindingStore` only. `LessonVersionRuntimeBindingStore` is the persistence boundary for a later approved database implementation. A future repository must provide atomic insert-if-absent semantics, read-by-lesson-version, a unique lesson-version constraint, immutable update behavior, and a foreign-key/reference check against the persistent runtime registry. The future migration must be expand/backfill/contract and must not infer historical runtime identity from a mutable current template row.
 
-The application generation and rendering paths do not import this binding service yet. Production integration belongs to a later phase after persistent runtime storage, staging data inventory, and historical recovery evidence are available.
+Phase 4 defines `PersistentRuntimePackageStore` and `PERSISTENT_RUNTIME_STORE_CONTRACT` in `persistent-store.ts`, but the production adapter remains blocked. The repository uses PostgreSQL through Drizzle (`lib/db/index.ts`), while this session has no connected Supabase/database integration and no verified isolated staging database. No `DATABASE_URL` connection, table creation, migration, data write, or production credential use is permitted by this phase gate.
+
+A production adapter must use a transactional or compare-and-swap `putIfAbsent` operation. It must stage the complete manifest and all files, verify package identity before publication, publish atomically, hide incomplete writes, never overwrite an existing identity, and return the already-published package for an identical concurrent registration. Runtime deletion is not part of registration and is permitted only after reference reconciliation confirms no lesson-version references; the default policy requires explicit approval and prevents deletion of referenced packages.
+
+The application generation and rendering paths do not import this binding service or persistent-store contract yet. Production integration belongs to a later phase after persistent runtime storage, staging data inventory, historical recovery evidence, and database migration approval are available.
 
 ## Error handling
 
