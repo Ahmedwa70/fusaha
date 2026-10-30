@@ -27,6 +27,7 @@ real complexity stays inside the system.*
 | [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
 | [architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md](./architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md) | Target architecture for immutable shared template runtimes, lesson-version references, lifecycle, security, and migration |
 | [architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md](./architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md) | Phased, reversible implementation plan for validating and migrating to immutable shared template runtimes |
+| [architecture/TEMPLATE_RUNTIME_PHASE_0_READINESS.md](./architecture/TEMPLATE_RUNTIME_PHASE_0_READINESS.md) | Phase 0 baseline audit, prerequisites, migration risks, and readiness gate for the first runtime implementation phase |
 
 ## Read this first
 
