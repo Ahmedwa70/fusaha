@@ -42,6 +42,7 @@
     "heroTitleLine3": "learning experience",
     "heroDescription": "Specialized tools to design Arabic lessons, produce teaching materials, and turn content into a more engaging, professional learning experience.",
     "heroPrimary": "Create a lesson",
+    "heroPrimaryAuthenticated": "Create a new lesson",
     "heroSecondary": "Explore Fusaha tools",
     "heroImageAlt": "Fusaha on multiple devices",
     "toolsTitle": "The Fusaha toolkit",
@@ -54,7 +55,7 @@
     "step1Title": "Add content", "step1Body": "Write text or attach a file", "step2Title": "Customize settings", "step2Body": "Choose the level and activities", "step3Title": "Create the lesson", "step3Body": "Get a ready-to-use lesson", "step4Title": "Use it in class", "step4Body": "Share it and start learning",
     "libraryTitle": "Learning library", "libraryDescription": "Curated resources to support your learning journey, from books and stories to activities and cultural materials.", "libraryCta": "Browse resources", "resourcesPending": "Learning resources are coming soon", "resourcesDescription": "Explore the tools available now. We will add published resources here when they are ready.", "resourcesCta": "Open resources",
     "audienceTitle": "Designed for those making a difference in Arabic education", "audienceDescription": "Fusaha supports teachers and learners across different contexts.", "audienceTeachers": "Teachers", "audienceTeachersBody": "Produce professional content with ease", "audienceInstitutions": "Educational institutions", "audienceInstitutionsBody": "Specialized resources and tools", "audienceLearners": "Learners", "audienceLearnersBody": "Interactive activities and resources", "audienceDevelopers": "Developers", "audienceDevelopersBody": "An environment for innovating new content",
-    "closingTitle": "Start your Fusaha journey today", "closingDescription": "Join the community of teachers creating better Arabic learning experiences.", "closingPrimary": "Create your account", "closingSecondary": "Explore the tools",
+    "closingTitle": "Start your Fusaha journey today", "closingDescription": "Join the community of teachers creating better Arabic learning experiences.", "closingPrimary": "Create your account", "closingPrimaryAuthenticated": "Go to dashboard", "closingSecondary": "Explore the tools",
 
     "hero": {
       "headline": "Turn a lesson source into an interactive class",
