@@ -7,8 +7,7 @@ import postgres from "postgres";
 import {
   projectRoot,
   STAGING_PROJECT_REF,
-  parseAndValidatePoolerUrl,
-  validateTargetEnvironment,
+  validateStagingConfiguration,
 } from "./database-target-guard.mjs";
 
 const envPath = path.join(projectRoot, ".env.staging.local");
@@ -31,22 +30,19 @@ function safeErrorCode(error) {
 async function verify() {
   let environment;
   try {
-    environment = dotenv.parse(readFileSync(envPath));
-    environment = validateTargetEnvironment(environment, "staging");
-
-    if (!environment.STAGING_DB_HOST || !environment.STAGING_DB_USER) {
-      throw new Error("STAGING_DB_HOST and STAGING_DB_USER are required");
-    }
-
-    const parsedUrl = parseAndValidatePoolerUrl(environment.DATABASE_URL, STAGING_PROJECT_REF);
-    if (parsedUrl.hostname !== environment.STAGING_DB_HOST) {
-      throw new Error("STAGING_DB_HOST does not match the validated Staging URL");
-    }
-    if (decodeURIComponent(parsedUrl.username) !== environment.STAGING_DB_USER) {
-      throw new Error("STAGING_DB_USER does not match the validated Staging URL");
-    }
+    environment = validateStagingConfiguration(dotenv.parse(readFileSync(envPath)));
   } catch (error) {
     fail(error instanceof Error ? error.message : "staging configuration is invalid");
+    return;
+  }
+
+  if (process.argv.includes("--preflight")) {
+    process.stdout.write("Staging preflight succeeded; no database connection attempted.\n");
+    process.stdout.write(`Project reference: ${STAGING_PROJECT_REF}\n`);
+    process.stdout.write(`Pooler host: ${environment.STAGING_DB_HOST}\n`);
+    process.stdout.write("Port: 6543\n");
+    process.stdout.write(`Username: ${environment.STAGING_DB_USER}\n`);
+    process.stdout.write("Password: present and not displayed\n");
     return;
   }
 

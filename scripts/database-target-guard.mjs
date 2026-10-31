@@ -65,6 +65,23 @@ export function validateTargetEnvironment(environment, target) {
   };
 }
 
+export function validateStagingConfiguration(environment) {
+  const validated = validateTargetEnvironment(environment, "staging");
+  if (!environment.STAGING_DB_HOST || !environment.STAGING_DB_USER) {
+    reject("STAGING_DB_HOST and STAGING_DB_USER are required");
+  }
+
+  const parsed = parseAndValidatePoolerUrl(validated.DATABASE_URL, STAGING_PROJECT_REF);
+  if (parsed.hostname !== environment.STAGING_DB_HOST) {
+    reject("Staging pooler host does not match the approved URL");
+  }
+  if (decodeURIComponent(parsed.username) !== environment.STAGING_DB_USER) {
+    reject("Staging pooler username does not match the approved URL");
+  }
+
+  return validated;
+}
+
 export function assertValidatedTarget(environment) {
   if (environment.DATABASE_TARGET_VALIDATED !== "1") {
     reject("direct database mutation requires an explicitly validated target");

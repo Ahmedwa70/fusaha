@@ -10,6 +10,7 @@
     "db:migrate": "node scripts/with-database-env.mjs --reject-generic",
     "db:seed": "node scripts/with-database-env.mjs --reject-generic",
     "db:check:staging": "node scripts/with-database-env.mjs staging check",
+    "db:preflight:staging": "node scripts/verify-staging-db.mjs --preflight",
     "db:verify:staging": "node scripts/verify-staging-db.mjs",
     "db:migrate:staging": "node scripts/with-database-env.mjs staging migrate",
     "db:seed:staging": "node scripts/with-database-env.mjs staging seed",
