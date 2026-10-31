@@ -1,0 +1,28 @@
+{
+  "identity": "sha256-v1-fixture-only",
+  "manifest": {
+    "contractVersion": "poc-v1",
+    "runtimeId": "html-player",
+    "runtimeVersion": "integration-poc",
+    "packageKind": "multi-file",
+    "entryPoint": "index.html",
+    "assets": [
+      {
+        "path": "index.html",
+        "contentSha256": "fixture-hash-index",
+        "sizeBytes": 119,
+        "contentType": "text/html; charset=utf-8"
+      },
+      {
+        "path": "assets/app.js",
+        "contentSha256": "fixture-hash-js",
+        "sizeBytes": 55,
+        "contentType": "text/javascript; charset=utf-8"
+      }
+    ]
+  },
+  "files": {
+    "index.html": "<!doctype html><html><body><div id=\"app\">POC only</div><script src=\"./assets/app.js\"></script></body></html>",
+    "assets/app.js": "document.querySelector('#app').dataset.loaded = 'true';"
+  }
+}
