@@ -45,9 +45,37 @@ Do not reuse the current `DATABASE_URL`, `SUPABASE_SECRET_KEY`, or any other pro
 
 ---
 
-## 3. Evidence Collected
+## 3. Confirmed Staging Project and Identity Comparison
 
-### 3.1 Drizzle client
+The operator has confirmed the following **non-secret staging metadata**:
+
+| Field | Confirmed value |
+|---|---|
+| Project name | `fusaha-staging` |
+| Project reference | `nodzspvuidbdlwsiejyp` |
+| Region | Northeast Asia (Tokyo) |
+| Region ID | `ap-northeast-1` |
+| Dashboard status | Healthy |
+| Intended use | Isolated staging only |
+
+### Comparison with production evidence
+
+The repository’s `.env.example` intentionally contains placeholders (`[project-ref]`) and does not contain a production Supabase project reference. The repository search found no non-secret production project reference or documented production project ID to compare against. The existing project environment variable names (`DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and Supabase keys) do not expose their values in this report and cannot establish project identity without opening a connection or reading secret configuration.
+
+Therefore:
+
+- `nodzspvuidbdlwsiejyp` is recorded as the declared staging project reference.
+- It is not possible to prove from repository configuration alone that the active production project reference differs from it.
+- The production identity comparison remains a **manual operator check** in the Supabase dashboard/provider metadata, not a claim made by this report.
+- The staging project name, region, and Healthy status are not sufficient by themselves to prove independent credentials or database isolation.
+
+The operator must compare the staging project reference above against the production project reference without sharing either secret or connection string. A non-secret evidence record may state only: `staging ref differs from production ref: yes/no`, plus masked host/project metadata.
+
+---
+
+## 4. Evidence Collected
+
+### 4.1 Drizzle client
 
 **File:** `lib/db/index.ts`
 
@@ -62,7 +90,7 @@ Verified behavior:
 
 This proves the application database technology and connection boundary. It does not prove which database any configured value points to.
 
-### 3.2 Drizzle Kit configuration
+### 4.2 Drizzle Kit configuration
 
 **File:** `drizzle.config.ts`
 
@@ -77,7 +105,7 @@ credentials: process.env.DATABASE_URL
 
 The config imports `dotenv/config` and throws when `DATABASE_URL` is absent. The same connection variable is therefore used for migration commands unless the command environment is deliberately isolated.
 
-### 3.3 Package scripts and versions
+### 4.3 Package scripts and versions
 
 **File:** `package.json`
 
@@ -93,7 +121,7 @@ Verified:
 
 The repository has a migration execution path, but no script-level environment guard that rejects production URLs or requires a staging marker.
 
-### 3.4 Schema and migration workflow
+### 4.4 Schema and migration workflow
 
 **Files:**
 
@@ -116,7 +144,7 @@ The repository currently contains migration SQL through the `0022_add_library_bo
 
 No migration was executed or changed by this report.
 
-### 3.5 Environment template
+### 4.5 Environment template
 
 **File:** `.env.example`
 
@@ -130,7 +158,7 @@ The template declares:
 
 The example contains placeholders, not usable credentials. It does not define separate `STAGING_DATABASE_URL`, `DATABASE_ENV`, `SUPABASE_STAGING_*`, or an equivalent non-production safety marker.
 
-### 3.6 Documentation evidence
+### 4.6 Documentation evidence
 
 **File:** `docs/development.md`
 
@@ -138,7 +166,7 @@ The development guide says that local setup requires a Supabase project, copying
 
 The deployment section explicitly describes running `pnpm db:migrate` against the production database as a deployment step. Therefore, an unguarded invocation with an unknown `DATABASE_URL` carries a real production-risk path.
 
-### 3.7 Integration availability
+### 4.7 Integration availability
 
 Integration availability metadata did not verify a connected Supabase database integration for this session. Project environment-variable names are not proof of a connected staging resource and do not disclose whether any database URL points to production.
 
@@ -146,9 +174,9 @@ No database schema was retrieved from a live integration. No live RLS, foreign-k
 
 ---
 
-## 4. Current Database Architecture
+## 5. Current Database Architecture
 
-### 4.1 Application connection
+### 5.1 Application connection
 
 ```text
 Next.js / Trigger-adjacent server code
@@ -160,7 +188,7 @@ Next.js / Trigger-adjacent server code
 
 The same general database environment is used by application queries and Drizzle migrations. The separation between development, staging, preview, and production is therefore an environment-management concern, not an enforced repository boundary.
 
-### 4.2 Active schema
+### 5.2 Active schema
 
 `database/schema/index.ts` exports the active application tables, including:
 
@@ -174,7 +202,7 @@ The same general database environment is used by application queries and Drizzle
 
 No runtime package table or lesson-version runtime foreign key exists in the inspected active schema. That is expected at this phase; adding them requires a later approved migration.
 
-### 4.3 Migration history
+### 5.3 Migration history
 
 The repository follows Drizzle's SQL-plus-snapshot workflow:
 
@@ -190,9 +218,9 @@ The migration journal is PostgreSQL/Drizzle Kit version 7 metadata. The current 
 
 ---
 
-## 5. Isolated Environment Determination
+## 6. Isolated Environment Determination
 
-### 5.1 Required condition
+### 6.1 Required condition
 
 The persistent runtime store needs a PostgreSQL target that is:
 
@@ -203,7 +231,7 @@ The persistent runtime store needs a PostgreSQL target that is:
 - Reachable by the migration and test runner.
 - Capable of PostgreSQL transactions, unique constraints, foreign keys, and concurrent writes.
 
-### 5.2 What was verified
+### 6.2 What was verified
 
 | Requirement | Evidence | Result |
 |---|---|---|
@@ -219,7 +247,7 @@ The persistent runtime store needs a PostgreSQL target that is:
 | Migration rollback rehearsal | Not performed, correctly prohibited | Not satisfied |
 | Concurrent PostgreSQL registration test | Not performed against PostgreSQL | Not satisfied |
 
-### 5.3 Why the status is BLOCKED rather than READY WITH CONDITIONS
+### 6.3 Why the status is BLOCKED rather than READY WITH CONDITIONS
 
 The requested phase is specifically to establish readiness for a persistent PostgreSQL store. The central prerequisite—an independently verified isolated database—is absent. Proceeding to schema or adapter implementation would require guessing the target database, relying on an unverified `DATABASE_URL`, or risking production writes.
 
@@ -227,11 +255,11 @@ The repository-only portion is ready for planning, but the environment itself is
 
 ---
 
-## 6. Required Staging Setup Specification
+## 7. Required Staging Setup Specification
 
 The following is the minimum provisioning specification. It is not an instruction to execute provisioning in this task.
 
-### 6.1 Resource
+### 7.1 Resource
 
 Provision one of:
 
@@ -240,7 +268,7 @@ Provision one of:
 
 Do not use a separate schema in the production database as the default substitute. A separate database/project is required to prevent cross-environment destructive operations and credential confusion.
 
-### 6.2 Required identity and credentials
+### 7.2 Required identity and credentials
 
 Create separate credentials for:
 
@@ -260,7 +288,7 @@ Create separate credentials for:
 
 If Supabase is used, retain the distinction between publishable client access and server-only secret/service access. Never copy production service-role credentials into staging or local files.
 
-### 6.3 Required connection configuration
+### 7.3 Required connection configuration
 
 Use a staging-only variable, preferably:
 
@@ -279,7 +307,7 @@ STAGING_PROJECT_REF=<non-production project reference>
 
 The metadata is not a security boundary by itself. The actual database identity must be verified through a read-only query and provider/project metadata.
 
-### 6.4 Required database capabilities
+### 7.4 Required database capabilities
 
 The staging target must support:
 
@@ -292,7 +320,7 @@ The staging target must support:
 - The extension/features required by the current schema.
 - Migration bookkeeping compatible with the repository's Drizzle Kit version.
 
-### 6.5 Data policy
+### 7.5 Data policy
 
 The target must start empty or contain only:
 
@@ -303,11 +331,11 @@ Do not copy production credentials, raw user data, private lesson content, share
 
 ---
 
-## 7. Manual Staging Provisioning and Configuration Runbook
+## 8. Manual Staging Provisioning and Configuration Runbook
 
 This section is an operator runbook only. It was not executed by this report.
 
-### 7.1 Supabase dashboard steps
+### 8.1 Supabase dashboard steps
 
 If staging is provisioned through Supabase:
 
@@ -318,12 +346,12 @@ If staging is provisioned through Supabase:
 5. In **Project Settings → API**, record the staging project URL and staging publishable key. Keep the staging secret/service key server-only; never put it in `NEXT_PUBLIC_*` variables.
 6. In **Database → Roles**, inspect the provider-managed roles. Use a dedicated least-privilege application role if the plan supports it; otherwise document the provider-managed role and compensate with schema grants and RLS verification.
 7. Do not import production data, production auth users, storage objects, share tokens, secrets, or settings. Start with the empty project.
-8. Before applying any migration, use the read-only identity query in Section 8 and compare the project reference/host against the production metadata held by the operator. This report must not receive either secret or production value.
+8. Before applying any migration, use the read-only identity query in Section 9 and compare the project reference/host against the production metadata held by the operator. This report must not receive either secret or production value.
 9. Capture a dashboard screenshot or non-secret audit record showing the staging project name/reference, region, and project status. Do not include connection strings or keys.
 
 If Supabase requires owner-level setup, the operator must complete it in the dashboard. No dashboard mutation is assumed or performed by v0.
 
-### 7.2 Exact variable mapping
+### 8.2 Exact variable mapping
 
 Use separate values for local staging and Vercel Preview. Do not overwrite Production variables.
 
@@ -349,7 +377,7 @@ For Vercel:
 
 The current repository does not yet contain `STAGING_DATABASE_URL`, `DATABASE_ENV`, or `STAGING_PROJECT_REF` in `.env.example`; adding those names is optional documentation/setup work, not permission to configure or use a database in this phase.
 
-### 7.3 Required database roles and permissions
+### 8.3 Required database roles and permissions
 
 Use provider-supported roles where custom roles are unavailable, and record the actual role names without recording passwords.
 
@@ -367,10 +395,10 @@ For Supabase, also verify:
 - Auth and storage are empty or explicitly synthetic.
 - Grants and policies are checked after each migration rehearsal.
 
-### 7.4 Schema initialization without production records
+### 8.4 Schema initialization without production records
 
 1. Create the empty staging project/database.
-2. Verify database identity and empty-data policy using Section 8 before migration.
+2. Verify database identity and empty-data policy using Section 9 before migration.
 3. Use the repository’s approved baseline migration history; do not dump or restore production tables.
 4. Generate SQL only when a schema change is approved: `pnpm dlx drizzle-kit generate`.
 5. Review the generated SQL and matching Drizzle snapshot in a branch.
@@ -380,7 +408,7 @@ For Supabase, also verify:
 
 No runtime package or lesson-version migration should be added until this staging baseline is verified.
 
-### 7.5 Migration and rollback procedure
+### 8.5 Migration and rollback procedure
 
 **Forward rehearsal:**
 
@@ -402,7 +430,7 @@ No runtime package or lesson-version migration should be added until this stagin
 
 **Production rollback is out of scope.** No production migration or rollback may be attempted as part of this phase.
 
-### 7.6 Remaining blockers after manual setup
+### 8.6 Remaining blockers after manual setup
 
 Even after the Supabase project is created, the phase remains blocked until the following non-secret evidence is recorded:
 
@@ -417,11 +445,11 @@ Even after the Supabase project is created, the phase remains blocked until the 
 
 ---
 
-## 8. Verification Checklist for the Next Environment Review
+## 9. Verification Checklist for the Next Environment Review
 
 The following checks must be executed only after the staging resource is provisioned and its credentials are available through the approved environment mechanism. Values must not be printed.
 
-### 8.1 Connection identity
+### 9.1 Connection identity
 
 Using a read-only staging connection, record masked/non-secret results for:
 
@@ -436,7 +464,7 @@ Verify:
 - Current user is the intended staging role.
 - No production host or project reference appears.
 
-### 8.2 Migration state
+### 9.2 Migration state
 
 Read-only inspection must confirm:
 
@@ -448,7 +476,7 @@ Read-only inspection must confirm:
 
 Do not run `pnpm db:migrate` until this inspection passes.
 
-### 8.3 Schema and permissions
+### 9.3 Schema and permissions
 
 Verify read-only:
 
@@ -459,11 +487,11 @@ Verify read-only:
 - Application role cannot drop unrelated tables.
 - Read-only verification role cannot mutate data.
 
-### 8.4 Safety marker
+### 9.4 Safety marker
 
 Require an explicit non-production marker from the provider/project metadata. A convention such as `DATABASE_ENV=staging` is useful but insufficient without database identity verification.
 
-### 8.5 Data inventory
+### 9.5 Data inventory
 
 Verify:
 
@@ -473,11 +501,11 @@ Verify:
 
 ---
 
-## 9. Minimum Runtime Store Schema Prerequisites
+## 10. Minimum Runtime Store Schema Prerequisites
 
 These are design prerequisites for the next implementation phase, not schema changes made by this report.
 
-### 9.1 Runtime package table
+### 10.1 Runtime package table
 
 A future migration should define an immutable runtime package record with at least:
 
@@ -498,7 +526,7 @@ If package files are stored separately, add an asset/file table keyed to the run
 - Byte size.
 - Immutable content location or bytes.
 
-### 9.2 Lesson-version binding
+### 10.2 Lesson-version binding
 
 A future migration should add a nullable `lesson_versions.runtime_version_id` during expand. It must eventually have:
 
@@ -509,7 +537,7 @@ A future migration should add a nullable `lesson_versions.runtime_version_id` du
 
 Existing lesson versions must remain explicitly legacy/unbound until historical evidence is classified. The migration must not infer historical runtime identity from the current mutable `templates` row.
 
-### 9.3 Immutability and deduplication
+### 10.3 Immutability and deduplication
 
 The schema and repository must enforce:
 
@@ -520,7 +548,7 @@ The schema and repository must enforce:
 - A different identity for any executable/manifest change.
 - Runtime deletion blocked while any lesson version references it.
 
-### 9.4 Migration shape
+### 10.4 Migration shape
 
 Use expand/backfill/contract:
 
@@ -534,16 +562,16 @@ Use expand/backfill/contract:
 
 ---
 
-## 10. Safe Testing Strategy
+## 11. Safe Testing Strategy
 
-### 10.1 Before first migration
+### 11.1 Before first migration
 
 - Restore the staging database to a known snapshot or verify it is empty.
 - Save migration journal, schema, constraints, roles, and row-count evidence.
 - Run generated SQL review without applying it.
 - Verify migration target identity again in the same controlled session.
 
-### 10.2 Migration rehearsal
+### 11.2 Migration rehearsal
 
 - Apply the migration to staging only.
 - Capture migration output and resulting journal state.
@@ -554,7 +582,7 @@ Use expand/backfill/contract:
 - Verify referenced runtimes cannot be deleted.
 - Verify source template/schema changes do not affect bound runtime records.
 
-### 10.3 Concurrency tests
+### 11.3 Concurrency tests
 
 Use multiple PostgreSQL sessions against staging to attempt identical registration simultaneously. Assert:
 
@@ -564,7 +592,7 @@ Use multiple PostgreSQL sessions against staging to attempt identical registrati
 - A failed transaction leaves no incomplete record.
 - Different package contents never collapse to one identity.
 
-### 10.4 Rollback tests
+### 11.4 Rollback tests
 
 Test both:
 
@@ -573,7 +601,7 @@ Test both:
 
 Do not delete runtime rows as a first-line rollback mechanism. Preserve them for retry and forensic comparison.
 
-### 10.5 Data and security tests
+### 11.5 Data and security tests
 
 - No production data is present.
 - Application role cannot perform DDL.
@@ -585,7 +613,7 @@ Do not delete runtime rows as a first-line rollback mechanism. Preserve them for
 
 ---
 
-## 11. Production-Safety Controls Required Before Any Future Apply
+## 12. Production-Safety Controls Required Before Any Future Apply
 
 Before a future staging or production migration command:
 
@@ -604,7 +632,7 @@ The current repository does not enforce all of these controls automatically. The
 
 ---
 
-## 12. Environment Configuration Summary
+## 13. Environment Configuration Summary
 
 ### Existing repository configuration
 
@@ -629,7 +657,7 @@ These are setup requirements. This report intentionally does not request, print,
 
 ---
 
-## 13. Final Status and Exact Next Action
+## 14. Final Status and Exact Next Action
 
 # BLOCKED — safe implementation cannot proceed
 
@@ -637,14 +665,23 @@ These are setup requirements. This report intentionally does not request, print,
 
 1. The repository has a valid Drizzle/PostgreSQL client and migration workflow.
 2. The active schema and migration history are locally inspectable.
-3. The environment template contains only a generic `DATABASE_URL` and no staging isolation marker.
-4. The migration command uses `DATABASE_URL` directly and has no production-target guard.
-5. No isolated staging database, independent credentials, live migration state, RLS, grants, or non-production data boundary was verified.
-6. The required database integration is not connected for live schema verification.
+3. The staging project is now operator-confirmed as `fusaha-staging`, reference `nodzspvuidbdlwsiejyp`, region `ap-northeast-1`, Healthy.
+4. Repository configuration contains only a generic `DATABASE_URL` and no staging isolation marker.
+5. The migration command uses `DATABASE_URL` directly and has no production-target guard.
+6. Independent staging credentials, live migration state, RLS, grants, empty-data inventory, and the staging-versus-production identity comparison are not yet evidenced.
+7. The required database integration is not connected for live schema verification in this session.
 
-### Exact next action
+### Exact remaining manual actions
 
-Provision or identify a separate non-production PostgreSQL/Supabase project with independent credentials and a read-only verification role. Then perform the checklist in Section 8 against that staging target, without running migrations initially.
+1. In Supabase, verify that production has a different project reference/host than `nodzspvuidbdlwsiejyp`; record only the non-secret result `staging differs from production: yes`.
+2. Create and store independent staging credentials. Do not reuse production passwords or service keys.
+3. Configure staging-only values in local/private configuration and Vercel **Preview** scope: `DATABASE_URL`/`STAGING_DATABASE_URL`, staging Supabase URL, staging publishable key, staging server secret, `DATABASE_ENV`, and `STAGING_PROJECT_REF`.
+4. Confirm no staging value is selected for Vercel Production and do not promote a staging Preview.
+5. Verify the staging connection identity read-only using Section 9.1, then verify migration journal, grants, RLS, roles, and zero/synthetic-only data.
+6. Only after those checks pass, run the existing Drizzle migrations against staging. Do not generate or apply the runtime-store migration yet.
+7. Record non-secret evidence for the migration baseline and rollback/recovery rehearsal.
+
+Until all seven actions are complete and independently evidenced, status remains **BLOCKED** and no persistent runtime implementation or Phase 5 work may begin.
 
 After the checklist passes, the next implementation phase may:
 
@@ -658,7 +695,7 @@ Until then, do not execute `pnpm db:migrate`, do not repoint `DATABASE_URL`, do 
 
 ---
 
-## 14. Related Documentation
+## 15. Related Documentation
 
 - `docs/architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md`
 - `docs/architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md`
