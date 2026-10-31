@@ -9,6 +9,10 @@
     "lint": "eslint",
     "db:migrate": "drizzle-kit migrate",
     "db:seed": "node database/seed.mjs",
+    "db:check:staging": "node scripts/with-database-env.mjs staging check",
+    "db:migrate:staging": "node scripts/with-database-env.mjs staging migrate",
+    "db:seed:staging": "node scripts/with-database-env.mjs staging seed",
+    "test:staging-launcher": "node scripts/with-database-env.mjs --self-test",
     "test": "node --experimental-test-module-mocks --test"
   },
   "dependencies": {
