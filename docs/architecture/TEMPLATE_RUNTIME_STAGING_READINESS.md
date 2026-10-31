@@ -58,18 +58,19 @@ The operator has confirmed the following **non-secret staging metadata**:
 | Dashboard status | Healthy |
 | Intended use | Isolated staging only |
 
+**Confirmed production project reference:** `msaxzamhzfwhbjjsdcae`
+
 ### Comparison with production evidence
 
-The repository’s `.env.example` intentionally contains placeholders (`[project-ref]`) and does not contain a production Supabase project reference. The repository search found no non-secret production project reference or documented production project ID to compare against. The existing project environment variable names (`DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and Supabase keys) do not expose their values in this report and cannot establish project identity without opening a connection or reading secret configuration.
+The repository’s `.env.example` intentionally contains placeholders (`[project-ref]`) and does not expose either live project. The operator has now supplied both non-secret project references, so the identity comparison is conclusive:
 
-Therefore:
+- Production: `msaxzamhzfwhbjjsdcae`
+- Staging: `nodzspvuidbdlwsiejyp`
+- Result: **distinct project references confirmed**
 
-- `nodzspvuidbdlwsiejyp` is recorded as the declared staging project reference.
-- It is not possible to prove from repository configuration alone that the active production project reference differs from it.
-- The production identity comparison remains a **manual operator check** in the Supabase dashboard/provider metadata, not a claim made by this report.
-- The staging project name, region, and Healthy status are not sufficient by themselves to prove independent credentials or database isolation.
+The existing environment variable names (`DATABASE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, and Supabase keys) do not expose secret values in this report. They must still be configured manually so local/Preview staging connections resolve only to `nodzspvuidbdlwsiejyp`.
 
-The operator must compare the staging project reference above against the production project reference without sharing either secret or connection string. A non-secret evidence record may state only: `staging ref differs from production ref: yes/no`, plus masked host/project metadata.
+Distinct project references prove project-level separation, but do not by themselves prove that credentials, Preview variables, roles, RLS, migration state, or data inventory are safe. Those remain read-only verification tasks below.
 
 ---
 
@@ -355,6 +356,52 @@ If Supabase requires owner-level setup, the operator must complete it in the das
 
 Use separate values for local staging and Vercel Preview. Do not overwrite Production variables.
 
+For local staging, create a private untracked file such as `.env.staging.local` with these names. Fill values from the **staging** Supabase project only; never paste values into this report:
+
+```dotenv
+DATABASE_ENV=staging
+STAGING_PROJECT_REF=nodzspvuidbdlwsiejyp
+STAGING_DATABASE_URL=<staging Supabase pooler URL>
+DATABASE_URL=<same staging pooler URL for the migration command>
+NEXT_PUBLIC_SUPABASE_URL=https://nodzspvuidbdlwsiejyp.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=<staging publishable key>
+SUPABASE_SECRET_KEY=<staging server-only secret>
+```
+
+Because `lib/db/index.ts` and `drizzle.config.ts` both read `DATABASE_URL`, the migration shell must explicitly copy the staging value into `DATABASE_URL`. The application’s normal `DATABASE_URL` must not be changed globally to discover a target.
+
+### 8.2.1 Fail-closed staging guard definition
+
+No application behavior is changed by this report. Before any local staging migration or verification command, the operator must run an equivalent guard that exits non-zero unless every condition passes:
+
+```sh
+set -eu
+[ "${DATABASE_ENV:-}" = "staging" ]
+[ "${STAGING_PROJECT_REF:-}" = "nodzspvuidbdlwsiejyp" ]
+case "${NEXT_PUBLIC_SUPABASE_URL:-}" in
+  "https://nodzspvuidbdlwsiejyp.supabase.co") ;;
+  *) exit 1 ;;
+esac
+case "${DATABASE_URL:-}" in
+  *"msaxzamhzfwhbjjsdcae"*) exit 1 ;;
+  *"nodzspvuidbdlwsiejyp"*) ;;
+  *) exit 1 ;;
+esac
+```
+
+The guard must reject missing variables, the production project reference `msaxzamhzfwhbjjsdcae`, any project reference other than staging, and a database URL whose provider format cannot be verified as staging. If the provider’s pooler URL does not include the project reference, do not weaken the guard; verify the database identity read-only first and use a provider-supported connection identifier/allowlist.
+
+A guarded command sequence is:
+
+```sh
+set -a
+. ./.env.staging.local
+set +a
+# run the guard above, then run only a read-only verification command
+```
+
+Do not run `pnpm db:migrate` during this identity-verification step. The existing Drizzle configuration has no built-in production-reference guard, so this external fail-closed check is mandatory until a separately approved wrapper is implemented.
+
 | Purpose | Local staging | Vercel Preview | Public? |
 |---|---|---|---|
 | Drizzle/migration connection | `STAGING_DATABASE_URL` in a private shell/env file | `DATABASE_URL` in **Preview** only, sourced from the staging project | No |
@@ -455,7 +502,13 @@ Using a read-only staging connection, record masked/non-secret results for:
 
 ```sql
 select current_database(), current_user, inet_server_addr(), inet_server_port(), version();
+select current_setting('server_version_num');
 ```
+
+The operator must compare the returned host/database/user metadata with the Supabase dashboard and the confirmed references:
+
+- Production: `msaxzamhzfwhbjjsdcae`
+- Staging: `nodzspvuidbdlwsiejyp`
 
 Verify:
 
@@ -463,6 +516,9 @@ Verify:
 - Host/project reference is not production.
 - Current user is the intended staging role.
 - No production host or project reference appears.
+- The result is saved without password, connection string, token, or secret key.
+
+If the returned identity cannot be tied to `nodzspvuidbdlwsiejyp`, stop. Do not run migrations or writes.
 
 ### 9.2 Migration state
 
@@ -473,6 +529,22 @@ Read-only inspection must confirm:
 - No unknown migration rows exist.
 - No migration is partially applied.
 - The staging snapshot is recorded before introducing runtime tables.
+
+Use read-only catalog queries such as:
+
+```sql
+select table_schema, table_name
+from information_schema.tables
+where table_name in ('__drizzle_migrations', 'drizzle_migrations')
+order by table_schema, table_name;
+
+select table_schema, table_name
+from information_schema.tables
+where table_schema not in ('pg_catalog', 'information_schema')
+order by table_schema, table_name;
+```
+
+If the Drizzle bookkeeping table exists, inspect its rows read-only and compare migration tags/checksums with the committed `database/migrations/meta/_journal.json`. Do not assume a missing table is safe; stop and investigate the baseline.
 
 Do not run `pnpm db:migrate` until this inspection passes.
 
@@ -486,6 +558,35 @@ Verify read-only:
 - Application role has only required DML privileges.
 - Application role cannot drop unrelated tables.
 - Read-only verification role cannot mutate data.
+
+Use these catalog queries without printing credentials:
+
+```sql
+select table_schema, table_name, constraint_name, constraint_type
+from information_schema.table_constraints
+where table_schema not in ('pg_catalog', 'information_schema')
+order by table_schema, table_name, constraint_name;
+
+select n.nspname as schemaname,
+       c.relname as tablename,
+       c.relrowsecurity as rowsecurity,
+       c.relforcerowsecurity as force_row_security
+from pg_catalog.pg_class c
+join pg_catalog.pg_namespace n on n.oid = c.relnamespace
+where c.relkind = 'r'
+  and n.nspname not in ('pg_catalog', 'information_schema')
+order by n.nspname, c.relname;
+
+select schemaname, tablename, policyname, permissive, roles, cmd
+from pg_catalog.pg_policies
+order by schemaname, tablename, policyname;
+
+select grantee, table_schema, table_name, privilege_type
+from information_schema.role_table_grants
+where table_schema not in ('pg_catalog', 'information_schema')
+order by grantee, table_schema, table_name, privilege_type;
+```
+
 
 ### 9.4 Safety marker
 
