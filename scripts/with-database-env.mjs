@@ -2,80 +2,49 @@
 
 import { existsSync, readFileSync } from "node:fs";
 import { spawnSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
 import path from "node:path";
 import dotenv from "dotenv";
+import {
+  projectRoot,
+  validateTargetEnvironment,
+  assertValidatedTarget,
+  rejectGenericDatabaseCommand,
+} from "./database-target-guard.mjs";
 
-const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const stagingEnvPath = path.join(projectRoot, ".env.staging.local");
-const productionProjectRef = "msaxzamhzfwhbjjsdcae";
 
-export function validateStagingEnvironment(environment) {
-  const required = [
-    "DATABASE_ENV",
-    "STAGING_PROJECT_REF",
-    "STAGING_DATABASE_URL",
-    "STAGING_DB_HOST",
-    "STAGING_DB_USER",
-  ];
-
-  for (const key of required) {
-    if (!environment[key]?.trim()) {
-      throw new Error(`Missing required staging variable: ${key}`);
+function loadEnvironment(target) {
+  if (target === "staging") {
+    if (!existsSync(stagingEnvPath)) {
+      throw new Error("Missing .env.staging.local; staging operations require an explicit private environment file.");
     }
-  }
-
-  if (environment.DATABASE_ENV !== "staging") {
-    throw new Error("DATABASE_ENV must be exactly staging.");
-  }
-
-  if (environment.STAGING_PROJECT_REF !== "nodzspvuidbdlwsiejyp") {
-    throw new Error("STAGING_PROJECT_REF does not match the approved staging project.");
-  }
-
-  if (environment.STAGING_DATABASE_URL.includes(productionProjectRef)) {
-    throw new Error("STAGING_DATABASE_URL references the production project.");
-  }
-
-  let parsedUrl;
-  try {
-    parsedUrl = new URL(environment.STAGING_DATABASE_URL);
-  } catch {
-    throw new Error("STAGING_DATABASE_URL must be a valid PostgreSQL URL.");
-  }
-
-  if (!['postgres:', 'postgresql:'].includes(parsedUrl.protocol) || !parsedUrl.hostname || !parsedUrl.username) {
-    throw new Error("STAGING_DATABASE_URL must include a PostgreSQL hostname and username.");
-  }
-
-  if (parsedUrl.hostname !== environment.STAGING_DB_HOST || parsedUrl.username !== environment.STAGING_DB_USER) {
-    throw new Error("Staging connection hostname/username does not match the expected staging identity.");
-  }
-
-  if (environment.DATABASE_URL && environment.DATABASE_URL !== environment.STAGING_DATABASE_URL) {
-    throw new Error("An inherited DATABASE_URL does not match STAGING_DATABASE_URL.");
+    return dotenv.parse(readFileSync(stagingEnvPath));
   }
 
   return {
-    ...environment,
-    DATABASE_URL: environment.STAGING_DATABASE_URL,
-    DATABASE_ENV: "staging",
+    ...process.env,
+    DATABASE_ENV: "production",
+    PRODUCTION_DATABASE_URL: process.env.PRODUCTION_DATABASE_URL ?? process.env.DATABASE_URL,
   };
 }
 
-function loadStagingEnvironment() {
-  if (!existsSync(stagingEnvPath)) {
-    throw new Error(`Missing ${path.basename(stagingEnvPath)}. Staging commands require an explicit private environment file.`);
-  }
-
-  const parsed = dotenv.parse(readFileSync(stagingEnvPath));
-  return validateStagingEnvironment(parsed);
-}
-
-function run(command, args, environment) {
-  const result = spawnSync(command, args, {
+function run(target, action, environment) {
+  const config = target === "staging" ? "drizzle.staging.config.ts" : "drizzle.config.ts";
+  const childEnvironment = {
+    ...process.env,
+    ...environment,
+    DATABASE_URL: environment.DATABASE_URL,
+    DATABASE_ENV: target,
+    DATABASE_TARGET_VALIDATED: "1",
+  };
+  const args = action === "migrate"
+    ? ["exec", "drizzle-kit", "migrate", "--config", config]
+    : ["database/seed.mjs"];
+  const command = action === "migrate" ? "pnpm" : process.execPath;
+  const commandArgs = action === "migrate" ? args : args;
+  const result = spawnSync(command, commandArgs, {
     cwd: projectRoot,
-    env: { ...process.env, ...environment, DATABASE_URL: environment.STAGING_DATABASE_URL },
+    env: childEnvironment,
     stdio: "inherit",
   });
 
@@ -87,38 +56,48 @@ function assert(condition, message) {
   if (!condition) throw new Error(`Self-test failed: ${message}`);
 }
 
+function dummyUrl(projectRef = "nodzspvuidbdlwsiejyp", overrides = {}) {
+  const username = overrides.username ?? `postgres.${projectRef}`;
+  const host = overrides.host ?? "aws-0-ap-northeast-1.pooler.supabase.com";
+  const port = overrides.port ?? "6543";
+  return `postgresql://${username}:dummy-password@${host}:${port}/postgres`;
+}
+
 function baseEnvironment(overrides = {}) {
+  const url = dummyUrl();
   return {
     DATABASE_ENV: "staging",
     STAGING_PROJECT_REF: "nodzspvuidbdlwsiejyp",
-    STAGING_DATABASE_URL: "postgresql://postgres.staging-user@db.staging.example:5432/postgres",
-    STAGING_DB_HOST: "db.staging.example",
-    STAGING_DB_USER: "postgres.staging-user",
-    DATABASE_URL: "postgresql://postgres.staging-user@db.staging.example:5432/postgres",
+    STAGING_DATABASE_URL: url,
+    DATABASE_URL: url,
     ...overrides,
   };
 }
 
-export function assertExplicitStagingSelection(environmentName) {
-  if (environmentName !== "staging") {
-    throw new Error("Explicit environment required. Use the staging launcher with an explicit staging selection.");
-  }
-}
-
 export function runSelfTests() {
-  assert(validateStagingEnvironment(baseEnvironment()).DATABASE_URL === baseEnvironment().STAGING_DATABASE_URL, "valid staging configuration");
-  for (const [name, overrides] of [
-    ["missing staging database URL", { STAGING_DATABASE_URL: "" }],
-    ["missing project reference", { STAGING_PROJECT_REF: "" }],
-    ["incorrect environment selection", { DATABASE_ENV: "development" }],
-    ["production URL supplied to staging", { STAGING_DATABASE_URL: "postgresql://postgres.prod@db.msaxzamhzfwhbjjsdcae.example:5432/postgres" }],
-    ["missing expected connection identity", { STAGING_DB_HOST: "" }],
-    ["malformed connection URL", { STAGING_DATABASE_URL: "not-a-database-url" }],
-    ["inherited production DATABASE_URL", { DATABASE_URL: "postgresql://postgres.prod@db.production.example:5432/postgres" }],
-    ["unknown environment", { DATABASE_ENV: "qa" }],
-  ]) {
+  const valid = validateTargetEnvironment(baseEnvironment(), "staging");
+  assert(valid.DATABASE_TARGET_VALIDATED === "1", "correct staging target");
+
+  const cases = [
+    ["Production URL supplied to Staging", { STAGING_DATABASE_URL: dummyUrl("msaxzamhzfwhbjjsdcae") }],
+    ["Production project reference disguised by markers", { STAGING_PROJECT_REF: "msaxzamhzfwhbjjsdcae" }],
+    ["Incorrect Staging username", { STAGING_DATABASE_URL: dummyUrl(undefined, { username: "postgres.wrong-project" }) }],
+    ["Incorrect pooler hostname", { STAGING_DATABASE_URL: dummyUrl(undefined, { host: "db.example.com" }) }],
+    ["Incorrect port", { STAGING_DATABASE_URL: dummyUrl(undefined, { port: "5432" }) }],
+    ["Missing credentials", { STAGING_DATABASE_URL: "postgresql://postgres.nodzspvuidbdlwsiejyp@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres" }],
+    ["Malformed URL", { STAGING_DATABASE_URL: "not-a-url" }],
+    ["Inherited Production DATABASE_URL", { DATABASE_URL: dummyUrl("msaxzamhzfwhbjjsdcae") }],
+    ["Unknown environment", { DATABASE_ENV: "qa" }],
+    ["Missing validation markers", { DATABASE_TARGET_VALIDATED: "", DATABASE_ENV: "staging" }],
+  ];
+
+  for (const [name, overrides] of cases) {
     try {
-      validateStagingEnvironment(baseEnvironment(overrides));
+      if (name === "Missing validation markers") {
+        assertValidatedTarget(baseEnvironment(overrides));
+      } else {
+        validateTargetEnvironment(baseEnvironment(overrides), "staging");
+      }
       throw new Error(`expected rejection: ${name}`);
     } catch (error) {
       assert(error instanceof Error && !error.message.startsWith("expected rejection"), name);
@@ -126,29 +105,45 @@ export function runSelfTests() {
   }
 
   try {
-    assertExplicitStagingSelection(undefined);
-    throw new Error("expected rejection: direct execution without explicit environment selection");
+    rejectGenericDatabaseCommand();
+    throw new Error("expected rejection: generic migration command");
   } catch (error) {
-    assert(error instanceof Error && !error.message.startsWith("expected rejection"), "direct execution without explicit environment selection");
+    assert(error instanceof Error && !error.message.startsWith("expected rejection") && !error.message.includes("dummy-password"), "generic migration command");
   }
 
-  process.stdout.write("staging launcher self-test: 10 scenarios passed; no database connection attempted.\n");
+  const directSeed = spawnSync(process.execPath, ["database/seed.mjs"], {
+    cwd: projectRoot,
+    env: { ...process.env, DATABASE_URL: dummyUrl() },
+    encoding: "utf8",
+  });
+  assert(directSeed.status !== 0, "direct seed invocation");
+  assert(!`${directSeed.stdout}${directSeed.stderr}`.includes("dummy-password"), "direct seed secret leakage");
+
+  const directDrizzle = spawnSync("pnpm", ["exec", "drizzle-kit", "migrate", "--config", "drizzle.staging.config.ts"], {
+    cwd: projectRoot,
+    env: { ...process.env, DATABASE_URL: dummyUrl() },
+    encoding: "utf8",
+  });
+  assert(directDrizzle.status !== 0, "direct Drizzle configuration invocation");
+  assert(!`${directDrizzle.stdout}${directDrizzle.stderr}`.includes("dummy-password"), "direct Drizzle secret leakage");
+
+  process.stdout.write("database target guard self-test: 16 scenarios passed; no database connection attempted.\n");
 }
 
-const [, , environmentName, action] = process.argv;
-if (environmentName === "--self-test") {
+const [, , target, action] = process.argv;
+if (target === "--self-test") {
   runSelfTests();
+} else if (!target || target === "--reject-generic") {
+  rejectGenericDatabaseCommand();
+} else if (target !== "staging" && target !== "production") {
+  throw new Error("Explicit environment required: use staging or production.");
+} else if (!["check", "migrate", "seed"].includes(action)) {
+  throw new Error("Explicit action required: use check, migrate, or seed.");
 } else {
-  assertExplicitStagingSelection(environmentName);
-
-  const environment = loadStagingEnvironment();
+  const environment = validateTargetEnvironment(loadEnvironment(target), target);
   if (action === "check") {
-    process.stdout.write("staging configuration validated; no database connection attempted.\n");
-  } else if (action === "migrate") {
-    run("pnpm", ["exec", "drizzle-kit", "migrate", "--config", "drizzle.staging.config.ts"], environment);
-  } else if (action === "seed") {
-    run(process.execPath, ["database/seed.mjs"], environment);
+    process.stdout.write(`${target} configuration validated; no database connection attempted.\n`);
   } else {
-    throw new Error("Unknown staging action. Use check, migrate, or seed.");
+    run(target, action, environment);
   }
 }

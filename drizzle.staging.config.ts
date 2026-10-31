@@ -1,19 +1,9 @@
-import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
+import { assertValidatedTarget } from "./scripts/database-target-guard.mjs";
 
-const stagingProjectRef = "nodzspvuidbdlwsiejyp";
-const productionProjectRef = "msaxzamhzfwhbjjsdcae";
-
-if (process.env.DATABASE_ENV !== "staging") {
-  throw new Error("drizzle.staging.config.ts requires DATABASE_ENV=staging.");
-}
-
-if (process.env.STAGING_PROJECT_REF !== stagingProjectRef) {
-  throw new Error("drizzle.staging.config.ts received an unexpected staging project reference.");
-}
-
-if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes(productionProjectRef)) {
-  throw new Error("drizzle.staging.config.ts requires a non-production DATABASE_URL.");
+const environment = assertValidatedTarget(process.env);
+if (environment.DATABASE_ENV !== "staging") {
+  throw new Error("staging Drizzle config requires a validated staging target.");
 }
 
 export default defineConfig({
@@ -21,6 +11,6 @@ export default defineConfig({
   out: "./database/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: environment.DATABASE_URL,
   },
 });
