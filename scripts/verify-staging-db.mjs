@@ -48,6 +48,7 @@ async function verify() {
 
   const sql = postgres(environment.DATABASE_URL, {
     prepare: false,
+    ssl: "require",
     max: 1,
     connect_timeout: 10,
   });
@@ -75,7 +76,12 @@ async function verify() {
     process.stdout.write(`PostgreSQL: ${identity.server_version}\n`);
     process.stdout.write("Read-only identity query completed; no migration or seed was executed.\n");
   } catch (error) {
-    fail(`read-only connection/query error (${safeErrorCode(error)})`);
+    const code = safeErrorCode(error);
+    if (code === "28P01") {
+      fail("PostgreSQL rejected the Staging credentials (28P01); refresh the Staging database password and URL-encode special characters exactly once");
+    } else {
+      fail(`read-only connection/query error (${code})`);
+    }
   } finally {
     await sql.end({ timeout: 5 });
   }

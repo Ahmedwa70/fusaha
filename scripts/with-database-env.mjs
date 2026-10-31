@@ -60,7 +60,9 @@ function dummyUrl(projectRef = "nodzspvuidbdlwsiejyp", overrides = {}) {
   const username = overrides.username ?? `postgres.${projectRef}`;
   const host = overrides.host ?? "aws-0-ap-northeast-1.pooler.supabase.com";
   const port = overrides.port ?? "6543";
-  return `postgresql://${username}:dummy-password@${host}:${port}/postgres`;
+  const password = overrides.password ?? "dummy-password";
+  const sslmode = overrides.sslmode ?? "require";
+  return `postgresql://${username}:${password}@${host}:${port}/postgres?sslmode=${sslmode}`;
 }
 
 function baseEnvironment(overrides = {}) {
@@ -78,14 +80,21 @@ export function runSelfTests() {
   const valid = validateTargetEnvironment(baseEnvironment(), "staging");
   assert(valid.DATABASE_TARGET_VALIDATED === "1", "correct staging target");
 
+  const encodedPassword = encodeURIComponent("P@ss#word?&/");
+  const encodedUrl = dummyUrl(undefined, { password: encodedPassword });
+  const encodedEnvironment = baseEnvironment({ STAGING_DATABASE_URL: encodedUrl, DATABASE_URL: encodedUrl });
+  assert(validateTargetEnvironment(encodedEnvironment, "staging").DATABASE_URL === encodedUrl, "URL-encoded special password");
+
   const cases = [
     ["Production URL supplied to Staging", { STAGING_DATABASE_URL: dummyUrl("msaxzamhzfwhbjjsdcae") }],
     ["Production project reference disguised by markers", { STAGING_PROJECT_REF: "msaxzamhzfwhbjjsdcae" }],
     ["Incorrect Staging username", { STAGING_DATABASE_URL: dummyUrl(undefined, { username: "postgres.wrong-project" }) }],
     ["Incorrect pooler hostname", { STAGING_DATABASE_URL: dummyUrl(undefined, { host: "db.example.com" }) }],
     ["Incorrect port", { STAGING_DATABASE_URL: dummyUrl(undefined, { port: "5432" }) }],
-    ["Missing credentials", { STAGING_DATABASE_URL: "postgresql://postgres.nodzspvuidbdlwsiejyp@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres" }],
+    ["Missing credentials", { STAGING_DATABASE_URL: "postgresql://postgres.nodzspvuidbdlwsiejyp@aws-0-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require" }],
     ["Malformed URL", { STAGING_DATABASE_URL: "not-a-url" }],
+    ["Missing SSL requirement", { STAGING_DATABASE_URL: dummyUrl(undefined, { sslmode: "disable" }) }],
+    ["Likely double-encoded password", { STAGING_DATABASE_URL: dummyUrl(undefined, { password: "P%2540ss" }) }],
     ["Inherited Production DATABASE_URL", { DATABASE_URL: dummyUrl("msaxzamhzfwhbjjsdcae") }],
     ["Unknown environment", { DATABASE_ENV: "qa" }],
     ["Missing validation markers", { DATABASE_TARGET_VALIDATED: "", DATABASE_ENV: "staging" }],
@@ -127,7 +136,7 @@ export function runSelfTests() {
   assert(directDrizzle.status !== 0, "direct Drizzle configuration invocation");
   assert(!`${directDrizzle.stdout}${directDrizzle.stderr}`.includes("dummy-password"), "direct Drizzle secret leakage");
 
-  process.stdout.write("database target guard self-test: 16 scenarios passed; no database connection attempted.\n");
+  process.stdout.write("database target guard self-test: 19 scenarios passed; no database connection attempted.\n");
 }
 
 const [, , target, action] = process.argv;

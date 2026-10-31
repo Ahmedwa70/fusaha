@@ -26,10 +26,25 @@ export function parseAndValidatePoolerUrl(value, expectedProjectRef) {
   if (!validProtocol || !validHost || parsed.port !== "6543") {
     reject("only the Supabase Transaction Pooler format on port 6543 is accepted");
   }
-  if (decodeURIComponent(parsed.username) !== expectedUser) {
+  let decodedUsername;
+  let decodedPassword;
+  try {
+    decodedUsername = decodeURIComponent(parsed.username);
+    decodedPassword = decodeURIComponent(parsed.password);
+  } catch {
+    reject("connection credentials contain invalid percent encoding");
+  }
+
+  if (decodedUsername !== expectedUser) {
     reject("connection username does not match the approved project reference");
   }
-  if (!parsed.password) reject("connection password is missing");
+  if (!parsed.password || !decodedPassword) reject("connection password is missing");
+  if (parsed.password.includes("%25") && /%[0-9a-f]{2}/i.test(decodedPassword)) {
+    reject("connection password appears double-encoded; encode it exactly once");
+  }
+  if (parsed.searchParams.get("sslmode") !== "require") {
+    reject("connection URL must require SSL with sslmode=require");
+  }
   if (value.includes(PRODUCTION_PROJECT_REF) && expectedProjectRef !== PRODUCTION_PROJECT_REF) {
     reject("Production project reference is not allowed for this target");
   }
