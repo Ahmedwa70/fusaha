@@ -1,7 +1,9 @@
-import { pgTable, uuid, integer, smallint, jsonb, timestamp } from "drizzle-orm/pg-core";
-import { VersionStatus, SourceType } from "./enums";
+import { pgTable, uuid, integer, smallint, jsonb, timestamp, check, index } from "drizzle-orm/pg-core";
+import { sql } from "drizzle-orm";
+import { VersionStatus, SourceType, RuntimeBindingStatus } from "./enums";
 import { lessons } from "./lessons";
 import { schemaDefinitions } from "./schema-definitions";
+import { runtimeVersions } from "./runtime-versions";
 
 // a draft is a LessonVersion with status = "draft"
 export const lessonVersions = pgTable("lesson_versions", {
@@ -18,6 +20,19 @@ export const lessonVersions = pgTable("lesson_versions", {
     .references(() => schemaDefinitions.id, { onDelete: "restrict" }),
   content: jsonb("content").notNull(),
   sourceType: smallint("source_type").$type<SourceType>(),
+  // Expand phase of the immutable runtime registry (design doc §3.6):
+  // nullable during migration; existing rows stay Unbound and render exactly
+  // as today until the classified backfill binds them. Bound/Legacy require a
+  // runtime reference — enforced by the check below.
+  runtimeVersionId: uuid("runtime_version_id").references(() => runtimeVersions.id, { onDelete: "restrict" }),
+  runtimeBindingStatus: smallint("runtime_binding_status")
+    .notNull()
+    .default(RuntimeBindingStatus.Unbound)
+    .$type<RuntimeBindingStatus>(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
   approvedAt: timestamp("approved_at", { withTimezone: true }),
-});
+}, (table) => [
+  // Unbound(0)/Quarantined(3)/Unrecoverable(4) may be null; Bound(1)/Legacy(2) require one.
+  check("lesson_versions_binding_chk", sql`${table.runtimeBindingStatus} IN (0, 3, 4) OR ${table.runtimeVersionId} IS NOT NULL`),
+  index("lesson_versions_runtime_idx").on(table.runtimeVersionId),
+]);
