@@ -63,7 +63,20 @@ async function verify() {
         current_setting('server_version') as server_version
     `);
 
-    if (!identity?.database_name || identity.user_name !== environment.STAGING_DB_USER || identity.server_port !== 6543) {
+    // Project identity is bound BEFORE this query by parseAndValidatePoolerUrl
+    // (URL username must be postgres.<approved project ref>, approved Supabase
+    // pooler host, port 6543, sslmode=require, production ref rejected) plus
+    // project-scoped credential acceptance: the Supabase pooler rejects these
+    // credentials for any other project with 28P01, so a successful query
+    // here means we are inside the approved staging project.
+    //
+    // Runtime identity fields need a pooler-aware allowlist: behind the
+    // Supabase transaction pooler the server reports the BACKEND role
+    // ("postgres") and the BACKEND port (5432), not the pooler username
+    // (postgres.<ref>) or pooler port (6543). Require the default database
+    // and an allowlisted role only; never weaken the URL-level checks above.
+    const acceptedRoleNames = new Set(["postgres", environment.STAGING_DB_USER]);
+    if (!identity?.database_name || !acceptedRoleNames.has(identity.user_name)) {
       fail("connected identity did not match the approved Staging target");
       return;
     }
