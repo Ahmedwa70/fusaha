@@ -19,6 +19,11 @@ import { requirePermission, requireTeacher } from "@/lib/auth/dal";
 import { Permissions } from "@/constants/permissions";
 import { recordAuditLog } from "@/lib/admin/audit-log";
 import { composePlayerHtml } from "@/lib/templates/compose-player-html";
+import { logger } from "@/lib/logger";
+import { createRuntimePublisher } from "@/lib/runtime/runtime-publication";
+import { createS3RuntimeContentStore, readS3StoreConfigFromEnv } from "@/lib/runtime/runtime-content-store";
+import { approveLessonWithRuntime } from "@/lib/runtime/lesson-approval-publishing";
+import { createLessonVersionRuntimeBindingService } from "@/lib/runtime/lesson-version-runtime-binding";
 
 export type LessonActionState = { error: string } | { success: true };
 
@@ -238,6 +243,67 @@ export async function approveLesson(
   if (!latestVersion) return { error: tErrors("noDraftVersion") };
   if (latestVersion.status === VersionStatus.Approved)
     return { error: tErrors("alreadyApproved") };
+
+  // Phase 5 (runtime persistence): publish the version's runtime package and
+  // bind it to the version as part of approval. Falls back to the legacy
+  // approval (no runtime) when the version has no template player or runtime
+  // object storage is not configured for this deployment.
+  const [templateSource] = await db
+    .select({
+      templateId: schemaDefinitions.templateId,
+      htmlPlayer: templates.htmlPlayer,
+    })
+    .from(lessonVersions)
+    .innerJoin(
+      schemaDefinitions,
+      eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id),
+    )
+    .leftJoin(templates, eq(schemaDefinitions.templateId, templates.id))
+    .where(eq(lessonVersions.id, latestVersion.id))
+    .limit(1);
+  const htmlPlayer = templateSource?.htmlPlayer ?? null;
+  const storeConfig = readS3StoreConfigFromEnv();
+
+  if (htmlPlayer && storeConfig.config && storeConfig.bucket) {
+    const publisher = createRuntimePublisher({
+      store: createS3RuntimeContentStore(storeConfig.config, storeConfig.bucket),
+      provider: "s3-compatible",
+      bucket: storeConfig.bucket,
+    });
+    const result = await approveLessonWithRuntime(
+      {
+        lessonId,
+        lessonVersionId: latestVersion.id,
+        htmlPlayer,
+        sourceTemplateId: templateSource?.templateId ?? null,
+        actorUserId: teacher.id,
+      },
+      {
+        publisher,
+        bindingService: createLessonVersionRuntimeBindingService(db),
+      },
+    );
+    if (!result.ok) {
+      logger.warn(
+        { lessonId, lessonVersionId: latestVersion.id, code: result.code, rolledBack: result.rolledBack },
+        "approveLesson: runtime publication path failed; nothing was approved",
+      );
+      return { error: tErrors("runtimePublishFailed") };
+    }
+    revalidatePath(`/dashboard/lessons/${lessonId}`);
+    revalidatePath("/dashboard");
+    return { success: true };
+  }
+
+  logger.warn(
+    {
+      lessonId,
+      lessonVersionId: latestVersion.id,
+      hasTemplatePlayer: Boolean(htmlPlayer),
+      storageConfigured: Boolean(storeConfig.config && storeConfig.bucket),
+    },
+    "approveLesson: runtime publication skipped; legacy approval used",
+  );
 
   const now = new Date();
   await db.transaction(async (tx) => {

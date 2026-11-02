@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 import { db } from "@/lib/db";
 import { lessons, lessonVersions, folders, shareLinks, schemaDefinitions, templates, LessonState } from "@/database/schema";
 import { resolveLevelLabel } from "@/lib/schema-definitions";
+import { assemblePlayableLesson } from "@/lib/runtime/lesson-play-resolution";
 import type { Locale } from "@/i18n/config";
 
 // The lesson-engine React player was removed — each template will define its
@@ -154,48 +155,93 @@ export type PlayableLesson = {
   name: string;
   content: LessonContent;
   htmlPlayer: string;
+  /** Which source supplied the player HTML — "runtime" (immutable, from the
+   *  bound runtime package) or "template" (legacy mutable template). */
+  playerSource: "runtime" | "template";
 };
+
+// The player HTML itself is decided centrally by the runtime play resolver
+// (lib/runtime/lesson-play-resolution): when the cutover flag is off, or for
+// Unbound historical versions, this fetches the legacy template HTML exactly as
+// the pre-cutover inner join did (null when no template is linked → 404).
+function fetchTemplateHtmlPlayer(templateId: string | null) {
+  return async (): Promise<string | null> => {
+    if (!templateId) return null;
+    const [template] = await db
+      .select({ htmlPlayer: templates.htmlPlayer })
+      .from(templates)
+      .where(eq(templates.id, templateId))
+      .limit(1);
+    return template?.htmlPlayer ?? null;
+  };
+}
 
 // For the "Play Lesson" run route (app/dashboard/lessons/[id]/run): only the
 // currently-approved version is playable, scoped to the owning teacher.
+// Authorization scoping is unchanged from the pre-cutover query; the template
+// join is deferred to the resolver's fallback so a Bound version never loads
+// mutable template content.
 export async function getApprovedLessonForPlay(ownerId: string, lessonId: string): Promise<PlayableLesson | null> {
   const [row] = await db
     .select({
       name: lessons.name,
       state: lessons.state,
+      versionId: lessonVersions.id,
       content: lessonVersions.content,
-      htmlPlayer: templates.htmlPlayer,
+      templateId: schemaDefinitions.templateId,
     })
     .from(lessons)
     .innerJoin(lessonVersions, eq(lessons.currentApprovedVersionId, lessonVersions.id))
     .innerJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
-    .innerJoin(templates, eq(schemaDefinitions.templateId, templates.id))
     .where(and(eq(lessons.id, lessonId), eq(lessons.ownerId, ownerId), isNull(lessons.deletedAt)))
     .limit(1);
 
   if (!row || row.state !== LessonState.Approved) return null;
-  return { name: row.name, content: row.content as LessonContent, htmlPlayer: row.htmlPlayer };
+  return assemblePlayableLesson(
+    {
+      name: row.name,
+      content: row.content as LessonContent,
+      lessonVersionId: row.versionId,
+      fetchTemplateHtmlPlayer: fetchTemplateHtmlPlayer(row.templateId),
+    }
+  ).then((resolved) =>
+    resolved === null
+      ? null
+      : { name: resolved.name, content: resolved.content, htmlPlayer: resolved.htmlPlayer, playerSource: resolved.source }
+  );
 }
 
 // For the public share-link viewer (app/l/[token]): no owner scoping — the
-// token itself is the authorization.
+// token itself is the authorization. Same resolution contract as the
+// dashboard path.
 export async function getApprovedLessonByShareToken(token: string): Promise<PlayableLesson | null> {
   const [row] = await db
     .select({
       name: lessons.name,
       state: lessons.state,
       deletedAt: lessons.deletedAt,
+      versionId: lessonVersions.id,
       content: lessonVersions.content,
-      htmlPlayer: templates.htmlPlayer,
+      templateId: schemaDefinitions.templateId,
     })
     .from(shareLinks)
     .innerJoin(lessons, eq(shareLinks.lessonId, lessons.id))
     .innerJoin(lessonVersions, eq(lessons.currentApprovedVersionId, lessonVersions.id))
     .innerJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
-    .innerJoin(templates, eq(schemaDefinitions.templateId, templates.id))
     .where(and(eq(shareLinks.token, token), eq(shareLinks.active, true)))
     .limit(1);
 
   if (!row || row.deletedAt !== null || row.state !== LessonState.Approved) return null;
-  return { name: row.name, content: row.content as LessonContent, htmlPlayer: row.htmlPlayer };
+  return assemblePlayableLesson(
+    {
+      name: row.name,
+      content: row.content as LessonContent,
+      lessonVersionId: row.versionId,
+      fetchTemplateHtmlPlayer: fetchTemplateHtmlPlayer(row.templateId),
+    }
+  ).then((resolved) =>
+    resolved === null
+      ? null
+      : { name: resolved.name, content: resolved.content, htmlPlayer: resolved.htmlPlayer, playerSource: resolved.source }
+  );
 }

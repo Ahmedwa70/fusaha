@@ -979,7 +979,8 @@
         "noDraftVersion": "没有待批准的版本。",
         "alreadyApproved": "该版本已经批准。",
         "versionNotFound": "未找到该版本。",
-        "cannotEditApprovedVersion": "该版本已无法编辑。"
+        "cannotEditApprovedVersion": "该版本已无法编辑。",
+        "runtimePublishFailed": "无法发布课程运行时。未批准任何内容，请重试。"
       },
       "editor": {
         "saving": "正在保存…",
