@@ -1,0 +1,294 @@
+{
+  "frozen": "2026-11-01",
+  "algorithm": "runtime-package/v1",
+  "identityFormat": "sha256-v1-<64 lowercase hex>",
+  "producedBy": "generate-identity-vectors.mjs over runtime-identity-v1.mjs (computed values, never invented)",
+  "vectors": [
+    {
+      "name": "V1",
+      "description": "single UTF-8 file: manifest {entryPoint:index.html, assets:[index.html sha256(hello) size 5 text/html]} and bytes hello",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "aGVsbG8="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "4654a405c81fb5beb239781c89313dd20358c8230fbec0e6a8626d158041a1b4",
+      "identity": "sha256-v1-f57acb6397b81680135a59a0738527a6b324ec92098ec75fa18176f944350860"
+    },
+    {
+      "name": "V2",
+      "description": "V1 supplied with reversed file insertion order: digest must equal V1",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "aGVsbG8="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "4654a405c81fb5beb239781c89313dd20358c8230fbec0e6a8626d158041a1b4",
+      "identity": "sha256-v1-f57acb6397b81680135a59a0738527a6b324ec92098ec75fa18176f944350860"
+    },
+    {
+      "name": "V3a",
+      "description": "one file a.txt = ab",
+      "input": {
+        "files": {
+          "a.txt": {
+            "base64": "YWI="
+          },
+          "index.html": {
+            "base64": "ZW50cnk="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"fb8e20fc2e4c3f248c60c39bd652f3c1347298bb977b8b4d5903b85055620603\",\"contentType\":\"text/plain\",\"path\":\"a.txt\",\"sizeBytes\":2},{\"contentSha256\":\"923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "a8e15e11f6ae24f1641f5a0d937357d6259a2ca12c261385b98b13a40794cbd9",
+      "identity": "sha256-v1-f081e59f654d5b44031c76d8eb185fe3154661c55e83209435a5fb8cfd3f7a61"
+    },
+    {
+      "name": "V3b",
+      "description": "two files a.txt = a and b.txt = b: framed boundaries differ from V3a even though concatenated bytes match",
+      "input": {
+        "files": {
+          "a.txt": {
+            "base64": "YQ=="
+          },
+          "b.txt": {
+            "base64": "Yg=="
+          }
+        },
+        "entryPoint": "a.txt",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb\",\"contentType\":\"text/plain\",\"path\":\"a.txt\",\"sizeBytes\":1},{\"contentSha256\":\"3e23e8160039594a33894f6564e1b1348bbd7a0088d42c4acb73eeaed59c009d\",\"contentType\":\"text/plain\",\"path\":\"b.txt\",\"sizeBytes\":1}],\"capabilities\":[],\"entryPoint\":\"a.txt\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "eae3f737723481f6abb82ee39efe1b7dde2292e7b8bcf59a9629731487f4efa8",
+      "identity": "sha256-v1-1b2bb91afc7ba29f7bea20db65cb9b2aaff7ea1296eaca6d4e86d56ce674f6ff"
+    },
+    {
+      "name": "V4a",
+      "description": "NFC path e-acute: é.txt with identical bytes",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "ZW50cnk="
+          },
+          "é.txt": {
+            "base64": "aWRlbnRpY2FsIGJ5dGVz"
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5},{\"contentSha256\":\"8ca5bfb553e7ce32d7543bac5f91cdc3e28d650106da4e244c0eeb5e3a71ea64\",\"contentType\":\"text/plain\",\"path\":\"é.txt\",\"sizeBytes\":15}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "a554a578959ac8275c6c86f7a764dc1e55b8f6fa7d6056b5524ccd846350f048",
+      "identity": "sha256-v1-fee6064265ea4ca282cc60f1cec67aa1c23b00a7e3f73e64287fd247cd1bfd9a"
+    },
+    {
+      "name": "V4b",
+      "description": "NFD path e + combining acute: é.txt with identical bytes: digest equals V4a",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "ZW50cnk="
+          },
+          "é.txt": {
+            "base64": "aWRlbnRpY2FsIGJ5dGVz"
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5},{\"contentSha256\":\"8ca5bfb553e7ce32d7543bac5f91cdc3e28d650106da4e244c0eeb5e3a71ea64\",\"contentType\":\"text/plain\",\"path\":\"é.txt\",\"sizeBytes\":15}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "a554a578959ac8275c6c86f7a764dc1e55b8f6fa7d6056b5524ccd846350f048",
+      "identity": "sha256-v1-fee6064265ea4ca282cc60f1cec67aa1c23b00a7e3f73e64287fd247cd1bfd9a"
+    },
+    {
+      "name": "V5",
+      "description": "Arabic content containing <, &, quotes, and a literal </script>: bytes are hashed exactly, independent of HTML escaping",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "2YbYtSDYudix2KjZiiDZgdmK2YcgPCDZiCAmINmIICLYp9mC2KrYqNin2LMiINmIIDwvc2NyaXB0PiDYrdix2YHZitmL2Kc="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"17f8420b9ba7c3276cdcc347714bf3991ca3845ef090ed89e08def2665504864\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":71}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "d1dbf27553301aa33d9d59174d0db3e9c11bfb0c290ed0a3ebca1c2a96daf87e",
+      "identity": "sha256-v1-3ac390d0818b6cc55448ca31d2aed47b65423e1d1d753e8c04d9e96a900b8ccd"
+    },
+    {
+      "name": "V5b",
+      "description": "V5 with HTML-escaped entities (&lt; &quot;): digest differs from V5",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "2YbYtSDYudix2KjZiiDZgdmK2YcgJmx0OyDZiCAmYW1wOyDZiCAmcXVvdDvYp9mC2KrYqNin2LMmcXVvdDsg2YggJmx0Oy9zY3JpcHQmZ3Q7INit2LHZgdmK2YvYpw=="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"5632d85383509759c80ecb6ecd742b7294058a3165b8af218d3abd5e13145662\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":94}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "9b4268a7d2066c6c0c5296042b6aec165e495f64a1ddeddd1c96a500f7b925b6",
+      "identity": "sha256-v1-3f0622438327ec8271d7ebf4c47a1b5eb2c54e17f0968bd049d0a6e26678e555"
+    },
+    {
+      "name": "V6",
+      "description": "binary bytes 00 ff 10 80 in blob.bin: byte mode, digest stable and differs from any UTF-8 decoding",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "ZW50cnk="
+          },
+          "blob.bin": {
+            "base64": "AP8QgA=="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"a33bb2aed757bc839807d7a9deab0688c3cf06d36e53cb428f2e539c8dc76c5b\",\"contentType\":\"application/octet-stream\",\"path\":\"blob.bin\",\"sizeBytes\":4},{\"contentSha256\":\"923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "5dd96eadf9e4cd147a1477383341800d1c2267479b222e1654eaea7273c975d4",
+      "identity": "sha256-v1-0a10ce566c2e4d37b68af990f71fb7213df82a536a8dc5cbaf6dfc15511774c1"
+    },
+    {
+      "name": "V6b",
+      "description": "V6 bytes re-encoded through UTF-8 replacement decoding: digest differs from V6 (byte mode proven)",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "ZW50cnk="
+          },
+          "blob.bin": {
+            "base64": "AO+/vRDvv70="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"53ab84e37e1f43a730b4b052ae3e96a900726cb34ca8aef7fae4df126980868a\",\"contentType\":\"application/octet-stream\",\"path\":\"blob.bin\",\"sizeBytes\":8},{\"contentSha256\":\"923fe53966c6cd9343e11af776cd4b05be315ea4b200b02e4d5dfb0f929b73bf\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "2c45bcfd318cd02b3fb22a41ac9a500253de32ff7751f97985f9c22597023d46",
+      "identity": "sha256-v1-d7ac2f91b45fed2749be19b07d897c2d1edd719a2a8b8dd6bcb010ab4afb3f80"
+    },
+    {
+      "name": "V7a",
+      "description": "V1 bytes plus capability media-playback: digest differs from V1",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "aGVsbG8="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": [
+          "media-playback"
+        ]
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[\"media-playback\"],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "5d1445b562c82bbfbc27c12453cacca2da84086ffda05f02bec05f7cf7264108",
+      "identity": "sha256-v1-6afe25a8cc023158959663e8c7f80b7cb490cd84f0b56bf162578d9d0c74bc1d"
+    },
+    {
+      "name": "V7b",
+      "description": "V1 bytes plus capability network-fetch: digest differs from V7a",
+      "input": {
+        "files": {
+          "index.html": {
+            "base64": "aGVsbG8="
+          }
+        },
+        "entryPoint": "index.html",
+        "capabilities": [
+          "network-fetch"
+        ]
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\",\"contentType\":\"text/html\",\"path\":\"index.html\",\"sizeBytes\":5}],\"capabilities\":[\"network-fetch\"],\"entryPoint\":\"index.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "014fb19f7d8b3c0350b73306c9afb19b7f64f09790bd1bae6cbfc08827260430",
+      "identity": "sha256-v1-ddd61745acc887722e2c7ecea3adbbeb7a93e4e3461ef9c3aeb709ad205a7eea"
+    },
+    {
+      "name": "V7c",
+      "description": "V1 bytes with entryPoint index.html unchanged but file renamed to main.html: digest differs from V1",
+      "input": {
+        "files": {
+          "main.html": {
+            "base64": "aGVsbG8="
+          }
+        },
+        "entryPoint": "main.html",
+        "capabilities": []
+      },
+      "canonicalManifest": "{\"assets\":[{\"contentSha256\":\"2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824\",\"contentType\":\"text/html\",\"path\":\"main.html\",\"sizeBytes\":5}],\"capabilities\":[],\"entryPoint\":\"main.html\",\"version\":\"runtime-package/v1\"}",
+      "manifestSha256": "c0e706498838afb40729058e2a4c22257110c1a7900acddcb569cf7e9270f461",
+      "identity": "sha256-v1-61fa45d729699dc00c212298a3891a65050ddc3c9110200ba1e54dd7065d4f21"
+    }
+  ],
+  "relations": [
+    {
+      "kind": "equal",
+      "a": "V1",
+      "b": "V2",
+      "reason": "order independence of files and capabilities"
+    },
+    {
+      "kind": "equal",
+      "a": "V4a",
+      "b": "V4b",
+      "reason": "Unicode NFC/NFD path normalization"
+    },
+    {
+      "kind": "different",
+      "a": "V1",
+      "b": "V3a",
+      "reason": "different packages"
+    },
+    {
+      "kind": "different",
+      "a": "V3a",
+      "b": "V3b",
+      "reason": "framed path/content boundaries distinguish concatenations"
+    },
+    {
+      "kind": "different",
+      "a": "V5",
+      "b": "V5b",
+      "reason": "byte-exact hashing: HTML escaping changes bytes"
+    },
+    {
+      "kind": "different",
+      "a": "V6",
+      "b": "V6b",
+      "reason": "byte mode: UTF-8 replacement decoding is not identity-preserving"
+    },
+    {
+      "kind": "different",
+      "a": "V1",
+      "b": "V7a",
+      "reason": "manifest capability change"
+    },
+    {
+      "kind": "different",
+      "a": "V7a",
+      "b": "V7b",
+      "reason": "different capability values"
+    },
+    {
+      "kind": "different",
+      "a": "V1",
+      "b": "V7c",
+      "reason": "path set change changes the manifest"
+    }
+  ]
+}

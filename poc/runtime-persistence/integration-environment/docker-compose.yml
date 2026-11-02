@@ -22,51 +22,57 @@ services:
     networks:
       - fusaha_runtime_poc
 
-  minio:
-    image: minio/minio:latest
-    container_name: fusaha-runtime-poc-minio
+  seaweedfs:
+    image: chrislusf/seaweedfs:4.48
+    container_name: fusaha-runtime-poc-seaweedfs
     restart: "no"
-    command: server /data --console-address ":9001"
+    command: >
+      server -dir=/data -s3 -s3.port=9000
+      -s3.config=/etc/seaweedfs/s3.json
+      -s3.port.iceberg=0 -s3.port.lance=0
+      -master.volumeSizeLimitMB=1024
     environment:
-      MINIO_ROOT_USER: ${POC_MINIO_ROOT_USER:?Set POC_MINIO_ROOT_USER in .env.integration}
-      MINIO_ROOT_PASSWORD: ${POC_MINIO_ROOT_PASSWORD:?Set POC_MINIO_ROOT_PASSWORD in .env.integration}
+      POC_S3_ROOT_USER: ${POC_S3_ROOT_USER:?Set POC_S3_ROOT_USER in .env.integration}
+      POC_S3_ROOT_PASSWORD: ${POC_S3_ROOT_PASSWORD:?Set POC_S3_ROOT_PASSWORD in .env.integration}
     ports:
-      - "127.0.0.1:${POC_MINIO_API_PORT:-59000}:9000"
-      - "127.0.0.1:${POC_MINIO_CONSOLE_PORT:-59001}:9001"
+      - "127.0.0.1:${POC_S3_API_PORT:-59000}:9000"
+      - "127.0.0.1:${POC_S3_CONSOLE_PORT:-59001}:8888"
     volumes:
-      - fusaha_runtime_poc_miniodata:/data
+      - fusaha_runtime_poc_s3data:/data
+      - ./s3/seaweedfs-s3.json:/etc/seaweedfs/s3.json:ro
     healthcheck:
-      test: ["CMD", "mc", "ready", "local"]
+      test: ["CMD-SHELL", "curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:9000/ | grep -qE '^(200|403)$$'"]
       interval: 2s
       timeout: 3s
       retries: 20
     networks:
       - fusaha_runtime_poc
 
-  minio-init:
-    image: minio/mc:latest
-    container_name: fusaha-runtime-poc-minio-init
+  s3-init:
+    image: amazon/aws-cli:2.39.3
+    container_name: fusaha-runtime-poc-s3-init
     restart: "no"
     depends_on:
-      minio:
+      seaweedfs:
         condition: service_healthy
     environment:
-      POC_MINIO_ROOT_USER: ${POC_MINIO_ROOT_USER:?Set POC_MINIO_ROOT_USER in .env.integration}
-      POC_MINIO_ROOT_PASSWORD: ${POC_MINIO_ROOT_PASSWORD:?Set POC_MINIO_ROOT_PASSWORD in .env.integration}
-      POC_MINIO_BUCKET: ${POC_MINIO_BUCKET:-runtime-poc-private}
+      AWS_ACCESS_KEY_ID: ${POC_S3_ROOT_USER:?Set POC_S3_ROOT_USER in .env.integration}
+      AWS_SECRET_ACCESS_KEY: ${POC_S3_ROOT_PASSWORD:?Set POC_S3_ROOT_PASSWORD in .env.integration}
+      AWS_DEFAULT_REGION: us-east-1
+      POC_S3_BUCKET: ${POC_S3_BUCKET:-runtime-poc-private}
+      POC_S3_ENDPOINT: http://seaweedfs:9000
     volumes:
-      - ./minio/init-minio.sh:/init-minio.sh:ro
-    entrypoint: ["/bin/sh", "/init-minio.sh"]
+      - ./minio/init-s3-bucket.sh:/init-s3-bucket.sh:ro
+    entrypoint: ["/bin/sh", "/init-s3-bucket.sh"]
     networks:
       - fusaha_runtime_poc
 
 volumes:
   fusaha_runtime_poc_pgdata:
     name: fusaha-runtime-poc-pgdata
-  fusaha_runtime_poc_miniodata:
-    name: fusaha-runtime-poc-miniodata
+  fusaha_runtime_poc_s3data:
+    name: fusaha-runtime-poc-s3data
 
 networks:
   fusaha_runtime_poc:
     name: fusaha-runtime-poc-network
-    internal: true

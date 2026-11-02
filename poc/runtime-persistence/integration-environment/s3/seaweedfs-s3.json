@@ -1,0 +1,14 @@
+{
+  "identities": [
+    {
+      "name": "poc-admin",
+      "credentials": [
+        {
+          "accessKey": "${POC_S3_ROOT_USER}",
+          "secretKey": "${POC_S3_ROOT_PASSWORD}"
+        }
+      ],
+      "actions": ["Admin", "Read", "Write"]
+    }
+  ]
+}
