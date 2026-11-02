@@ -9,8 +9,8 @@ This directory proves the publication protocol of `docs/architecture/PERSISTENT_
 - `runtime-persistence-poc.mjs` — the original **in-memory model** of the publication state machine (pending/published/failed, idempotent registration, manifest identity). It simulates persistence; it is not database integration.
 - `runtime-persistence-poc.test.mjs` — tests for the in-memory model (6/6 passing).
 - `integration-adapter-poc.mjs` — **real integration adapter**: publication protocol over actual PostgreSQL + S3-compatible object storage. Imports the identity algorithm from the frozen V1 canonicalizer (single source of truth, no parallel identity path).
-- `integration-adapter-poc.test.mjs` — 10 integration tests against real services (10/10 passing), including proof that the adapter publishes exactly the reference V1 identity for identical inputs and that idempotency-key reuse with a different package fails with no side effects (F2).
-- `lease-concurrency-poc.test.mjs` — lease-expiry, fencing, recovery-eligibility, cross-process, and crash-recovery tests (7/7 passing), all on V1 identities.
+- `integration-adapter-poc.itest.mjs` — 10 integration tests against real services, including proof that the adapter publishes exactly the reference V1 identity for identical inputs and that idempotency-key reuse with a different package fails with no side effects (F2). Requires the integration environment running. **Not auto-discovered by `pnpm test`** (`.itest.mjs` suffix) — run it explicitly via `pnpm test:poc-integration` or `node --test integration-adapter-poc.itest.mjs`. See "Known issue" below.
+- `lease-concurrency-poc.itest.mjs` — lease-expiry, fencing, recovery-eligibility, cross-process, and crash-recovery tests, all on V1 identities. Also requires the integration environment; also excluded from the default suite for the same reason.
 - `publisher-process.mjs` — standalone publisher CLI used to run **real OS processes** against the same environment for cross-process tests; builds its package through the same V1 canonicalizer, so cross-process identity agreement is guaranteed by construction.
 - `runtime-identity-v1.mjs` — frozen reference implementation of the `runtime-package/v1` identity contract (ADR §8, frozen 2026-11-01): byte mode, canonical JSON (UTF-8 byte-order keys), path normalization, content-type allowlist, framed hashing.
 - `generate-identity-vectors.mjs` — regenerates `identity-vectors.json` from the reference implementation; every expected digest is computed, never hand-written.
@@ -39,7 +39,9 @@ Leases are parameterized (`leaseSeconds`, default 30): acquisition and every re-
 - **SeaweedFS** (S3 API on `127.0.0.1:59000`) holds bytes only. `runtime_storage_objects` maps each logical object to a provider key; `runtime_assets` maps each runtime file path to a logical object.
 - The link is the **content SHA-256 stored in PostgreSQL and recomputed from S3 bytes on every verification** — never the provider ETag.
 
-## Integration test results (10/10 passing)
+## Integration test results
+
+**Known issue (test 4, sequencing-dependent):** when the whole adapter suite runs in one process, test 4 ("two concurrent publishers converge") observes only **1 attempt row instead of the expected 2** — the second publisher's `beginAttempt` observes the version already `published` and takes the short-circuit path, which by design records no attempt row. The test **passes when run on its own** (`node --test --test-name-pattern '^4\.' integration-adapter-poc.itest.mjs`), and the convergence invariants it exists to prove hold in every observed run: exactly one `runtime_versions` row, both publishers returning the same runtime id, and byte-for-byte integrity (`verifyPublishedAssets` all-ok). No leaked transactions or connections remain afterwards. The production port (`lib/runtime/runtime-publication.ts`) has its own unit-level concurrency/stale-worker coverage, all passing. Root cause: test-isolation state carried by the shared pool/process from tests 1–3 — under investigation; do not treat a green full-suite run of this file as guaranteed until it is fixed.
 
 | # | Test | Proves |
 |---|---|---|
@@ -82,11 +84,13 @@ cd poc/runtime-persistence
 node --test runtime-persistence-poc.test.mjs
 
 # real integration tests (require POC postgres + SeaweedFS up)
-node --test integration-adapter-poc.test.mjs
+node --test integration-adapter-poc.itest.mjs
 
 # lease / fencing / cross-process tests (spawn real child processes)
-node --test lease-concurrency-poc.test.mjs
+node --test lease-concurrency-poc.itest.mjs
 ```
+
+Or from the repo root: `pnpm test:poc-integration` runs both live-infra suites. They are intentionally excluded from the default `pnpm test` discovery: they require the disposable Docker environment, touch real services, and must never run against any non-POC database.
 
 The tests read credentials exclusively from `integration-environment/.env.integration` (mode 600, git-ignored) and connect to `127.0.0.1` only. They never read `.env`, `DATABASE_URL`, or any Fusaha/Supabase credential.
 

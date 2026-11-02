@@ -17,7 +17,8 @@
     "db:migrate:production": "node scripts/with-database-env.mjs production migrate",
     "db:seed:production": "node scripts/with-database-env.mjs production seed",
     "test:staging-launcher": "node scripts/with-database-env.mjs --self-test",
-    "test": "node --experimental-test-module-mocks --experimental-transform-types --test"
+    "test": "node --experimental-test-module-mocks --experimental-transform-types --test",
+    "test:poc-integration": "node --experimental-test-module-mocks --experimental-transform-types --test poc/runtime-persistence/integration-adapter-poc.itest.mjs poc/runtime-persistence/lease-concurrency-poc.itest.mjs"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^3.0.39",
