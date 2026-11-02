@@ -17,7 +17,7 @@
     "db:migrate:production": "node scripts/with-database-env.mjs production migrate",
     "db:seed:production": "node scripts/with-database-env.mjs production seed",
     "test:staging-launcher": "node scripts/with-database-env.mjs --self-test",
-    "test": "node --experimental-test-module-mocks --test"
+    "test": "node --experimental-test-module-mocks --experimental-transform-types --test"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^3.0.39",
