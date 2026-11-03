@@ -1016,7 +1016,8 @@
         "noDraftVersion": "لا يوجد إصدار بانتظار الاعتماد.",
         "alreadyApproved": "هذا الإصدار معتمد بالفعل.",
         "versionNotFound": "الإصدار المحدد غير موجود.",
-        "cannotEditApprovedVersion": "لم يعد بالإمكان تعديل هذا الإصدار."
+        "cannotEditApprovedVersion": "لم يعد بالإمكان تعديل هذا الإصدار.",
+        "runtimePublishFailed": "تعذر نشر بيئة تشغيل الدرس. لم يُعتمد أي شيء — حاول مرة أخرى."
       },
       "editor": {
         "saving": "��ارٍ الحفظ…",

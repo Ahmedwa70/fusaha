@@ -987,7 +987,8 @@
         "noDraftVersion": "There is no version awaiting approval.",
         "alreadyApproved": "This version is already approved.",
         "versionNotFound": "The selected version was not found.",
-        "cannotEditApprovedVersion": "This version can no longer be edited."
+        "cannotEditApprovedVersion": "This version can no longer be edited.",
+        "runtimePublishFailed": "The lesson runtime could not be published. Nothing was approved — please try again."
       },
       "editor": {
         "saving": "Saving…",

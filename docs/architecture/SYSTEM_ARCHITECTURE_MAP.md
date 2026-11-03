@@ -162,7 +162,11 @@ The task records success/failure generation events, logs through the shared logg
 
 **Verified:** this task is asynchronous and separate from the Next.js request timeout. The exact enqueueing call is owned by the generation action/flow and should be traced separately when modifying that feature.
 
-## 7. External integrations and configuration boundaries
+## 7. Template runtime architecture cross-reference
+
+The current template, schema-definition, lesson-version, and rendering boundaries are documented in `TEMPLATE_RUNTIME_ARCHITECTURE.md`. That specification separates verified repository behavior from the proposed immutable shared runtime target and defines the migration constraints for this subsystem. This map remains the current-state overview; the linked document is the detailed template-runtime architecture standard.
+
+## 7.1 External integrations and configuration boundaries
 
 The following integrations are referenced by code or dependencies:
 

@@ -31,9 +31,12 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # env files (can opt-in for committing if needed)
+/poc/runtime-persistence/integration-environment/.env.integration
 .env
 .env.local
 .env.backup
+.env.staging.local
+.env.********.local
 
 # vercel
 .vercel

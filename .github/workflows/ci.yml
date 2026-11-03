@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main, "feat/**"]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Next.js route type generation must precede tsc: PageProps/LayoutProps
+      # globals live in the generated .next/types tree.
+      - name: Generate Next.js route types
+        run: pnpm exec next typegen
+
+      - name: Typecheck
+        run: pnpm exec tsc --noEmit
+
+      - name: Lint
+        run: pnpm lint
+
+      # Default suite only. The live-infra POC suites (*.itest.mjs) need the
+      # disposable Docker environment and are run manually (pnpm test:poc-integration).
+      - name: Test
+        run: pnpm test

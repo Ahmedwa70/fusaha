@@ -7,9 +7,18 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "db:migrate": "drizzle-kit migrate",
-    "db:seed": "node database/seed.mjs",
-    "test": "node --experimental-test-module-mocks --test"
+    "db:migrate": "node scripts/with-database-env.mjs --reject-generic",
+    "db:seed": "node scripts/with-database-env.mjs --reject-generic",
+    "db:check:staging": "node scripts/with-database-env.mjs staging check",
+    "db:preflight:staging": "node scripts/verify-staging-db.mjs --preflight",
+    "db:verify:staging": "node scripts/verify-staging-db.mjs",
+    "db:migrate:staging": "node scripts/with-database-env.mjs staging migrate",
+    "db:seed:staging": "node scripts/with-database-env.mjs staging seed",
+    "db:migrate:production": "node scripts/with-database-env.mjs production migrate",
+    "db:seed:production": "node scripts/with-database-env.mjs production seed",
+    "test:staging-launcher": "node scripts/with-database-env.mjs --self-test",
+    "test": "node --experimental-test-module-mocks --experimental-transform-types --test",
+    "test:poc-integration": "node --experimental-test-module-mocks --experimental-transform-types --test poc/runtime-persistence/integration-adapter-poc.itest.mjs poc/runtime-persistence/lease-concurrency-poc.itest.mjs"
   },
   "dependencies": {
     "@ai-sdk/deepseek": "^3.0.39",

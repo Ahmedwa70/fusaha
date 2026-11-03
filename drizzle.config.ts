@@ -1,15 +1,13 @@
-import "dotenv/config";
 import { defineConfig } from "drizzle-kit";
+import { assertValidatedTarget } from "./scripts/database-target-guard.mjs";
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set");
-}
+const environment = assertValidatedTarget(process.env);
 
 export default defineConfig({
   schema: "./database/schema/index.ts",
   out: "./database/migrations",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    url: environment.DATABASE_URL,
   },
 });

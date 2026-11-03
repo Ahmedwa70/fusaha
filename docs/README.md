@@ -18,6 +18,7 @@ real complexity stays inside the system.*
 | [frontend.md](./frontend.md) | Route map, component library, styling, the official locale/RTL/LTR standard, form and data-flow patterns |
 | [api-reference.md](./api-reference.md) | **The service catalogue.** Every Server Action and HTTP route: inputs, outputs, auth, side effects |
 | [data-model.md](./data-model.md) | Database schema: every table, column, relation, and enum |
+| [architecture/TEMPLATE_RUNTIME_STAGING_READINESS.md](./architecture/TEMPLATE_RUNTIME_STAGING_READINESS.md) | Phase 4.1 readiness and setup specification for isolated runtime storage staging |
 | [ai-pipeline.md](./ai-pipeline.md) | Lesson generation end to end, source ingestion, templates, billing, integrations |
 | [development.md](./development.md) | Local setup, environment variables, migrations, deployment, known issues |
 | [PRD.md](./PRD.md) | Original product requirements document (draft v1) |
@@ -25,6 +26,9 @@ real complexity stays inside the system.*
 | [product/BOOK_LIBRARY_SPECIFICATION.md](./product/BOOK_LIBRARY_SPECIFICATION.md) | Organizational standard for adding, classifying, and linking books and references (not an implemented feature) |
 | [architecture/REPOSITORY_TREE.md](./architecture/REPOSITORY_TREE.md) | Verified repository directory tree and major code groups |
 | [architecture/SYSTEM_ARCHITECTURE_MAP.md](./architecture/SYSTEM_ARCHITECTURE_MAP.md) | Selective map of current runtime, domain, and integration boundaries |
+| [architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md](./architecture/TEMPLATE_RUNTIME_ARCHITECTURE.md) | Target architecture for immutable shared template runtimes, lesson-version references, lifecycle, security, and migration |
+| [architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md](./architecture/TEMPLATE_RUNTIME_IMPLEMENTATION_PLAN.md) | Phased, reversible implementation plan for validating and migrating to immutable shared template runtimes |
+| [architecture/TEMPLATE_RUNTIME_PHASE_0_READINESS.md](./architecture/TEMPLATE_RUNTIME_PHASE_0_READINESS.md) | Phase 0 baseline audit, prerequisites, migration risks, and readiness gate for the first runtime implementation phase |
 
 ## Read this first
 
