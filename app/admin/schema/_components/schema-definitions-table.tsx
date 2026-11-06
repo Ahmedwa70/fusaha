@@ -14,7 +14,7 @@ import { resolveLevelLabel } from "@/lib/schema-definitions";
 import type { Locale } from "@/i18n/config";
 import { SchemaDefinitionFormDialog } from "@/app/admin/schema/_components/schema-definition-form-dialog";
 import { DeleteConfirmationDialog } from "@/components/shared/delete-confirmation-dialog";
-import { deleteSchemaDefinition } from "@/actions/schema-definitions";
+import { retireSchemaDefinition } from "@/actions/schema-definitions";
 
 type SchemaDefinitionListItem = typeof schemaDefinitions.$inferSelect;
 
@@ -46,7 +46,7 @@ export function SchemaDefinitionsTable({
     setIsDeleting(true);
     startDeleteTransition(async () => {
       try {
-        const result = await deleteSchemaDefinition(rowToDelete.id);
+        const result = await retireSchemaDefinition(rowToDelete.id);
         if ("error" in result) {
           setDeleteError(result.error);
           return;
