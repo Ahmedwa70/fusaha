@@ -35,6 +35,9 @@ const databaseUrl = process.env.RUNTIME_PUBLICATION_TEST_DATABASE_URL ?? process
 const s3Store = readS3StoreConfigFromEnv();
 const hasLiveS3 = Boolean(s3Store.config && s3Store.bucket);
 const sha256Of = (bytes: Buffer) => createHash("sha256").update(bytes).digest("hex");
+// The strict validator executes the script as CommonJS and requires the
+// exported function to return { errors: [], warnings: [] }.
+const VALIDATION_SCRIPT = "module.exports = function validate() { return { errors: [], warnings: [] }; }";
 
 describe("template independence (real database + live object storage)", {
   skip: (!databaseUrl && "set RUNTIME_BINDING_TEST_DATABASE_URL to a disposable migrated database") ||
@@ -72,7 +75,7 @@ describe("template independence (real database + live object storage)", {
     const [folderRow] = await db.insert(schema.folders).values({ ownerId: user.id, name: tag }).returning({ id: schema.folders.id });
     const [template] = await db
       .insert(schema.templates)
-      .values({ name: tag, htmlPlayer: `<html><body>template:${tag}</body></html>`, blueprint: "{}", validationScript: "return true" })
+      .values({ name: tag, htmlPlayer: `<html><body>template:${tag}</body></html>`, blueprint: "{}", validationScript: VALIDATION_SCRIPT })
       .returning({ id: schema.templates.id });
     const [schemaDefinition] = await db
       .insert(schema.schemaDefinitions)
@@ -122,7 +125,14 @@ describe("template independence (real database + live object storage)", {
     const html = `<!doctype html><html><body>independent runtime ${fixture.tag}</body></html>`;
 
     const result = await approveLessonWithRuntime(
-      { lessonId: fixture.lessonId, lessonVersionId: fixture.lessonVersionId, htmlPlayer: html, sourceTemplateId: fixture.templateId },
+      {
+        lessonId: fixture.lessonId,
+        lessonVersionId: fixture.lessonVersionId,
+        htmlPlayer: html,
+        sourceTemplateId: fixture.templateId,
+        content: { probe: fixture.tag },
+        validationScript: VALIDATION_SCRIPT,
+      },
       { publisher: publisher as never, bindingService: bindingService as never, db: db as never },
     );
     assert.equal(result.ok, true, `approval failed: ${result.ok === false ? result.message : ""}`);
@@ -162,7 +172,14 @@ describe("template independence (real database + live object storage)", {
     const fixture = await makeLessonFixture();
     const html = `<html><body>flag-off ${fixture.tag}</body></html>`;
     const result = await approveLessonWithRuntime(
-      { lessonId: fixture.lessonId, lessonVersionId: fixture.lessonVersionId, htmlPlayer: html, sourceTemplateId: fixture.templateId },
+      {
+        lessonId: fixture.lessonId,
+        lessonVersionId: fixture.lessonVersionId,
+        htmlPlayer: html,
+        sourceTemplateId: fixture.templateId,
+        content: { probe: fixture.tag },
+        validationScript: VALIDATION_SCRIPT,
+      },
       { publisher: publisher as never, bindingService: bindingService as never, db: db as never },
     );
     assert.equal(result.ok, true);
@@ -186,7 +203,14 @@ describe("template independence (real database + live object storage)", {
     const fixture = await makeLessonFixture();
     const html = `<html><body>immutable ${fixture.tag}</body></html>`;
     const result = await approveLessonWithRuntime(
-      { lessonId: fixture.lessonId, lessonVersionId: fixture.lessonVersionId, htmlPlayer: html, sourceTemplateId: fixture.templateId },
+      {
+        lessonId: fixture.lessonId,
+        lessonVersionId: fixture.lessonVersionId,
+        htmlPlayer: html,
+        sourceTemplateId: fixture.templateId,
+        content: { probe: fixture.tag },
+        validationScript: VALIDATION_SCRIPT,
+      },
       { publisher: publisher as never, bindingService: bindingService as never, db: db as never },
     );
     assert.equal(result.ok, true);
@@ -254,11 +278,25 @@ describe("template independence (real database + live object storage)", {
     const html1 = `<html><body>v1 ${fixture.tag}</body></html>`;
     const html2 = `<html><body>v2 ${v2.tag}</body></html>`;
     const r1 = await approveLessonWithRuntime(
-      { lessonId: fixture.lessonId, lessonVersionId: fixture.lessonVersionId, htmlPlayer: html1, sourceTemplateId: fixture.templateId },
+      {
+        lessonId: fixture.lessonId,
+        lessonVersionId: fixture.lessonVersionId,
+        htmlPlayer: html1,
+        sourceTemplateId: fixture.templateId,
+        content: { probe: fixture.tag },
+        validationScript: VALIDATION_SCRIPT,
+      },
       { publisher: publisher as never, bindingService: bindingService as never, db: db as never },
     );
     const r2 = await approveLessonWithRuntime(
-      { lessonId: v2.lessonId, lessonVersionId: v2.lessonVersionId, htmlPlayer: html2, sourceTemplateId: v2.templateId },
+      {
+        lessonId: v2.lessonId,
+        lessonVersionId: v2.lessonVersionId,
+        htmlPlayer: html2,
+        sourceTemplateId: v2.templateId,
+        content: { probe: v2.tag },
+        validationScript: VALIDATION_SCRIPT,
+      },
       { publisher: publisher as never, bindingService: bindingService as never, db: db as never },
     );
     assert.equal(r1.ok, true);

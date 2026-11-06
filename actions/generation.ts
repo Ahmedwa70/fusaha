@@ -33,9 +33,11 @@ export async function createLesson(formData: FormData): Promise<CreateLessonActi
   if (!schemaDefinitionId) return { error: t("invalidLevel") };
   const schemaDefinition = await getSchemaDefinitionById(schemaDefinitionId);
   if (!schemaDefinition) return { error: t("invalidLevel") };
+  if (!schemaDefinition.active) return { error: t("invalidLevel") };
   if (!schemaDefinition.templateId) return { error: t("invalidLevel") };
   const template = await getTemplateById(schemaDefinition.templateId);
   if (!template) return { error: t("invalidLevel") };
+  if (!template.active) return { error: t("invalidLevel") };
 
   let source: GenerationSource;
   let sourceType: SourceType;

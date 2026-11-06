@@ -4,7 +4,7 @@ import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
-import { templates, schemaDefinitions } from "@/database/schema";
+import { templates, schemaDefinitions, lessonVersions, RuntimeBindingStatus } from "@/database/schema";
 import { requirePermission } from "@/lib/auth/dal";
 import { Permissions } from "@/constants/permissions";
 import { recordAuditLog } from "@/lib/admin/audit-log";
@@ -126,5 +126,58 @@ export async function deleteTemplate(id: string): Promise<TemplateActionState> {
   });
 
   revalidatePath(ROUTES.adminTemplates);
+  return { success: true };
+}
+
+export async function retireTemplate(id: string): Promise<TemplateActionState> {
+  const admin = await requirePermission(Permissions.templatesDelete);
+
+  const tErrors = await getTranslations("admin.templates.errors");
+  const [existing] = await db
+    .select()
+    .from(templates)
+    .where(eq(templates.id, id))
+    .limit(1);
+  if (!existing) return { error: tErrors("notFound") };
+
+  // Independence gate: a template is retired together with every schema
+  // definition linked to it (they become non-pickable via templateId=null).
+  // That is only safe when every lesson version that used any of those
+  // schemas is Bound to its runtime. Any non-Bound version still resolves
+  // play content through the schema/template path — stop, change nothing.
+  const linkedSchemas = await db
+    .select({ id: schemaDefinitions.id })
+    .from(schemaDefinitions)
+    .where(eq(schemaDefinitions.templateId, id));
+  for (const schema of linkedSchemas) {
+    const versions = await db
+      .select({ id: lessonVersions.id, runtimeBindingStatus: lessonVersions.runtimeBindingStatus })
+      .from(lessonVersions)
+      .where(eq(lessonVersions.schemaDefinitionId, schema.id));
+    const notBound = versions.filter((v) => v.runtimeBindingStatus !== RuntimeBindingStatus.Bound);
+    if (notBound.length > 0) return { error: tErrors("templateInUse") };
+  }
+
+  // Unlink the schemas, then delete the template — one transaction. After
+  // this the schemas stay in the admin list (history) but drop out of the
+  // wizard picker because isPickableSchemaDefinition requires templateId.
+  // runtime_versions.source_template_id is ON DELETE SET NULL, so published
+  // runtime records keep running with a NULL historical pointer.
+  await db.transaction(async (tx) => {
+    await tx.update(schemaDefinitions).set({ templateId: null }).where(eq(schemaDefinitions.templateId, id));
+    await tx.delete(templates).where(eq(templates.id, id));
+  });
+
+  await recordAuditLog({
+    userId: admin.id,
+    action: Permissions.templatesDelete,
+    resourceType: "template",
+    resourceId: id,
+    oldValues: existing,
+    newValues: { retired: true, unlinkedSchemaDefinitionCount: linkedSchemas.length },
+  });
+
+  revalidatePath(ROUTES.adminTemplates);
+  revalidatePath(ROUTES.adminSchema);
   return { success: true };
 }

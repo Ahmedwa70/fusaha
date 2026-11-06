@@ -9,6 +9,12 @@
 // this fixes: the picker offered active-but-template-less definitions, which
 // creation then rejected with "اختر مستوى الدرس" — blaming the user for a
 // server-side data gap they can neither see nor fix.
+//
+// Scope note: the predicate sees only the definition row. The picker query
+// (getActiveSchemaDefinitions) additionally inner-joins templates and
+// requires templates.active = true, matching createLesson's template.active
+// gate — a schema whose template was deactivated/retired is not offered even
+// though this predicate alone cannot see that.
 
 export type SchemaDefinitionAvailability = {
   active: boolean;
