@@ -161,9 +161,10 @@ export type PlayableLesson = {
 };
 
 // The player HTML itself is decided centrally by the runtime play resolver
-// (lib/runtime/lesson-play-resolution): when the cutover flag is off, or for
-// Unbound historical versions, this fetches the legacy template HTML exactly as
-// the pre-cutover inner join did (null when no template is linked → 404).
+// (lib/runtime/lesson-play-resolution): only Unbound versions ever reach this
+// fetcher — Unbound historical versions, exactly as the pre-cutover inner join
+// did (null when no template is linked → 404). Bound/Legacy versions serve
+// their immutable runtime entry and this fetcher is never consulted.
 function fetchTemplateHtmlPlayer(templateId: string | null) {
   return async (): Promise<string | null> => {
     if (!templateId) return null;
@@ -178,9 +179,13 @@ function fetchTemplateHtmlPlayer(templateId: string | null) {
 
 // For the "Play Lesson" run route (app/dashboard/lessons/[id]/run): only the
 // currently-approved version is playable, scoped to the owning teacher.
-// Authorization scoping is unchanged from the pre-cutover query; the template
-// join is deferred to the resolver's fallback so a Bound version never loads
-// mutable template content.
+// Authorization scoping is unchanged from the pre-cutover query. The version's
+// runtime binding state is selected alongside the row and handed to the
+// resolver, which decides: Bound/Legacy versions always serve their immutable
+// runtime entry — flag on OR off — so a retired/unlinked/deleted template can
+// never 404 them (production retire incident); only Unbound versions may use
+// the legacy template fallback, and a missing schema row then fails closed
+// (404), exactly the fail-closed behavior the pre-cutover inner join gave.
 export async function getApprovedLessonForPlay(ownerId: string, lessonId: string): Promise<PlayableLesson | null> {
   const [row] = await db
     .select({
@@ -189,10 +194,12 @@ export async function getApprovedLessonForPlay(ownerId: string, lessonId: string
       versionId: lessonVersions.id,
       content: lessonVersions.content,
       templateId: schemaDefinitions.templateId,
+      bindingStatus: lessonVersions.runtimeBindingStatus,
+      bindingRuntimeVersionId: lessonVersions.runtimeVersionId,
     })
     .from(lessons)
     .innerJoin(lessonVersions, eq(lessons.currentApprovedVersionId, lessonVersions.id))
-    .innerJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
+    .leftJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
     .where(and(eq(lessons.id, lessonId), eq(lessons.ownerId, ownerId), isNull(lessons.deletedAt)))
     .limit(1);
 
@@ -202,6 +209,7 @@ export async function getApprovedLessonForPlay(ownerId: string, lessonId: string
       name: row.name,
       content: row.content as LessonContent,
       lessonVersionId: row.versionId,
+      runtimeBinding: { status: row.bindingStatus, runtimeVersionId: row.bindingRuntimeVersionId },
       fetchTemplateHtmlPlayer: fetchTemplateHtmlPlayer(row.templateId),
     }
   ).then((resolved) =>
@@ -213,7 +221,8 @@ export async function getApprovedLessonForPlay(ownerId: string, lessonId: string
 
 // For the public share-link viewer (app/l/[token]): no owner scoping — the
 // token itself is the authorization. Same resolution contract as the
-// dashboard path.
+// dashboard path, including the LEFT join on schema_definitions so a Bound
+// version plays from its immutable runtime with no schema-row dependency.
 export async function getApprovedLessonByShareToken(token: string): Promise<PlayableLesson | null> {
   const [row] = await db
     .select({
@@ -223,11 +232,13 @@ export async function getApprovedLessonByShareToken(token: string): Promise<Play
       versionId: lessonVersions.id,
       content: lessonVersions.content,
       templateId: schemaDefinitions.templateId,
+      bindingStatus: lessonVersions.runtimeBindingStatus,
+      bindingRuntimeVersionId: lessonVersions.runtimeVersionId,
     })
     .from(shareLinks)
     .innerJoin(lessons, eq(shareLinks.lessonId, lessons.id))
     .innerJoin(lessonVersions, eq(lessons.currentApprovedVersionId, lessonVersions.id))
-    .innerJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
+    .leftJoin(schemaDefinitions, eq(lessonVersions.schemaDefinitionId, schemaDefinitions.id))
     .where(and(eq(shareLinks.token, token), eq(shareLinks.active, true)))
     .limit(1);
 
@@ -237,6 +248,7 @@ export async function getApprovedLessonByShareToken(token: string): Promise<Play
       name: row.name,
       content: row.content as LessonContent,
       lessonVersionId: row.versionId,
+      runtimeBinding: { status: row.bindingStatus, runtimeVersionId: row.bindingRuntimeVersionId },
       fetchTemplateHtmlPlayer: fetchTemplateHtmlPlayer(row.templateId),
     }
   ).then((resolved) =>

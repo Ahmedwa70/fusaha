@@ -4,9 +4,15 @@
 // and the central binding service (no faked resolution decisions):
 //   - a Bound version serves runtime entry bytes even after its template row is
 //     mutated underneath it (no mutable-template dependency),
-//   - Unbound historical versions take the explicit template fallback,
+//   - a Bound version keeps serving runtime bytes after its template is
+//     RETIRED (schema_definitions.template_id unlinked, template row deleted) —
+//     with the cutover flag ON and OFF (production retire incident: flag-off
+//     play used to 404 every retired-template lesson),
+//   - an Unbound historical version takes the explicit template fallback, and
+//     fails closed (null → 404) after its template is retired,
 //   - Quarantined/Unrecoverable fail closed even though a template exists,
-//   - disabling the flag rolls every path back to the template instantly.
+//   - flag-off rollback remains byte-identical for Unbound legacy rows and
+//     never re-attaches Bound rows to the mutable template.
 // The last test exercises the real S3-compatible reader against live object
 // storage when RUNTIME_CONTENT_S3_* variables are provided (otherwise it skips).
 
@@ -82,31 +88,59 @@ describe("phase-4 cutover (real database)", { skip: !databaseUrl && "set RUNTIME
     };
   }
 
+  function boundInput(fx: { lessonVersionId: string; templateId: string }, runtimeVersionId: string) {
+    return {
+      name: "lesson",
+      content: {},
+      lessonVersionId: fx.lessonVersionId,
+      runtimeBinding: { status: schema.RuntimeBindingStatus.Bound, runtimeVersionId },
+      fetchTemplateHtmlPlayer: templateFetcher(fx.templateId),
+    };
+  }
+
+  function unboundInput(fx: { lessonVersionId: string; templateId: string }) {
+    return {
+      name: "lesson",
+      content: {},
+      lessonVersionId: fx.lessonVersionId,
+      runtimeBinding: { status: schema.RuntimeBindingStatus.Unbound, runtimeVersionId: null },
+      fetchTemplateHtmlPlayer: templateFetcher(fx.templateId),
+    };
+  }
+
+  /** The exact DB effects of retireTemplate, on synthetic fixture rows only. */
+  async function retireTemplateRows(templateId: string) {
+    await db.update(schema.schemaDefinitions).set({ templateId: null }).where(eq(schema.schemaDefinitions.templateId, templateId));
+    await db.delete(schema.templates).where(eq(schema.templates.id, templateId));
+  }
+
   test("1. bound version serves runtime bytes and ignores a mutated template", async () => {
     const fixture = await makeApprovedLessonVersion();
     const identity = identityOf();
-    await insertRuntime(identity, schema.RuntimeVersionState.Published);
+    const rv = await insertRuntime(identity, schema.RuntimeVersionState.Published);
     await bindingService.bindLessonVersionRuntime({ lessonVersionId: fixture.lessonVersionId, runtimeIdentity: identity });
 
-    const on = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: runtimeReader("<immutable-runtime-html>") }
-    );
+    const on = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
     assert.equal(on?.source, "runtime");
     assert.equal(on?.htmlPlayer, "<immutable-runtime-html>");
 
     // Mutate the template AFTER binding — the bound version must not change.
     await db.update(schema.templates).set({ htmlPlayer: "<mutated-template-html>" }).where(eq(schema.templates.id, fixture.templateId));
-    const afterMutation = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: runtimeReader("<immutable-runtime-html>") }
-    );
+    const afterMutation = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
     assert.equal(afterMutation?.htmlPlayer, "<immutable-runtime-html>");
 
     // The fallback fetcher itself is never consulted for the bound version.
     let fallbackCalled = false;
     const noFallback = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: async () => { fallbackCalled = true; return "<template>"; } },
+      { ...boundInput(fixture, rv.id), fetchTemplateHtmlPlayer: async () => { fallbackCalled = true; return "<template>"; } },
       { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: runtimeReader("<immutable-runtime-html>") }
     );
     assert.equal(noFallback?.source, "runtime");
@@ -115,10 +149,11 @@ describe("phase-4 cutover (real database)", { skip: !databaseUrl && "set RUNTIME
 
   test("2. unbound historical version uses the explicit template fallback", async () => {
     const fixture = await makeApprovedLessonVersion();
-    const resolved = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: async () => { throw new Error("reader must not run for unbound"); } }
-    );
+    const resolved = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: async () => { throw new Error("reader must not run for unbound"); },
+    });
     assert.equal(resolved?.source, "template");
     assert.match(resolved?.htmlPlayer ?? "", /template:/);
   });
@@ -126,50 +161,74 @@ describe("phase-4 cutover (real database)", { skip: !databaseUrl && "set RUNTIME
   test("3. quarantined version fails closed even though a template exists", async () => {
     const fixture = await makeApprovedLessonVersion();
     await bindingService.quarantineLessonVersion({ lessonVersionId: fixture.lessonVersionId, reason: "verification failed" });
-    const resolved = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: async () => ({ html: "<runtime>" }) }
-    );
+    const resolved = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: async () => ({ html: "<runtime>" }),
+    });
     assert.equal(resolved, null);
   });
 
   test("4. unrecoverable version fails closed", async () => {
     const fixture = await makeApprovedLessonVersion();
     await bindingService.markLessonVersionUnrecoverable({ lessonVersionId: fixture.lessonVersionId, reason: "source content lost" });
-    const resolved = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: async () => ({ html: "<runtime>" }) }
-    );
+    const resolved = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: async () => ({ html: "<runtime>" }),
+    });
     assert.equal(resolved, null);
   });
 
   test("5. legacy-bound version serves its legacy runtime snapshot", async () => {
     const fixture = await makeApprovedLessonVersion();
     const identity = identityOf();
-    await insertRuntime(identity, schema.RuntimeVersionState.Published);
+    const rv = await insertRuntime(identity, schema.RuntimeVersionState.Published);
     await bindingService.markLessonVersionLegacyRuntime({ lessonVersionId: fixture.lessonVersionId, runtimeIdentity: identity, reason: "approved legacy snapshot" });
     const resolved = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: runtimeReader("<legacy-snapshot-html>") }
+      {
+        ...unboundInput(fixture),
+        runtimeBinding: { status: schema.RuntimeBindingStatus.Legacy, runtimeVersionId: rv.id },
+      },
+      {
+        isEnabled: () => true,
+        resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+        readRuntimeEntry: runtimeReader("<legacy-snapshot-html>"),
+      }
     );
     assert.equal(resolved?.source, "runtime");
     assert.equal(resolved?.htmlPlayer, "<legacy-snapshot-html>");
   });
 
-  test("6. rollback: same bound version returns to the template when the flag is off", async () => {
+  test("6. flag-off rollback: Unbound rows stay byte-identical legacy; Bound rows stay on runtime", async () => {
     const fixture = await makeApprovedLessonVersion();
     const identity = identityOf();
-    await insertRuntime(identity, schema.RuntimeVersionState.Published);
+    const rv = await insertRuntime(identity, schema.RuntimeVersionState.Published);
     await bindingService.bindLessonVersionRuntime({ lessonVersionId: fixture.lessonVersionId, runtimeIdentity: identity });
 
-    // Rollback must not alter the stored binding — only the decision changes.
-    const off = await assemblePlayableLesson(
-      { name: "lesson", content: {}, lessonVersionId: fixture.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(fixture.templateId) },
-      { isEnabled: () => false }
-    );
-    assert.equal(off?.source, "template");
-    assert.match(off?.htmlPlayer ?? "", /template:/);
+    // Unbound rollback contract: template bytes, resolver never consulted.
+    let resolverConsulted = false;
+    const unboundOff = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => false,
+      resolveRuntime: async () => { resolverConsulted = true; throw new Error("resolver must not be consulted for unbound rows with the flag off"); },
+      readRuntimeEntry: async () => { throw new Error("reader must not run with the flag off"); },
+    });
+    assert.equal(unboundOff?.source, "template");
+    assert.match(unboundOff?.htmlPlayer ?? "", /template:/);
+    assert.equal(resolverConsulted, false);
 
+    // Bound rows have no pre-Phase-4 equivalent: rollback must never
+    // re-attach them to the mutable template — their template may already be
+    // retired. Flag off must still serve the immutable runtime entry.
+    const boundOff = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => false,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
+    assert.equal(boundOff?.source, "runtime");
+    assert.equal(boundOff?.htmlPlayer, "<immutable-runtime-html>");
+
+    // Rollback must not alter the stored binding — only the decision changes.
     const row = await db.select({ status: schema.lessonVersions.runtimeBindingStatus, runtimeVersionId: schema.lessonVersions.runtimeVersionId })
       .from(schema.lessonVersions).where(eq(schema.lessonVersions.id, fixture.lessonVersionId)).limit(1);
     assert.equal(row[0].status, schema.RuntimeBindingStatus.Bound); // binding untouched by rollback
@@ -180,21 +239,23 @@ describe("phase-4 cutover (real database)", { skip: !databaseUrl && "set RUNTIME
     const b = await makeApprovedLessonVersion();
     const identityA = identityOf();
     const identityB = identityOf();
-    await insertRuntime(identityA, schema.RuntimeVersionState.Published);
-    await insertRuntime(identityB, schema.RuntimeVersionState.Published);
+    const rvA = await insertRuntime(identityA, schema.RuntimeVersionState.Published);
+    const rvB = await insertRuntime(identityB, schema.RuntimeVersionState.Published);
     await bindingService.bindLessonVersionRuntime({ lessonVersionId: a.lessonVersionId, runtimeIdentity: identityA });
     await bindingService.bindLessonVersionRuntime({ lessonVersionId: b.lessonVersionId, runtimeIdentity: identityB });
 
     const readA = runtimeReader("<runtime-A>");
     const readB = runtimeReader("<runtime-B>");
-    const resolvedA = await assemblePlayableLesson(
-      { name: "a", content: {}, lessonVersionId: a.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(a.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: readA }
-    );
-    const resolvedB = await assemblePlayableLesson(
-      { name: "b", content: {}, lessonVersionId: b.lessonVersionId, fetchTemplateHtmlPlayer: templateFetcher(b.templateId) },
-      { isEnabled: () => true, resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id), readRuntimeEntry: readB }
-    );
+    const resolvedA = await assemblePlayableLesson(boundInput(a, rvA.id), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: readA,
+    });
+    const resolvedB = await assemblePlayableLesson(boundInput(b, rvB.id), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: readB,
+    });
     assert.equal(resolvedA?.htmlPlayer, "<runtime-A>");
     assert.equal(resolvedB?.htmlPlayer, "<runtime-B>");
   });
@@ -234,5 +295,88 @@ describe("phase-4 cutover (real database)", { skip: !databaseUrl && "set RUNTIME
     // The default env-driven flag helper agrees the e2e config shape is valid.
     assert.equal(isRuntimeResolverCutoverEnabled({ RUNTIME_RESOLVER_CUTOVER_ENABLED: "true" } as never), true);
     assert.equal(isRuntimeResolverCutoverEnabled({} as never), false);
+  });
+
+  test("9. PRODUCTION INCIDENT — flag off + Bound + template retired (unlinked & deleted): runtime still served", async () => {
+    const fixture = await makeApprovedLessonVersion();
+    const identity = identityOf();
+    const rv = await insertRuntime(identity, schema.RuntimeVersionState.Published);
+    await bindingService.bindLessonVersionRuntime({ lessonVersionId: fixture.lessonVersionId, runtimeIdentity: identity });
+
+    // Exactly what retireTemplate does to the database.
+    await retireTemplateRows(fixture.templateId);
+
+    // The legacy fetcher genuinely has nothing left — pre-fix code 404'd here.
+    const legacyFetcher = templateFetcher(fixture.templateId);
+    assert.equal(await legacyFetcher(), null, "template row must be gone after retire");
+
+    const off = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => false,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
+    assert.equal(off?.source, "runtime");
+    assert.equal(off?.htmlPlayer, "<immutable-runtime-html>");
+
+    const on = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
+    assert.equal(on?.source, "runtime");
+    assert.equal(on?.htmlPlayer, "<immutable-runtime-html>");
+  });
+
+  test("10. flag off + Unbound + template retired: fails closed (legacy 404 semantics, no silent fallback)", async () => {
+    const fixture = await makeApprovedLessonVersion();
+    await retireTemplateRows(fixture.templateId);
+
+    const off = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => false,
+      resolveRuntime: async () => { throw new Error("resolver must not be consulted for unbound rows with the flag off"); },
+      readRuntimeEntry: async () => { throw new Error("reader must not run with the flag off"); },
+    });
+    assert.equal(off, null);
+
+    const on = await assemblePlayableLesson(unboundInput(fixture), {
+      isEnabled: () => true,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: async () => { throw new Error("reader must not run for unbound"); },
+    });
+    assert.equal(on, null);
+  });
+
+  test("11. flag off + Bound + schema definition retired (rebound to sentinel): runtime still served", async () => {
+    const fixture = await makeApprovedLessonVersion();
+    const identity = identityOf();
+    const rv = await insertRuntime(identity, schema.RuntimeVersionState.Published);
+    await bindingService.bindLessonVersionRuntime({ lessonVersionId: fixture.lessonVersionId, runtimeIdentity: identity });
+
+    // Exactly what retireSchemaDefinition does: rebind the version's FK to the
+    // sentinel row, then delete the schema row. The sentinel must exist in the
+    // disposable database (T-suite seeds it); look it up rather than assume.
+    const [sentinel] = await db.select({ id: schema.schemaDefinitions.id })
+      .from(schema.schemaDefinitions)
+      .where(eq(schema.schemaDefinitions.levelKey, "retired"))
+      .limit(1);
+    assert.ok(sentinel, "retired sentinel must exist in the test database (T-suite seeds it)");
+    const [versionRow] = await db.select({ schemaDefinitionId: schema.lessonVersions.schemaDefinitionId })
+      .from(schema.lessonVersions)
+      .where(eq(schema.lessonVersions.id, fixture.lessonVersionId))
+      .limit(1);
+    await db.update(schema.lessonVersions)
+      .set({ schemaDefinitionId: sentinel.id })
+      .where(eq(schema.lessonVersions.id, fixture.lessonVersionId));
+    await db.delete(schema.schemaDefinitions).where(eq(schema.schemaDefinitions.id, versionRow.schemaDefinitionId));
+
+    // The play query's leftJoin now resolves to the sentinel (templateId NULL)
+    // — the template fetcher has nothing, and the Bound row must still play.
+    const off = await assemblePlayableLesson(boundInput(fixture, rv.id), {
+      isEnabled: () => false,
+      resolveRuntime: (id: string) => bindingService.resolveLessonVersionRuntime(id),
+      readRuntimeEntry: runtimeReader("<immutable-runtime-html>"),
+    });
+    assert.equal(off?.source, "runtime");
+    assert.equal(off?.htmlPlayer, "<immutable-runtime-html>");
   });
 });
