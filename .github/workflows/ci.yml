@@ -30,6 +30,12 @@ jobs:
       - name: Typecheck
         run: pnpm exec tsc --noEmit
 
+      # Production build: the only gate that enforces framework constraints
+      # like "a 'use server' file may only export async functions" (this
+      # class of error shipped once when CI skipped the build step).
+      - name: Build
+        run: pnpm build
+
       - name: Lint
         run: pnpm lint
 

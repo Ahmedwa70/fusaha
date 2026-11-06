@@ -1,6 +1,6 @@
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { deleteTemplate } from "@/actions/templates";
+import { retireTemplate } from "@/actions/templates";
 import type { templates } from "@/database/schema";
 
 type TemplateRow = typeof templates.$inferSelect;
@@ -24,7 +24,7 @@ export function useTemplateTable() {
     setIsDeleting(true);
     startDeleteTransition(async () => {
       try {
-        const result = await deleteTemplate(rowToDelete.id);
+        const result = await retireTemplate(rowToDelete.id);
         if ("error" in result) {
           setDeleteError(result.error);
           return;

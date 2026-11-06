@@ -200,4 +200,39 @@ describe("T7 retire refusal for non-Bound lesson versions (fusaha-staging)", {
     results.push(await expectRefusal(schema.RuntimeBindingStatus.Unrecoverable, "Unrecoverable"));
     evidence("T7-refusal-summary", { statusesTested: results.length, results });
   });
+
+  test("T8: unused fixtures retire cleanly — the UI delete path parity case", async () => {
+    // The legacy delete actions used to handle never-used rows. The retire
+    // actions must cover that case too, since the UI now calls only them.
+    const tag = `${RUN}-unused-${randomUUID().slice(0, 8)}`;
+    const [tpl] = await db
+      .insert(schema.templates)
+      .values({ name: tag, htmlPlayer: `<html><body>${tag}</body></html>`, blueprint: "{}", validationScript: "module.exports = function validate() { return { errors: [], warnings: [] }; }", active: true })
+      .returning({ id: schema.templates.id });
+    const [def] = await db
+      .insert(schema.schemaDefinitions)
+      .values({ levelKey: tag, level: { en: tag }, version: "v1", content: "{}", templateId: tpl.id, active: true } as never)
+      .returning({ id: schema.schemaDefinitions.id });
+
+    // Unused template with a linked schema: retire unlinks and deletes the
+    // template, the schema survives as non-pickable history.
+    const rTpl = await retireTemplate(tpl.id);
+    assert.deepEqual(rTpl, { success: true }, "retireTemplate succeeds for an unused template");
+    const [tplAfter] = await db.select({ id: schema.templates.id }).from(schema.templates).where(eq(schema.templates.id, tpl.id)).limit(1);
+    assert.equal(tplAfter, undefined, "unused template row deleted");
+    const [defAfterTplRetire] = await db
+      .select({ templateId: schema.schemaDefinitions.templateId })
+      .from(schema.schemaDefinitions)
+      .where(eq(schema.schemaDefinitions.id, def.id))
+      .limit(1);
+    assert.equal(defAfterTplRetire.templateId, null, "its schema unlinked and kept as history");
+
+    // Unused schema (no lesson versions at all): retire deletes it outright.
+    const rDef = await retireSchemaDefinition(def.id);
+    assert.deepEqual(rDef, { success: true }, "retireSchemaDefinition succeeds for an unused schema");
+    const [defAfter] = await db.select({ id: schema.schemaDefinitions.id }).from(schema.schemaDefinitions).where(eq(schema.schemaDefinitions.id, def.id)).limit(1);
+    assert.equal(defAfter, undefined, "unused schema row deleted");
+
+    evidence("T8-unused-retire", { tag, templateDeleted: true, schemaDeleted: true });
+  });
 });
