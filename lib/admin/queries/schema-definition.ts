@@ -1,7 +1,7 @@
 import "server-only";
 import { and, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { schemaDefinitions } from "@/database/schema";
+import { schemaDefinitions, templates } from "@/database/schema";
 import { isPickableSchemaDefinition } from "@/lib/lesson-levels";
 
 export async function getSchemaDefinitions() {
@@ -28,15 +28,17 @@ export async function getActiveSchemaDefinition(levelKey: string) {
 // levels, with no hardcoded 1/2/3 anywhere. Admin adding a new level's first
 // active schema makes it selectable here automatically.
 //
-// The pickable filter additionally requires a linked template — the exact
-// contract createLesson enforces at submit time (actions/generation.ts).
-// Offering template-less definitions used to let users pick a level that
-// creation then rejected with "اختر مستوى الدرس".
+// The pickable filter requires a linked, ACTIVE template — the exact
+// contract createLesson enforces at submit time (actions/generation.ts,
+// including the template.active gate). Offering template-less definitions —
+// or schemas whose template was retired/deactivated — used to let users pick
+// a level that creation then rejected with "اختر مستوى الدرس".
 export async function getActiveSchemaDefinitions() {
   const rows = await db
-    .select()
+    .select({ definition: schemaDefinitions })
     .from(schemaDefinitions)
-    .where(eq(schemaDefinitions.active, true))
+    .innerJoin(templates, eq(schemaDefinitions.templateId, templates.id))
+    .where(and(eq(schemaDefinitions.active, true), eq(templates.active, true)))
     .orderBy(schemaDefinitions.levelKey);
-  return rows.filter(isPickableSchemaDefinition);
+  return rows.map((row) => row.definition).filter(isPickableSchemaDefinition);
 }

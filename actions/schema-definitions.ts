@@ -4,10 +4,11 @@ import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
-import { schemaDefinitions, lessonVersions } from "@/database/schema";
+import { schemaDefinitions, lessonVersions, RuntimeBindingStatus } from "@/database/schema";
 import { requirePermission } from "@/lib/auth/dal";
 import { Permissions } from "@/constants/permissions";
 import { recordAuditLog } from "@/lib/admin/audit-log";
+import { RETIRED_SCHEMA_DEFINITION_LEVEL_KEY } from "@/lib/lesson-levels";
 import { ROUTES } from "@/constants/routes";
 import { createSchemaDefinitionSchema, type CreateSchemaDefinitionValues } from "@/validation/schema-definitions";
 
@@ -130,6 +131,61 @@ export async function deleteSchemaDefinition(id: string): Promise<SchemaDefiniti
     resourceType: "schema-definition",
     resourceId: `${existing.levelKey}/${existing.version}`,
     oldValues: existing,
+  });
+
+  revalidatePath(ROUTES.adminSchema);
+  return { success: true };
+}
+
+export async function retireSchemaDefinition(id: string): Promise<SchemaDefinitionActionState> {
+  const admin = await requirePermission(Permissions.schemaDelete);
+
+  const tErrors = await getTranslations("admin.schema.errors");
+  const [existing] = await db
+    .select()
+    .from(schemaDefinitions)
+    .where(eq(schemaDefinitions.id, id))
+    .limit(1);
+  if (!existing) return { error: tErrors("notFound") };
+  if (existing.levelKey === RETIRED_SCHEMA_DEFINITION_LEVEL_KEY) return { error: tErrors("notFound") };
+
+  // The sentinel must exist before any retire: without it the rebind below
+  // would leave NOT NULL lesson_versions rows pointing at a deleted schema.
+  const [sentinel] = await db
+    .select({ id: schemaDefinitions.id })
+    .from(schemaDefinitions)
+    .where(eq(schemaDefinitions.levelKey, RETIRED_SCHEMA_DEFINITION_LEVEL_KEY))
+    .limit(1);
+  if (!sentinel) return { error: tErrors("notFound") };
+
+  // Independence gate: every lesson version that ever used this schema must
+  // be Bound to its runtime. An Unbound (or otherwise non-Bound) version
+  // still resolves play content through the schema path, so retiring would
+  // break it. Stop without changing anything.
+  const linkedVersions = await db
+    .select({ id: lessonVersions.id, runtimeBindingStatus: lessonVersions.runtimeBindingStatus })
+    .from(lessonVersions)
+    .where(eq(lessonVersions.schemaDefinitionId, id));
+  const notBound = linkedVersions.filter((v) => v.runtimeBindingStatus !== RuntimeBindingStatus.Bound);
+  if (notBound.length > 0) return { error: tErrors("schemaInUse") };
+
+  // Rebind history to the sentinel, then delete — one transaction, so the
+  // FK (NOT NULL + RESTRICT) never observes an intermediate state.
+  await db.transaction(async (tx) => {
+    await tx
+      .update(lessonVersions)
+      .set({ schemaDefinitionId: sentinel.id })
+      .where(eq(lessonVersions.schemaDefinitionId, id));
+    await tx.delete(schemaDefinitions).where(eq(schemaDefinitions.id, id));
+  });
+
+  await recordAuditLog({
+    userId: admin.id,
+    action: Permissions.schemaDelete,
+    resourceType: "schema-definition",
+    resourceId: `${existing.levelKey}/${existing.version}`,
+    oldValues: existing,
+    newValues: { retired: true, reboundLessonVersionCount: linkedVersions.length, sentinelId: sentinel.id },
   });
 
   revalidatePath(ROUTES.adminSchema);
