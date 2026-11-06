@@ -8,17 +8,11 @@ import { schemaDefinitions, lessonVersions, RuntimeBindingStatus } from "@/datab
 import { requirePermission } from "@/lib/auth/dal";
 import { Permissions } from "@/constants/permissions";
 import { recordAuditLog } from "@/lib/admin/audit-log";
+import { RETIRED_SCHEMA_DEFINITION_LEVEL_KEY } from "@/lib/lesson-levels";
 import { ROUTES } from "@/constants/routes";
 import { createSchemaDefinitionSchema, type CreateSchemaDefinitionValues } from "@/validation/schema-definitions";
 
 export type SchemaDefinitionActionState = { error: string } | { success: true };
-
-// Sentinel row absorbing lesson_versions.schema_definition_id when a schema
-// definition is retired (D1). Never deletable itself, never pickable
-// (active=false). Created on-demand by the staging/runtime tooling when the
-// first retire runs; retireSchemaDefinition refuses to run while it is
-// missing rather than leaving versions pointing at a deleted row.
-export const RETIRED_SCHEMA_DEFINITION_LEVEL_KEY = "retired";
 
 // levelKey is a stable, non-translated identifier (e.g. "level-a1b2c3d4")
 // used for uniqueness/lookups — never entered by an admin. Generated here by

@@ -24,3 +24,11 @@ export type SchemaDefinitionAvailability = {
 export function isPickableSchemaDefinition(row: SchemaDefinitionAvailability): boolean {
   return row.active && row.templateId !== null;
 }
+
+// Sentinel level key: the schema_definitions row that absorbs
+// lesson_versions.schema_definition_id when a schema definition is retired
+// (D1). Never deletable itself, never pickable (active=false). Lives here —
+// not in an actions/ "use server" file, which may only export async
+// functions. Created on-demand by the staging/runtime tooling; the retire
+// action refuses to run while the sentinel row is missing.
+export const RETIRED_SCHEMA_DEFINITION_LEVEL_KEY = "retired";
