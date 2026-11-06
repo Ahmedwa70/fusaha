@@ -1,4 +1,5 @@
 import { logger } from "@/lib/logger";
+import { RuntimeBindingStatus } from "@/database/schema";
 import {
   createLessonVersionRuntimeBindingService,
   LessonVersionRuntimeBindingError,
@@ -10,22 +11,32 @@ import {
   RuntimeEntryContentError,
 } from "./runtime-entry-content";
 
-// Central playable-lesson resolution for Phase 4 (controlled cutover). BOTH
-// render paths — the authenticated dashboard play route and the anonymous
-// public share route — assemble their player HTML here and nowhere else; the
-// play queries in lib/dashboard/queries/lesson.ts stay responsible only for
-// authorization scoping (owner / share token) and row fetching.
+// Central playable-lesson resolution. BOTH render paths — the authenticated
+// dashboard play route and the anonymous public share route — assemble their
+// player HTML here and nowhere else; the play queries in
+// lib/dashboard/queries/lesson.ts stay responsible only for authorization
+// scoping (owner / share token) and row fetching.
 //
-// Decision table:
-//   flag OFF                          → legacy template HTML (Phase 4 behavior,
-//                                       byte-identical to the pre-cutover path)
-//   flag ON + Bound/Legacy runtime    → entry-point bytes from runtime storage,
-//                                       verified by SHA-256; the mutable template
-//                                       row is never read for this version
-//   flag ON + Unbound (historical)    → legacy template HTML through the EXPLICIT
-//                                       template-fallback mode (logged, observable)
-//   flag ON + Quarantined/Unrecoverable → FAIL CLOSED: no HTML, no silent fallback
-//   any runtime/storage contract error  → fail closed (null → 404 at the route)
+// Decision table (binding-driven — a Bound version's play independence can
+// never depend on a deployment flag, because retireTemplate unlinks and
+// deletes its template at an arbitrary later moment):
+//   Unbound  + flag OFF                → legacy template HTML (Phase 4 rollback,
+//                                        byte-identical to the pre-cutover path;
+//                                        the resolver is never consulted)
+//   Unbound  + flag ON                 → explicit template fallback (logged,
+//                                        observable) — same bytes, instrumented
+//   Bound/Legacy (flag ON or OFF)      → entry-point bytes from runtime storage,
+//                                        verified by SHA-256; the mutable template
+//                                        row is never read for this version, so a
+//                                        retired/unlinked/deleted template cannot
+//                                        break play (production retire incident)
+//   Quarantined/Unrecoverable (any)    → FAIL CLOSED: no HTML, no silent fallback
+//   any runtime/storage contract error → fail closed (null → 404 at the route)
+//
+// The cutover flag now governs exactly one thing: whether Unbound legacy rows
+// take the instrumented path and whether blocked states fail closed when the
+// flag is off. Rollback for the pre-Phase-4 population is unchanged; Bound
+// rows have no pre-Phase-4 equivalent to roll back to.
 
 export type PlayablePlayerSource = "runtime" | "template";
 
@@ -40,9 +51,20 @@ export type AssemblePlayableLessonInput = Readonly<{
   name: string;
   content: unknown;
   lessonVersionId: string;
-  /** Legacy template HTML lookup — the ONLY source used when the flag is off
-   *  or the version is Unbound. Returns null when no template is linked
-   *  (preserves the pre-cutover inner-join → 404 semantics). */
+  /** Binding state of the version row, fetched by the play query alongside the
+   *  version itself. Under a disabled cutover flag ONLY Unbound rows may take
+   *  the legacy template path: Bound/Legacy rows must resolve through their
+   *  runtime even with the flag off, because the template may already have
+   *  been retired (schema_definitions.template_id unlinked, template row
+   *  deleted) after binding — serving them from the template is both unsafe
+   *  and, post-retire, a guaranteed 404. */
+  runtimeBinding: Readonly<{
+    status: RuntimeBindingStatus;
+    runtimeVersionId: string | null;
+  }>;
+  /** Legacy template HTML lookup — the ONLY source used for Unbound versions.
+   *  Returns null when no template is linked (preserves the pre-cutover
+   *  inner-join → 404 semantics). Never consulted for Bound/Legacy rows. */
   fetchTemplateHtmlPlayer: () => Promise<string | null>;
 }>;
 
@@ -68,13 +90,16 @@ export async function assemblePlayableLesson(
 ): Promise<ResolvedPlayableLesson | null> {
   const isEnabled = deps.isEnabled ?? isRuntimeResolverCutoverEnabled;
 
-  // ---- Legacy path (flag off): identical to pre-cutover behavior. ----
-  if (!isEnabled()) {
+  // ---- Legacy rollback path: flag off + Unbound only. ----
+  // Byte-identical to the pre-cutover behavior and the resolver is never
+  // consulted. Bound/Legacy/Quarantined/Unrecoverable rows fall through to
+  // the binding-driven path below even with the flag off.
+  if (!isEnabled() && input.runtimeBinding.status === RuntimeBindingStatus.Unbound) {
     const htmlPlayer = await input.fetchTemplateHtmlPlayer();
     return htmlPlayer === null ? null : toResolved(input, htmlPlayer, "template");
   }
 
-  // ---- Cutover path (flag on). ----
+  // ---- Binding-driven path: flag on, or any non-Unbound binding state. ----
   const resolveRuntime = deps.resolveRuntime ?? ((id: string) => bindingService.resolveLessonVersionRuntime(id));
   const readRuntimeEntry =
     deps.readRuntimeEntry ??
