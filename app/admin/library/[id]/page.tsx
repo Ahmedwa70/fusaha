@@ -10,9 +10,10 @@ import { LibraryFilePanel } from "../_components/library-file-panel";
 import { LibraryDownloadGrantsPanel } from "../_components/library-download-grants";
 import { getBookFileByBookId, listDownloadGrants } from "@/lib/library/book-files";
 
-export default async function EditLibraryBookPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function EditLibraryBookPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ uploadError?: string }> }) {
   await requirePermission(Permissions.libraryUpdate);
   const { id } = await params;
+  const { uploadError } = await searchParams;
   const [book] = await db.select().from(libraryBooks).where(eq(libraryBooks.id, id)).limit(1);
   if (!book) notFound();
   const localized = (value: Record<string, string> | null | undefined) => ({ ar: value?.ar ?? "", en: value?.en ?? "", zh: value?.zh ?? "" });
@@ -32,5 +33,5 @@ export default async function EditLibraryBookPage({ params }: { params: Promise<
     ? { originalFilename: bundle.file.originalFilename, sizeBytes: bundle.file.sizeBytes, sha256: bundle.file.sha256, createdAt: bundle.file.createdAt.toISOString() }
     : null;
   const grantItems = grants.map((grant) => ({ id: grant.id, userEmail: grant.userEmail, createdAt: grant.createdAt.toISOString() }));
-  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} lifecycle={{ publicationStatus: book.publicationStatus as "draft" | "pending_review" | "published" | "unpublished" | "archived", reviewStatus: book.reviewStatus as "needs_review" | "verified" }} /><LibraryFilePanel bookId={id} file={attachedFile} /><LibraryDownloadGrantsPanel bookId={id} grants={grantItems} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
+  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} lifecycle={{ publicationStatus: book.publicationStatus as "draft" | "pending_review" | "published" | "unpublished" | "archived", reviewStatus: book.reviewStatus as "needs_review" | "verified" }} /><LibraryFilePanel bookId={id} file={attachedFile} uploadError={uploadError === "1"} /><LibraryDownloadGrantsPanel bookId={id} grants={grantItems} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
 }

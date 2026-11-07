@@ -13,7 +13,7 @@ export type AttachedLibraryFile = {
   createdAt: string;
 };
 
-function formatBytes(size: number): string {
+export function formatBytes(size: number): string {
   if (size < 1024) return `${size} B`;
   const units = ["KB", "MB", "GB"];
   let value = size / 1024;
@@ -25,11 +25,11 @@ function formatBytes(size: number): string {
   return `${value.toFixed(1)} ${units[unit]}`;
 }
 
-export function LibraryFilePanel({ bookId, file }: { bookId: string; file: AttachedLibraryFile | null }) {
+export function LibraryFilePanel({ bookId, file, uploadError = false }: { bookId: string; file: AttachedLibraryFile | null; uploadError?: boolean }) {
   const t = useTranslations("admin.library");
   const inputRef = useRef<HTMLInputElement>(null);
   const [pending, startTransition] = useTransition();
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(uploadError ? t("createUploadFailed") : null);
   const [notice, setNotice] = useState<string | null>(null);
 
   const onSubmit = () => {

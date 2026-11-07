@@ -1,8 +1,10 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition, type ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createLibraryBook, updateLibraryBook } from "@/actions/library";
+import { uploadLibraryBookFile } from "@/actions/library-files";
+import { formatBytes } from "./library-file-panel";
 import { useForm, type FieldErrors, type Path, type UseFormRegister } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -30,20 +32,56 @@ export function LibraryBookForm({ mode, id, initialValues, lifecycle }: { mode: 
   const [submitted, setSubmitted] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileError, setFileError] = useState<string | null>(null);
+  const [fileUploading, setFileUploading] = useState(false);
   const methods = useForm<CreateLibraryBookValues>({ resolver: zodResolver(createLibraryBookSchema) as never, defaultValues: initialValues ?? defaults, mode: "onBlur" });
   const { register, handleSubmit, watch, formState: { errors } } = methods;
   const values = watch();
   const errorCount = useMemo(() => Object.keys(errors).length, [errors]);
+  const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] ?? null;
+    setFileError(null);
+    if (file && file.type !== "application/pdf") {
+      event.target.value = "";
+      setSelectedFile(null);
+      setFileError(t("errors.notPdf"));
+      return;
+    }
+    setSelectedFile(file);
+  };
   const onSubmit = (data: CreateLibraryBookValues) => {
     setServerError(null);
     startTransition(async () => {
-      const result = mode === "create" ? await createLibraryBook(data) : await updateLibraryBook(id!, { ...data, publicationStatus: lifecycle!.publicationStatus, reviewStatus: lifecycle!.reviewStatus });
+      if (mode === "create") {
+        const result = await createLibraryBook(data);
+        if ("error" in result) { setServerError(result.error); return; }
+        setSubmitted(true);
+        if (!result.id) return;
+        if (selectedFile) {
+          setFileUploading(true);
+          const formData = new FormData();
+          formData.set("file", selectedFile);
+          const upload = await uploadLibraryBookFile(result.id, formData);
+          setFileUploading(false);
+          if ("error" in upload) {
+            setSelectedFile(null);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+            router.push(`/admin/library/${result.id}?uploadError=1`);
+            return;
+          }
+        }
+        router.push(`/admin/library/${result.id}`);
+        return;
+      }
+      const result = await updateLibraryBook(id!, { ...data, publicationStatus: lifecycle!.publicationStatus, reviewStatus: lifecycle!.reviewStatus });
       if ("error" in result) setServerError(result.error);
-      else { setSubmitted(true); if (mode === "create" && result.id) router.push(`/admin/library/${result.id}`); }
+      else setSubmitted(true);
     });
   };
   return <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-    <div className="flex flex-wrap items-center justify-between gap-3"><div><h1 className="text-2xl font-bold">{mode === "create" ? t("newTitle") : t("editTitle")}</h1><p className="text-muted-foreground">{t("formDescription")}</p></div><div className="flex gap-2"><Badge variant="outline">{t("draftLabel")}</Badge><Button type="submit" disabled={pending}>{pending ? t("saving") : t("saveDraft")}</Button></div></div>
+    <div className="flex flex-wrap items-center justify-between gap-3"><div><h1 className="text-2xl font-bold">{mode === "create" ? t("newTitle") : t("editTitle")}</h1><p className="text-muted-foreground">{t("formDescription")}</p></div><div className="flex gap-2"><Badge variant="outline">{t("draftLabel")}</Badge><Button type="submit" disabled={pending}>{pending ? (fileUploading ? t("uploading") : t("saving")) : t("saveDraft")}</Button></div></div>
     {submitted && <div className="rounded-lg border border-emerald-500/40 bg-emerald-500/10 p-3 text-sm">{t("saved")}</div>}
     {serverError && <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">{serverError}</div>}
     {errorCount > 0 && <div className="rounded-lg border border-destructive/40 bg-destructive/10 p-3 text-sm">{t("validationErrors", { count: errorCount })}</div>}
@@ -53,6 +91,7 @@ export function LibraryBookForm({ mode, id, initialValues, lifecycle }: { mode: 
       <Card><CardHeader><CardTitle>{t("localizedContent")}</CardTitle></CardHeader><CardContent className="space-y-4"><LocalizedFields name="displayTitle" label={t("displayTitle")} register={register} errors={errors.displayTitle} /><LocalizedFields name="description" label={t("description")} multiline register={register} errors={errors.description} /><LocalizedFields name="longDescription" label={t("longDescription")} multiline register={register} errors={errors.longDescription} /><LocalizedFields name="accessNotes" label={t("accessNotes")} multiline register={register} errors={errors.accessNotes} /></CardContent></Card>
       <Card><CardHeader><CardTitle>{t("sourceAccess")}</CardTitle></CardHeader><CardContent><FieldGroup><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel>{t("sourceName")}</FieldLabel><Input {...register("sourceName")} /></Field><Field><FieldLabel>{t("destinationType")}</FieldLabel><select className="h-9 rounded-lg border bg-background px-3 text-sm" {...register("destinationType")}><option value="publisher">{t("publisherDestination")}</option><option value="author">{t("authorDestination")}</option><option value="institution">{t("institutionDestination")}</option><option value="library">{t("libraryDestination")}</option><option value="other">{t("otherDestination")}</option></select></Field></div><Field><FieldLabel>{t("sourceUrl")}</FieldLabel><Input dir="ltr" placeholder="https://" {...register("sourceUrl")} /><FieldError errors={[errors.sourceUrl]} /></Field><Field><FieldLabel>{t("accessStatus")}</FieldLabel><select className="h-9 rounded-lg border bg-background px-3 text-sm" {...register("accessStatus")}><option value="unknown">{t("accessUnknown")}</option><option value="free_reading">{t("accessFree")}</option><option value="preview">{t("accessPreview")}</option><option value="purchase">{t("accessPurchase")}</option><option value="institutional_access">{t("accessInstitutional")}</option></select></Field></FieldGroup></CardContent></Card>
       <Card><CardHeader><CardTitle>{t("cover")}</CardTitle></CardHeader><CardContent><Field><FieldLabel>{t("coverUrl")}</FieldLabel><Input dir="ltr" placeholder="https://" {...register("coverUrl")} /><FieldDescription>{t("coverDescription")}</FieldDescription><FieldError errors={[errors.coverUrl]} /></Field><div className="mt-4"><LocalizedFields name="coverAlt" label={t("coverAlt")} register={register} errors={errors.coverAlt} /></div></CardContent></Card>
+      {mode === "create" && <Card><CardHeader><CardTitle className="text-base">{t("fileSection")}</CardTitle></CardHeader><CardContent className="space-y-3"><FieldDescription>{t("filePickHint")}</FieldDescription><div className="flex flex-wrap items-center gap-3"><input ref={fileInputRef} type="file" accept="application/pdf" className="text-sm" onChange={onFileChange} disabled={pending} />{selectedFile && <span className="text-sm text-muted-foreground">{selectedFile.name} · {formatBytes(selectedFile.size)}</span>}</div>{fileError && <p className="text-sm text-destructive">{fileError}</p>}</CardContent></Card>}
     </div><aside className="space-y-6 xl:sticky xl:top-6 xl:self-start"><LibraryPreview values={values} /><Card><CardHeader><CardTitle>{t("workflowTitle")}</CardTitle></CardHeader><CardContent className="text-sm text-muted-foreground">{t("workflowDescription")}</CardContent></Card></aside></div>
   </form>;
 }
