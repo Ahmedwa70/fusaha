@@ -25,3 +25,4 @@ export * from "./runtime-assets";
 export * from "./runtime-storage-objects";
 export * from "./runtime-storage-locations";
 export * from "./runtime-publication-attempts";
+export * from "./library-files";

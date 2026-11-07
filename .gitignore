@@ -48,3 +48,12 @@ next-env.d.ts
 .trigger
 # Local environment backups
 .env.local.backup*
+
+# Local Cloudflare R2 credentials for the library bucket (never commit)
+.env.library-r2.local
+
+# Owner-level production credentials for the pre-launch backup (never commit)
+.env.production-owner.local
+
+# Local database backups (must never enter the repo)
+backups/

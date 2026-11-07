@@ -1,0 +1,16 @@
+# Owner-level production credentials — used ONLY for the pre-launch full backup.
+#
+# INSTRUCTIONS:
+#   1. In the project root (fusaha-library-db/) create a file named exactly:
+#        .env.production-owner.local
+#   2. Put a single line in it (fill <PASSWORD> and <REGION> from your Supabase
+#      dashboard: Project Settings -> Database -> Connection string -> "Transaction"):
+#        PRODUCTION_DATABASE_URL="postgresql://postgres.msaxzamhzfwhbjjsdcae:<PASSWORD>@aws-0-<REGION>.pooler.supabase.com:6543/postgres?sslmode=require"
+#      The role MUST be `postgres` (owner). The read-only role cannot take a full backup.
+#   3. Never commit it, never paste it into chat. The name is already git-ignored.
+#
+# Optional extra lines (only if pg_dump is not found automatically):
+#   PG_DUMP_BIN=/path/to/pg_dump
+#   PG_RESTORE_BIN=/path/to/pg_restore
+#
+# Then run:  node scripts/production-backup.mjs

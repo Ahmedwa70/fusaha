@@ -25,7 +25,9 @@ const nextConfig: NextConfig = {
       // Template create/update actions send the bundled HTML (with inlined
       // CSS/JS) plus a base64 preview image in one payload, which regularly
       // exceeds the 1MB default and fails with "Body exceeded 1 MB limit".
-      bodySizeLimit: "10mb",
+      // Library uploads send whole book PDFs, so the limit is sized for the
+      // largest accepted upload (see LIBRARY_UPLOAD_MAX_BYTES).
+      bodySizeLimit: "100mb",
     },
   },
 };

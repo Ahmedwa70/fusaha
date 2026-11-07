@@ -6,6 +6,9 @@ import { db } from "@/lib/db";
 import { libraryBooks } from "@/database/schema";
 import { LibraryBookForm } from "../_components/library-book-form";
 import { LibraryLifecycleActions } from "../_components/library-lifecycle-actions";
+import { LibraryFilePanel } from "../_components/library-file-panel";
+import { LibraryDownloadGrantsPanel } from "../_components/library-download-grants";
+import { getBookFileByBookId, listDownloadGrants } from "@/lib/library/book-files";
 
 export default async function EditLibraryBookPage({ params }: { params: Promise<{ id: string }> }) {
   await requirePermission(Permissions.libraryUpdate);
@@ -24,5 +27,10 @@ export default async function EditLibraryBookPage({ params }: { params: Promise<
     accessNotes: book.accessNotes ? localized(book.accessNotes) : undefined, coverUrl: book.coverUrl ?? undefined,
     coverAlt: book.coverAlt ? localized(book.coverAlt) : undefined,
   };
-  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
+  const [bundle, grants] = await Promise.all([getBookFileByBookId(id), listDownloadGrants(id)]);
+  const attachedFile = bundle
+    ? { originalFilename: bundle.file.originalFilename, sizeBytes: bundle.file.sizeBytes, sha256: bundle.file.sha256, createdAt: bundle.file.createdAt.toISOString() }
+    : null;
+  const grantItems = grants.map((grant) => ({ id: grant.id, userEmail: grant.userEmail, createdAt: grant.createdAt.toISOString() }));
+  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} /><LibraryFilePanel bookId={id} file={attachedFile} /><LibraryDownloadGrantsPanel bookId={id} grants={grantItems} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
 }
