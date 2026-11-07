@@ -51,7 +51,65 @@ Book fields (Zod-validated, `validation/library-books.ts`):
   (`needs_review|verified`). Invariant enforced server-side: **published ⇒ verified**.
 
 Public visibility rule: public pages list only `publicationStatus='published'` AND
-`reviewStatus='verified'` books (`lib/library/public-books.ts`).
+`reviewStatus='verified'` books (`lib/library/public-books.ts`). The same
+condition gates the stream/download routes for everyone, managers included
+(`not_published` denial in `lib/library/access-policy.ts`).
+
+## 2b. Server Actions — dashboard queries (`actions/library.ts`)
+
+Read-only catalog helpers for the admin dashboard. All are permission-checked
+and input-validated server-side; return `{ error: string }` (pre-localized)
+on failure.
+
+### `listLibraryBooks(input: LibraryBookListQuery)`
+
+- Permission: `library.list`.
+- Input (Zod, `libraryBookListQuerySchema`):
+  - `query?: string` (≤160) — substring match on `originalTitle` OR `slug`
+    (case-insensitive; `%`, `_`, `\` in the input are escaped, never wildcards).
+  - `publicationStatus?: "draft" | "pending_review" | "published" | "unpublished" | "archived"`
+  - `reviewStatus?: "needs_review" | "verified"`
+  - `page?: number` (int ≥1, default 1)
+  - `pageSize?: number` (int 1–100, default 20)
+- Success:
+
+```ts
+{
+  success: true;
+  books: Array<{
+    id: string; slug: string; originalTitle: string;
+    publicationStatus: string; reviewStatus: string; updatedAt: Date;
+  }>; // sorted by updatedAt desc
+  page: number; pageSize: number; total: number; totalPages: number;
+}
+```
+
+### `searchLibraryMembers(input: { query: string })`
+
+- Permission: `library.update`.
+- `query`: 1–160 chars; partial, case-insensitive email match (wildcards escaped).
+- Success: `{ success: true; members: Array<{ id: string; email: string; name: string }> }`
+  — at most 10 rows, ordered by email. Use the returned `id` with
+  `grantLibraryDownload(bookId, email)` (email is the grant contract).
+
+### `getLibraryStats()`
+
+- Permission: `library.list`. No input.
+- Success:
+
+```ts
+{
+  success: true;
+  stats: {
+    totalBooks: number;
+    byPublicationStatus: { draft: number; pending_review: number; published: number; unpublished: number; archived: number };
+    totalGrants: number;
+    grantsPerBook: Array<{ bookId: string; originalTitle: string; count: number }>;
+    totalFiles: number;   // library_files rows
+    totalBytes: number;   // sum of size_bytes
+  };
+}
+```
 
 ## 3. Server Actions — files & access (`actions/library-files.ts`)
 

@@ -8,7 +8,8 @@ import { libraryBooks } from "@/database/schema";
 import { Permissions } from "@/constants/permissions";
 import { requirePermission } from "@/lib/auth/dal";
 import { recordAuditLog } from "@/lib/admin/audit-log";
-import { createLibraryBookSchema, publishLibraryBookSchema, updateLibraryBookSchema, canTransitionToPublished, type CreateLibraryBookValues, type UpdateLibraryBookValues } from "@/validation/library-books";
+import { createLibraryBookSchema, publishLibraryBookSchema, updateLibraryBookSchema, libraryBookListQuerySchema, libraryMemberSearchSchema, canTransitionToPublished, type CreateLibraryBookValues, type UpdateLibraryBookValues } from "@/validation/library-books";
+import { listLibraryBookRows, searchMembersByEmail, getLibraryStatsSnapshot, computePagination, type LibraryBookListFilters } from "@/lib/library/admin-queries";
 
 export type LibraryActionState = { success: true; id?: string } | { error: string };
 
@@ -135,4 +136,42 @@ export async function deleteLibraryBook(id: string): Promise<LibraryActionState>
   await recordAuditLog({ userId: admin.id, action: Permissions.libraryDelete, resourceType: "library-book", resourceId: id, oldValues: existing });
   revalidatePath(libraryPath);
   return { success: true, id };
+}
+
+// ── Dashboard queries (v0 admin UI) ─────────────────────────────────────
+// Read-only catalog helpers for the library dashboard. Every entry point
+// is permission-checked and input-validated server-side; the data layer in
+// lib/library/admin-queries.ts performs no authorization of its own.
+
+export type LibraryBookListActionResult =
+  | { success: true; books: Awaited<ReturnType<typeof listLibraryBookRows>>["books"]; page: number; pageSize: number; total: number; totalPages: number }
+  | { error: string };
+
+export async function listLibraryBooks(input: unknown): Promise<LibraryBookListActionResult> {
+  await requirePermission(Permissions.libraryList);
+  const parsed = libraryBookListQuerySchema.safeParse(input);
+  if (!parsed.success) return { error: await errorMessage("invalidData") };
+
+  const filters: LibraryBookListFilters = {
+    query: parsed.data.query,
+    publicationStatus: parsed.data.publicationStatus,
+    reviewStatus: parsed.data.reviewStatus,
+  };
+  const { books, total } = await listLibraryBookRows(filters, parsed.data.page, parsed.data.pageSize);
+  return { success: true, books, ...computePagination(parsed.data.page, parsed.data.pageSize, total) };
+}
+
+export async function searchLibraryMembers(input: unknown): Promise<{ success: true; members: Awaited<ReturnType<typeof searchMembersByEmail>> } | { error: string }> {
+  await requirePermission(Permissions.libraryUpdate);
+  const parsed = libraryMemberSearchSchema.safeParse(input);
+  if (!parsed.success) return { error: await errorMessage("invalidData") };
+
+  const members = await searchMembersByEmail(parsed.data.query);
+  return { success: true, members };
+}
+
+export async function getLibraryStats(): Promise<{ success: true; stats: Awaited<ReturnType<typeof getLibraryStatsSnapshot>> } | { error: string }> {
+  await requirePermission(Permissions.libraryList);
+  const stats = await getLibraryStatsSnapshot();
+  return { success: true, stats };
 }

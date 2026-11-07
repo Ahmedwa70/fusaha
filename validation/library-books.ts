@@ -99,5 +99,17 @@ export function canTransitionToPublished(current: { publicationStatus: string },
   return next.accessStatus !== "unknown";
 }
 
+export const libraryMemberSearchSchema = z.object({
+  query: z.string().trim().min(1).max(160),
+});
+
+export const libraryBookListQuerySchema = z.object({
+  query: z.string().trim().max(160).optional(),
+  publicationStatus: publicationStatusSchema.optional(),
+  reviewStatus: reviewStatusSchema.optional(),
+  page: z.coerce.number().int().min(1).default(1),
+  pageSize: z.coerce.number().int().min(1).max(100).default(20),
+});
+
 export type CreateLibraryBookValues = z.infer<typeof createLibraryBookSchema>;
 export type UpdateLibraryBookValues = z.infer<typeof updateLibraryBookSchema>;
