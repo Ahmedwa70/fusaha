@@ -8,6 +8,9 @@
 // verifies the bytes and SHA-256 match, then deletes exactly that one test
 // object. Nothing else in the bucket is touched, and no secret value is
 // ever printed.
+//
+// When the credentials file (or any key in it) is missing — e.g. on CI —
+// the test prints SKIPPED and exits 0 so it never fails automated runs.
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -19,6 +22,12 @@ const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 // this resolver lets raw Node load it for this standalone script.
 register(new URL("./ts-extension-resolver.mjs", import.meta.url).href);
 const envPath = path.join(projectRoot, ".env.library-r2.local");
+
+function skip(reason) {
+  console.log(`SKIPPED: ${reason}`);
+  console.log("To run this test, create .env.library-r2.local with: LIBRARY_R2_ACCOUNT_ID, LIBRARY_R2_ACCESS_KEY_ID, LIBRARY_R2_SECRET_ACCESS_KEY, LIBRARY_R2_BUCKET_NAME");
+  process.exit(0);
+}
 
 function loadLocalEnv() {
   let parsed = {};
@@ -33,14 +42,11 @@ function loadLocalEnv() {
         })
     );
   } catch {
-    console.error(`Missing ${envPath}`);
-    console.error("Create it with: LIBRARY_R2_ACCOUNT_ID, LIBRARY_R2_ACCESS_KEY_ID, LIBRARY_R2_SECRET_ACCESS_KEY, LIBRARY_R2_BUCKET_NAME");
-    process.exit(2);
+    skip(`no local credentials file at ${envPath}`);
   }
   for (const key of ["LIBRARY_R2_ACCOUNT_ID", "LIBRARY_R2_ACCESS_KEY_ID", "LIBRARY_R2_SECRET_ACCESS_KEY", "LIBRARY_R2_BUCKET_NAME"]) {
     if (!parsed[key]) {
-      console.error(`Missing ${key} in ${envPath}`);
-      process.exit(2);
+      skip(`missing ${key} in ${envPath}`);
     }
     process.env[key] = parsed[key];
   }
