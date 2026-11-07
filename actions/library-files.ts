@@ -54,7 +54,7 @@ export async function uploadLibraryBookFile(bookId: string, formData: FormData):
   // Dedup: identical bytes already on record? Link the existing file and
   // skip the storage round-trip entirely.
   const existing = await findLibraryFileBySha256(sha256);
-  let deduplicated = !!existing;
+  const deduplicated = !!existing;
 
   if (!existing) {
     const storageKey = buildStorageKey(sha256);
