@@ -32,5 +32,5 @@ export default async function EditLibraryBookPage({ params }: { params: Promise<
     ? { originalFilename: bundle.file.originalFilename, sizeBytes: bundle.file.sizeBytes, sha256: bundle.file.sha256, createdAt: bundle.file.createdAt.toISOString() }
     : null;
   const grantItems = grants.map((grant) => ({ id: grant.id, userEmail: grant.userEmail, createdAt: grant.createdAt.toISOString() }));
-  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} /><LibraryFilePanel bookId={id} file={attachedFile} /><LibraryDownloadGrantsPanel bookId={id} grants={grantItems} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
+  return <div className="space-y-6"><LibraryBookForm mode="edit" id={id} initialValues={initialValues} lifecycle={{ publicationStatus: book.publicationStatus as "draft" | "pending_review" | "published" | "unpublished" | "archived", reviewStatus: book.reviewStatus as "needs_review" | "verified" }} /><LibraryFilePanel bookId={id} file={attachedFile} /><LibraryDownloadGrantsPanel bookId={id} grants={grantItems} /><LibraryLifecycleActions id={id} status={book.publicationStatus} /></div>;
 }

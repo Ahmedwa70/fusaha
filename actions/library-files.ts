@@ -118,7 +118,7 @@ export async function grantLibraryDownload(bookId: string, email: string): Promi
 
 export async function revokeLibraryDownload(bookId: string, grantId: string): Promise<{ success: true } | { error: string }> {
   const admin = await requirePermission(Permissions.libraryUpdate);
-  const removed = await deleteDownloadGrant(grantId);
+  const removed = await deleteDownloadGrant(bookId, grantId);
   if (removed) {
     await recordAuditLog({
       userId: admin.id,

@@ -87,5 +87,17 @@ export const publishLibraryBookSchema = z.object({
   reviewStatus: z.literal("verified"),
 });
 
+// Transition rule for reaching "published", shared by publishLibraryBook and
+// updateLibraryBook so the dedicated action and the generic update can never
+// disagree: publishing requires an explicit, known access status. Kept out of
+// the Zod schemas because "unknown" is a valid status for drafts — it only
+// becomes a blocker at the moment of publication.
+export function canTransitionToPublished(current: { publicationStatus: string }, next: { publicationStatus: string; reviewStatus: string; accessStatus: string }): boolean {
+  if (next.publicationStatus !== "published") return true;
+  if (next.reviewStatus !== "verified") return false;
+  if (current.publicationStatus === "published") return true;
+  return next.accessStatus !== "unknown";
+}
+
 export type CreateLibraryBookValues = z.infer<typeof createLibraryBookSchema>;
 export type UpdateLibraryBookValues = z.infer<typeof updateLibraryBookSchema>;

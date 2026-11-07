@@ -8,11 +8,12 @@ import { libraryBooks } from "@/database/schema";
 import { Permissions } from "@/constants/permissions";
 import { requirePermission } from "@/lib/auth/dal";
 import { recordAuditLog } from "@/lib/admin/audit-log";
-import { createLibraryBookSchema, publishLibraryBookSchema, type CreateLibraryBookValues } from "@/validation/library-books";
+import { createLibraryBookSchema, publishLibraryBookSchema, updateLibraryBookSchema, canTransitionToPublished, type CreateLibraryBookValues, type UpdateLibraryBookValues } from "@/validation/library-books";
 
 export type LibraryActionState = { success: true; id?: string } | { error: string };
 
 type LibraryBookInput = CreateLibraryBookValues;
+type LibraryBookUpdateInput = UpdateLibraryBookValues;
 
 const libraryPath = "/admin/library";
 
@@ -50,14 +51,17 @@ export async function createLibraryBook(data: LibraryBookInput): Promise<Library
   }
 }
 
-export async function updateLibraryBook(id: string, data: LibraryBookInput): Promise<LibraryActionState> {
+export async function updateLibraryBook(id: string, data: LibraryBookUpdateInput): Promise<LibraryActionState> {
   const admin = await requirePermission(Permissions.libraryUpdate);
-  const parsed = createLibraryBookSchema.safeParse(data);
+  const parsed = updateLibraryBookSchema.safeParse(data);
   if (!parsed.success) return { error: await errorMessage("invalidData") };
 
   const [existing] = await db.select().from(libraryBooks).where(eq(libraryBooks.id, id)).limit(1);
   if (!existing) return { error: await errorMessage("notFound") };
   if (existing.publicationStatus === "archived") return { error: await errorMessage("cannotArchive") };
+  // The update path must satisfy the SAME publication gate as the dedicated
+  // publish action: published requires verified + a known accessStatus.
+  if (!canTransitionToPublished(existing, parsed.data)) return { error: await errorMessage("cannotPublish") };
 
   try {
     const [updated] = await db.update(libraryBooks).set({ ...parsed.data, updatedBy: admin.id, updatedAt: new Date() }).where(and(eq(libraryBooks.id, id), eq(libraryBooks.updatedAt, existing.updatedAt))).returning({ id: libraryBooks.id });
@@ -87,7 +91,7 @@ export async function publishLibraryBook(id: string): Promise<LibraryActionState
     coverUrl: existing.coverUrl ?? undefined,
     coverAlt: existing.coverAlt ?? undefined,
   });
-  if (!parsed.success || parsed.data.accessStatus === "unknown") return { error: await errorMessage("cannotPublish") };
+  if (!parsed.success || !canTransitionToPublished(existing, parsed.data)) return { error: await errorMessage("cannotPublish") };
 
   const now = new Date();
   const [published] = await db.update(libraryBooks).set({ publicationStatus: "published", reviewStatus: "verified", publishedAt: now, updatedBy: admin.id, updatedAt: now }).where(and(eq(libraryBooks.id, id), eq(libraryBooks.updatedAt, existing.updatedAt))).returning({ id: libraryBooks.id });

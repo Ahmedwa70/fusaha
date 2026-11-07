@@ -24,7 +24,7 @@ function LocalizedFields({ name, label, multiline, register, errors }: { name: "
   return <div className="grid gap-3 rounded-xl border p-4"><div><h3 className="font-medium">{label}</h3><p className="text-xs text-muted-foreground">{locales.map((locale) => localeLabels[locale]).join(" · ")}</p></div>{locales.map((locale) => <Field key={locale} data-invalid={!!errorMap?.[locale]}><FieldLabel htmlFor={`${name}-${locale}`}>{localeLabels[locale]}</FieldLabel>{multiline ? <Textarea id={`${name}-${locale}`} dir="auto" rows={3} {...register(`${name}.${locale}` as Path<CreateLibraryBookValues>)} /> : <Input id={`${name}-${locale}`} dir="auto" {...register(`${name}.${locale}` as Path<CreateLibraryBookValues>)} />}<FieldError errors={[errorMap?.[locale]]} /></Field>)}</div>;
 }
 
-export function LibraryBookForm({ mode, id, initialValues }: { mode: "create" | "edit"; id?: string; initialValues?: CreateLibraryBookValues }) {
+export function LibraryBookForm({ mode, id, initialValues, lifecycle }: { mode: "create" | "edit"; id?: string; initialValues?: CreateLibraryBookValues; lifecycle?: { publicationStatus: "draft" | "pending_review" | "published" | "unpublished" | "archived"; reviewStatus: "needs_review" | "verified" } }) {
   const t = useTranslations("admin.library");
   const router = useRouter();
   const [submitted, setSubmitted] = useState(false);
@@ -37,7 +37,7 @@ export function LibraryBookForm({ mode, id, initialValues }: { mode: "create" | 
   const onSubmit = (data: CreateLibraryBookValues) => {
     setServerError(null);
     startTransition(async () => {
-      const result = mode === "create" ? await createLibraryBook(data) : await updateLibraryBook(id!, data);
+      const result = mode === "create" ? await createLibraryBook(data) : await updateLibraryBook(id!, { ...data, publicationStatus: lifecycle!.publicationStatus, reviewStatus: lifecycle!.reviewStatus });
       if ("error" in result) setServerError(result.error);
       else { setSubmitted(true); if (mode === "create" && result.id) router.push(`/admin/library/${result.id}`); }
     });

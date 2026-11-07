@@ -13,6 +13,11 @@
 
 export type LibraryBookAccessFacts = {
   hasFile: boolean;
+  // The public routes (stream/download) only serve books that passed the
+  // admin review workflow. This gate applies to EVERYONE — including library
+  // managers — because these routes are the public delivery surface; drafts
+  // must never be reachable through a direct URL or a Range request.
+  isPublished: boolean;
   accessStatus: string;
   hasGrant: boolean;
 };
@@ -24,13 +29,14 @@ export type LibraryViewer = {
 
 export type AccessDecision =
   | { allowed: true }
-  | { allowed: false; reason: "unauthenticated" | "no_file" | "no_grant" | "access_status" };
+  | { allowed: false; reason: "unauthenticated" | "no_file" | "not_published" | "no_grant" | "access_status" };
 
 const deny = (reason: Exclude<AccessDecision, { allowed: true }>["reason"]): AccessDecision => ({ allowed: false, reason });
 
 export function canReadLibraryBook(viewer: LibraryViewer | null, facts: LibraryBookAccessFacts): AccessDecision {
   if (!viewer) return deny("unauthenticated");
   if (!facts.hasFile) return deny("no_file");
+  if (!facts.isPublished) return deny("not_published");
   if (viewer.canManageLibrary) return { allowed: true };
   if (facts.accessStatus === "free_reading") return { allowed: true };
   if (facts.hasGrant) return { allowed: true };
@@ -40,6 +46,7 @@ export function canReadLibraryBook(viewer: LibraryViewer | null, facts: LibraryB
 export function canDownloadLibraryBook(viewer: LibraryViewer | null, facts: LibraryBookAccessFacts): AccessDecision {
   if (!viewer) return deny("unauthenticated");
   if (!facts.hasFile) return deny("no_file");
+  if (!facts.isPublished) return deny("not_published");
   // free_reading intentionally grants NO download right here.
   if (viewer.canManageLibrary || facts.hasGrant) return { allowed: true };
   return deny("no_grant");

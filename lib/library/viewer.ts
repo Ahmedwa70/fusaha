@@ -27,6 +27,9 @@ export async function resolveLibraryBookAccess(slug: string): Promise<ResolvedLi
   const [viewer, bundle] = await Promise.all([getLibraryViewer(), getBookFileBySlug(slug)]);
   const facts = {
     hasFile: !!bundle,
+    isPublished: bundle
+      ? bundle.book.publicationStatus === "published" && bundle.book.reviewStatus === "verified"
+      : false,
     accessStatus: bundle?.book.accessStatus ?? "unknown",
     hasGrant: viewer && bundle ? await hasDownloadGrant(bundle.book.id, viewer.userId) : false,
   };

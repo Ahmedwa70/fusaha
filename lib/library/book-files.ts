@@ -111,8 +111,14 @@ export async function insertDownloadGrant(bookId: string, userId: string, grante
   return result.length > 0;
 }
 
-export async function deleteDownloadGrant(grantId: string): Promise<boolean> {
-  const result = await db.delete(libraryDownloadGrants).where(eq(libraryDownloadGrants.id, grantId)).returning({ id: libraryDownloadGrants.id });
+// Scoped to BOTH the grant id and the book id: a grant row belonging to a
+// different book must never be deletable through another book's admin page,
+// even if a caller somehow obtains that grant's id.
+export async function deleteDownloadGrant(bookId: string, grantId: string): Promise<boolean> {
+  const result = await db
+    .delete(libraryDownloadGrants)
+    .where(and(eq(libraryDownloadGrants.id, grantId), eq(libraryDownloadGrants.bookId, bookId)))
+    .returning({ id: libraryDownloadGrants.id });
   return result.length > 0;
 }
 
